@@ -35,7 +35,7 @@ def getChatGPTInput(text, textbox):
     try:
         print(askchatGPT(text, textbox))
     except:
-        print('AA')
+        print('Function getChatGPTInput error!')
 
 
 homescreen_menu = ttk.Frame(main, padding=20, style='Card.TFrame')
