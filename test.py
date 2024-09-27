@@ -17,8 +17,7 @@ def switchy():
     mainFrame.pack(fill='both', expand=True)
 
 
-
-
+print('rawr')
 test2 = ttk.Notebook(main)
 test2.place(relx=0, rely=.1)
 mainNOFRAME = ttk.Frame(test2)
