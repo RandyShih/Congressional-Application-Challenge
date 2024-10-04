@@ -4,13 +4,18 @@ from tkinter import *
 from tkinter import font
 import json as json
 from tkinter import messagebox
-
-##import google.generativeai as genai
-##import os
+try:
+    import google.generativeai as genai
+    import os
+except:
+    print("google.generativeai import failed!")
 
 # Google API Configuration
-# genai.configure(api_key="AIzaSyB_5KHGQ94m6cu_L-kEWeYzsXxuPmrvqp4")
-# Model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+try:
+    genai.configure(api_key="AIzaSyB_5KHGQ94m6cu_L-kEWeYzsXxuPmrvqp4")
+    Model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+except:
+    print("google.generativeai configuration failed!")
 increase_value = 0
 main = tk.Tk()
 main.geometry('1200x800')
@@ -133,24 +138,28 @@ for i in range(0, 50):
     signupscreen.rowconfigure(i, weight=weight_factor)
     signupscreen.columnconfigure(i, weight=weight_factor)
 # Login Screen Widgets
-passwordentry_loginmenu = ttk.Entry(login_menu, style='Pack.TLabel', width=30)
-passwordentry_loginmenu.grid(column=25, row=25)
-usernameentry_loginmenu = ttk.Entry(login_menu, style='Pack.TLabel', width=30)
-usernameentry_loginmenu.grid(column=25, row=24)
+passwordentry_loginmenu = ttk.Entry(login_menu, width=30, foreground='white')
+passwordentry_loginmenu.configure(fieldbackground='white')
+passwordentry_loginmenu.grid(column=25, row=20)
+usernameentry_loginmenu = ttk.Entry(login_menu, width=30, foreground='white')
+usernameentry_loginmenu.grid(column=25, row=19)
 loginbutton_loginmenu = ttk.Button(login_menu, text='Login', style='Accent.TButton', command=login, width=40)
-loginbutton_loginmenu.grid(column=25, row=27)
+loginbutton_loginmenu.grid(column=25, row=22)
 errorlogin_loginmenu = Label(login_menu, width=50, text='Please enter your username and password', bg='#333333',
                              fg='red', font=("Helvetica 12 bold", 10))
-errorlogin_loginmenu.grid(column=25, row=26)
+errorlogin_loginmenu.grid(column=25, row=21)
 signupbutton_loginmenu = ttk.Button(login_menu, text='Sign up', style='Accent.TButton', width=40, command=changescreen_signupscreen)
-signupbutton_loginmenu.grid(column=25, row=28)
-image = tk.PhotoImage(file="up-accent.png", master=login_menu)
-
+signupbutton_loginmenu.grid(column=25, row=23)
+image = tk.PhotoImage(file="R.png", master=login_menu)
+label_login = ttk.Label(master=login_menu, image=image, background='#333333')
+label_login.grid(column=25, row=18)
 # Sign Up Screen Widgets
-passwordentry_signupscreen = ttk.Entry(master=signupscreen, style='Pack.TLabel', width=30)
-passwordentry_signupscreen.grid(column=25, row=24)
-usernameentry_signupscreen = ttk.Entry(master=signupscreen, style='Pack.TLabel', width=30)
-usernameentry_signupscreen.grid(column=25, row=23)
+passwordentry_signupscreen = ttk.Entry(master=signupscreen, foreground='white', width=30)
+passwordentry_signupscreen.grid(column=25, row=20)
+usernameentry_signupscreen = ttk.Entry(master=signupscreen, foreground='white', width=30)
+usernameentry_signupscreen.grid(column=25, row=19, pady=5)
 signupbutton_signupscreen = ttk.Button(master=signupscreen, style='Accent.TButton', text='Sign up')
-signupbutton_signupscreen.grid(column=25, row=25, sticky='ew')
+signupbutton_signupscreen.grid(column=25, row=21, sticky='ew', pady=5)
+label = ttk.Label(master=signupscreen, image=image, width=12, background='#333333')
+label.grid(column=25, row=18)
 main.mainloop()
