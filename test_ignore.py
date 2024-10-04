@@ -100,10 +100,6 @@ settingsbutton_homescreen = ttk.Button(homescreen_menu, text='Settings', style='
 settingsbutton_homescreen.grid(column=0, row=6, pady=20)
 mainscreen_homescreen = ttk.Frame(main, style='Card.TFrame', borderwidth=10)
 mainscreen_homescreen.grid(row=0, column=2, sticky='nsew', columnspan=6, rowspan=6)
-main.resizable(height=False, width=False)
-main.grid_rowconfigure(0, weight=1)
-main.grid_columnconfigure(2, weight=1)
-mainscreen_homescreen.propagate(False)
 ignore_text = Text(master=mainscreen_homescreen, width=100, height=20, borderwidth=20, background='gray',
                    font=font_test, state='disabled')
 ignore_text.grid(row=0, column=5, sticky='n', pady=20, columnspan=1, rowspan=1)
@@ -112,65 +108,49 @@ askaibutton_homescreen = ttk.Button(mainscreen_homescreen, style='Accent.TButton
                                     command=lambda: getChatGPTInput(textinput_homescreen.get(), ignore_text))
 textinput_homescreen.grid(column=5, row=1, pady=10, sticky='nsew', rowspan=1, columnspan=1)
 askaibutton_homescreen.grid(column=5, row=2, pady=10, sticky='nsew', columnspan=1, rowspan=1)
-# Grid configuration
-mainscreen_homescreen.grid_rowconfigure(0, weight=1)
-mainscreen_homescreen.grid_rowconfigure(1, weight=1)
-mainscreen_homescreen.grid_rowconfigure(2, weight=1)
-mainscreen_homescreen.grid_rowconfigure(3, weight=1)
-mainscreen_homescreen.grid_rowconfigure(4, weight=1)
-mainscreen_homescreen.grid_rowconfigure(5, weight=5)
-mainscreen_homescreen.grid_rowconfigure(6, weight=1)
-mainscreen_homescreen.grid_rowconfigure(7, weight=1)
-mainscreen_homescreen.grid_rowconfigure(8, weight=1)
-mainscreen_homescreen.grid_rowconfigure(9, weight=1)
-mainscreen_homescreen.grid_columnconfigure(0, weight=1)
-mainscreen_homescreen.grid_columnconfigure(1, weight=1)
-mainscreen_homescreen.grid_columnconfigure(2, weight=1)
-mainscreen_homescreen.grid_columnconfigure(3, weight=1)
-mainscreen_homescreen.grid_columnconfigure(4, weight=1)
-mainscreen_homescreen.grid_columnconfigure(5, weight=5)
-mainscreen_homescreen.grid_columnconfigure(6, weight=1)
-mainscreen_homescreen.grid_columnconfigure(7, weight=1)
-mainscreen_homescreen.grid_columnconfigure(8, weight=1)
-mainscreen_homescreen.grid_columnconfigure(9, weight=1)
+# Main Screen Grid configuration
+for i in range(0,10):
+    mainscreen_homescreen.grid_columnconfigure(i, weight=weight_factor)
+    mainscreen_homescreen.grid_rowconfigure(i, weight=weight_factor)
+mainscreen_homescreen.propagate(False)
 
-main.grid_rowconfigure(0, weight=weight_factor)
-main.grid_rowconfigure(1, weight=weight_factor)
-main.grid_rowconfigure(2, weight=weight_factor)
-main.grid_rowconfigure(3, weight=weight_factor)
-main.grid_rowconfigure(4, weight=weight_factor)
-main.grid_columnconfigure(0, weight=weight_factor)
-main.grid_columnconfigure(1, weight=weight_factor)
-main.grid_columnconfigure(2, weight=weight_factor)
-main.grid_columnconfigure(3, weight=weight_factor)
-main.grid_columnconfigure(4, weight=weight_factor)
+# Main Grid Configuration
+for i in range(0,5):
+    main.grid_rowconfigure(i, weight=weight_factor)
+    main.grid_columnconfigure(i, weight=weight_factor)
+main.resizable(height=False, width=False)
+
+# Login Menu Configuration
 login_menu = ttk.Frame(main, style='Card.TFrame')
 login_menu.grid(column=0, row=0, sticky='NSEW', columnspan=5, rowspan=5)
 for i in range(0, 50):
-    login_menu.columnconfigure(increase_value, weight=weight_factor)
-    login_menu.rowconfigure(increase_value, weight=weight_factor)
-    increase_value = i + 1
+    login_menu.columnconfigure(i, weight=weight_factor)
+    login_menu.rowconfigure(i, weight=weight_factor)
 
+# Sign Up Screen Configuration
+signupscreen = ttk.Frame(master=main, style="Card.TFrame")
+for i in range(0, 50):
+    signupscreen.rowconfigure(i, weight=weight_factor)
+    signupscreen.columnconfigure(i, weight=weight_factor)
+# Login Screen Widgets
 passwordentry_loginmenu = ttk.Entry(login_menu, style='Pack.TLabel', width=30)
 passwordentry_loginmenu.grid(column=25, row=25)
 usernameentry_loginmenu = ttk.Entry(login_menu, style='Pack.TLabel', width=30)
 usernameentry_loginmenu.grid(column=25, row=24)
-loginbutton_loginmenu = ttk.Button(login_menu, text='Login', style='Pack.TButton', command=login, width=40)
+loginbutton_loginmenu = ttk.Button(login_menu, text='Login', style='Accent.TButton', command=login, width=40)
 loginbutton_loginmenu.grid(column=25, row=27)
 errorlogin_loginmenu = Label(login_menu, width=50, text='Please enter your username and password', bg='#333333',
                              fg='red', font=("Helvetica 12 bold", 10))
 errorlogin_loginmenu.grid(column=25, row=26)
-signupbutton_loginmenu = ttk.Button(login_menu, text='Sign up', style='Pack.TButton', width=40, command=changescreen_signupscreen)
+signupbutton_loginmenu = ttk.Button(login_menu, text='Sign up', style='Accent.TButton', width=40, command=changescreen_signupscreen)
 signupbutton_loginmenu.grid(column=25, row=28)
 image = tk.PhotoImage(file="up-accent.png", master=login_menu)
-signupscreen = ttk.Frame(master=main, style="Card.TFrame")
-for i in range(0, 50):
-    print(i)
-    increase_value = i+1
-    signupscreen.rowconfigure(increase_value, weight=weight_factor)
-    signupscreen.columnconfigure(increase_value, weight=weight_factor)
-passwordentry_signupscreen = ttk.Entry(signupscreen, style='Pack.TLabel', width=30)
-passwordentry_signupscreen.grid(column=25, row=25)
-usernameentry_signupscreen = ttk.Entry(signupscreen, style='Pack.TLabel', width=30)
-usernameentry_signupscreen.grid(column=25, row=24)
+
+# Sign Up Screen Widgets
+passwordentry_signupscreen = ttk.Entry(master=signupscreen, style='Pack.TLabel', width=30)
+passwordentry_signupscreen.grid(column=25, row=24)
+usernameentry_signupscreen = ttk.Entry(master=signupscreen, style='Pack.TLabel', width=30)
+usernameentry_signupscreen.grid(column=25, row=23)
+signupbutton_signupscreen = ttk.Button(master=signupscreen, style='Accent.TButton', text='Sign up')
+signupbutton_signupscreen.grid(column=25, row=25, sticky='ew')
 main.mainloop()
