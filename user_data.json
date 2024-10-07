@@ -1,10 +1,47 @@
 [
     {
-        "Username": "j",
-        "Password": "w"
+        "Username": "Samantha",
+        "Password": "PuppyLover123",
+        "Assignments": ["Essay due at 10", "Quiz at 9"],
+        "Period": [2, 5],
+        "Class": ["English", "Science"],
+        "DueDate": ["10 April 2024", "12 April 2024"],
+        "TimeDue": ["10:00 AM", "1:30 PM"]
     },
     {
-        "Username": "Shawn",
-        "Password": "Ilikegatos"
+        "Username": "Jake",
+        "Password": "Skateboard2024",
+        "Assignments": ["Project due at 6", "Lab work due at 7"],
+        "Period": [3, 6],
+        "Class": ["Computer Science", "Chemistry"],
+        "DueDate": ["20 April 2024", "22 April 2024"],
+        "TimeDue": ["6:00 PM", "2:00 PM"]
+    },
+    {
+        "Username": "Emily",
+        "Password": "Dancer123",
+        "Assignments": ["Presentation due at 5", "Final Exam at 10"],
+        "Period": [1, 7],
+        "Class": ["History", "Math"],
+        "DueDate": ["25 April 2024", "30 April 2024"],
+        "TimeDue": ["9:00 AM", "10:30 AM"]
+    },
+    {
+        "Username": "Michael",
+        "Password": "BasketballPro21",
+        "Assignments": ["Assignment due at 7", "Test at 9"],
+        "Period": [4, 8],
+        "Class": ["Geography", "Physics"],
+        "DueDate": ["18 April 2024", "21 April 2024"],
+        "TimeDue": ["11:00 AM", "3:30 PM"]
+    },
+    {
+        "Username": "Olivia",
+        "Password": "ArtLover2024",
+        "Assignments": ["Art project due at 4", "Speech due at 9"],
+        "Period": [2, 5],
+        "Class": ["Art", "English"],
+        "DueDate": ["14 April 2024", "19 April 2024"],
+        "TimeDue": ["2:00 PM", "9:30 AM"]
     }
 ]

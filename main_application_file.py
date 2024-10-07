@@ -139,7 +139,6 @@ for i in range(0, 50):
     signupscreen.columnconfigure(i, weight=weight_factor)
 # Login Screen Widgets
 passwordentry_loginmenu = ttk.Entry(login_menu, width=30, foreground='white')
-passwordentry_loginmenu.configure(fieldbackground='white')
 passwordentry_loginmenu.grid(column=25, row=20)
 usernameentry_loginmenu = ttk.Entry(login_menu, width=30, foreground='white')
 usernameentry_loginmenu.grid(column=25, row=19)
