@@ -54,14 +54,25 @@ style.map('Custom.TButton', background=[('active', '#595858')])
 print(font)
 
 class createclass:
-        def __init__(self, width, height, column, row):
+        def __init__(self, width, height, column, row, master):
             self.width = width
             self.height = height
             self.column = column
             self.row = row
-            self.label = ttk.Label(master=classScreen, width=self.width, style='Card.TFrame')
-            self.label.grid(column=self.column, row=self.row, sticky='ew', columnspan=1, pady=10)
+            self.label = ttk.Label(master=master, width=self.width, style='Card.TFrame')
+            self.label.grid(column=self.column, row=self.row, columnspan=3, pady=10, sticky='ew')
+            for i in classScreen.children:
+                print(i[1:])
+            print(classScreen.winfo_children())
 
+class breakframe():
+    def __init__(self):
+        self.frame = ttk.Frame(master=main)
+        for i in (0, 5):
+            self.frame.grid_rowconfigure(i, weight=weight_factor)
+            self.frame.grid_columnconfigure(i, weight=weight_factor)
+        self.frame.grid_propagate(0)
+        self.frame.grid(column=0, row=0, sticky='nsew')
 def recallclasses():
     with open('user_data.json') as sp:
         userdata = json.load(sp)
@@ -84,12 +95,15 @@ def index(username):
 def hideallscreensexcept():
     mainscreen_homescreen.grid_forget()
 def changeclassesscreen():
-    classScreen.grid(row=0, column=2, sticky='nsew', columnspan=8, rowspan=10)
     recallclasses()
+    for i in classScreen.children:
+        print(i)
+        i.destroy()
+    classScreen.grid(column=2, row=0, sticky='nsew', columnspan=8, rowspan=10)
     classNUM = 0
     for i in recallclasses():
         classNUM += 1
-        createclass(column=3, row=classNUM, width=10, height=10)
+        createclass(column=1, row=classNUM, width=10, height=30, master=classScreen)
     hideallscreensexcept()
 
 def askchatGPT(text, textbox):
