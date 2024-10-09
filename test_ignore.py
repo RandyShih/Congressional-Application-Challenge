@@ -63,8 +63,11 @@ class createclass:
             self.height = height
             self.column = column
             self.row = row
-            self.label = ttk.Label(master=master, width=self.width, text=text)
-            self.label.grid(column=self.column, row=self.row, columnspan=3, pady=10, sticky='ew')
+            self.frame = ttk.Frame(master=master, width=self.width, style='Card.TFrame', height=self.height)
+            self.frame.grid(column=self.column, row=self.row, pady=40, sticky='nsew', columnspan=3)
+            self.label = ttk.Label(master=self.frame, text=text, background='#333333', foreground='white', font=("Georgia", 12))
+            self.label.grid(column=0, row=0, padx=5, pady=5)
+            print(recallassignmentdetails('Math', timedue=True))
             print(f'Created the class {text}!')
 
 class createclassScreen:
@@ -92,6 +95,30 @@ def loading():
 def loadingcomplete():
     loadingscreen.grid_forget()
     progressionBar.step(0)
+
+def recallassignmentdetails(classes, timedue=False, datedue=False, shortdescription=False, notes=False, period=False):
+    with open("user_data.json", 'r')  as sp:
+        userdata = json.load(sp)
+        counter = 0
+        for classesIndex in userdata[user]['Classes']:
+            assignmentInformationDict = {
+
+            }
+            if classes == classesIndex:
+                assignmentInformationDict.pop("Assignment Index", counter)
+                if timedue:
+                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                if datedue:
+                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                if shortdescription:
+                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                if notes:
+                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                if period:
+                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                counter += 1
+                return assignmentInformationDict
+
 def recallclasses():
     with open('user_data.json') as sp:
         userdata = json.load(sp)
@@ -184,7 +211,7 @@ def updateClasses():
             print("Created a class screen!")
             firsttime = False
         classNUM += 1
-        createclass(row=classNUM, column=0, width=20, height=10, master=classesScreenDict[classFrameNum], text=classes)
+        createclass(row=classNUM, column=1, width=60, height=10, master=classesScreenDict[classFrameNum], text=classes)
 
 
 def askchatGPT(text, textbox):
@@ -224,7 +251,6 @@ def getChatGPTInput(text, textbox):
         print('Function getChatGPTInput error!')
 
 def returnloginscreen():
-    loadingscreen.lift(signupscreen)
     loading()
     progressionBar.step(50)
     main.update_idletasks()
@@ -234,7 +260,6 @@ def returnloginscreen():
     loadingcomplete()
 
 def changescreen_signupscreen():
-    loadingscreen.lift(login_menu)
     loading()
     progressionBar.step(50)
     main.update_idletasks()
