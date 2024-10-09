@@ -3,9 +3,13 @@ from tkinter import ttk
 from tkinter import *
 from tkinter import font
 import json as json
+import time as time
 from tkinter import messagebox
 
 increase_value = 0
+classesScreenValue = 1
+classFrameNum = 0
+weight_factor = 1
 
 try:
     import google.generativeai as genai
@@ -19,6 +23,7 @@ try:
     Model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 except:
     print("google.generativeai configuration failed!")
+classesScreenDict = {}
 main = tk.Tk()
 main.geometry('1200x800')
 main.title('Organize Now!')
@@ -52,34 +57,45 @@ style.layout("Custom.TButton", [('custom.button', {'children': [('customButton.b
 style.configure('Custom.TButton', background='#292828', borderwidth=2, relief='SUNKEN')
 style.map('Custom.TButton', background=[('active', '#595858')])
 print(font)
-
 class createclass:
-        def __init__(self, width, height, column, row, master):
+        def __init__(self, width, height, column, row, master, text):
             self.width = width
             self.height = height
             self.column = column
             self.row = row
-            self.label = ttk.Label(master=master, width=self.width, style='Card.TFrame')
+            self.label = ttk.Label(master=master, width=self.width, text=text)
             self.label.grid(column=self.column, row=self.row, columnspan=3, pady=10, sticky='ew')
-            for i in classScreen.children:
-                print(i[1:])
-            print(classScreen.winfo_children())
+            print(f'Created the class {text}!')
 
-class breakframe():
-    def __init__(self):
-        self.frame = ttk.Frame(master=main)
-        for i in (0, 5):
-            self.frame.grid_rowconfigure(i, weight=weight_factor)
-            self.frame.grid_columnconfigure(i, weight=weight_factor)
-        self.frame.grid_propagate(0)
-        self.frame.grid(column=0, row=0, sticky='nsew')
+class createclassScreen:
+    def __init__(self, master):
+        global classFrameNum
+        self.master = master
+        self.frame = ttk.Frame(master=master, style="Card.TFrame")
+        self.frame.grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
+        self.leftbutton = ttk.Button(master=self.frame, width=10, command=testcmd, text='Left')
+        self.rightbutton = ttk.Button(master=self.frame, width=10, command=testcmd, text='Right')
+        for i in range(0,6):
+            self.frame.rowconfigure(i, weight=weight_factor)
+            self.frame.columnconfigure(i, weight=weight_factor)
+        self.leftbutton.grid(column=2, row=5, sticky='s', pady=20)
+        self.rightbutton.grid(column=3, row=5, sticky='s', pady=20)
+        classFrameNum += 1
+        if classFrameNum != 1:
+            self.frame.grid_forget()
+        classesScreenDict.update({classFrameNum: self.frame})
+def loading():
+    progressionBar.step(0)
+    loadingscreen.grid(column=0, row=0, columnspan=10, rowspan=10, sticky='nsew')
+    progressionBar.place(rely=.5, relx=.5, anchor=CENTER)
+
+def loadingcomplete():
+    loadingscreen.grid_forget()
+    progressionBar.step(0)
 def recallclasses():
     with open('user_data.json') as sp:
         userdata = json.load(sp)
-        print(user)
-        print(userdata)
-        print(userdata[user]['Class'])
-        return userdata[user]['Class']
+        return userdata[user]['Classes']
 def index(username):
     usernamefound = False
     with open('user_data.json', 'r') as sp:
@@ -94,17 +110,82 @@ def index(username):
         return "Invalid Username, data not found."
 def hideallscreensexcept():
     mainscreen_homescreen.grid_forget()
-def changeclassesscreen():
+def testcmd():
+    global classesScreenValue
+    global classesScreenDict
+    for i, v in classesScreenDict:
+        print('e')
+
+def signup():
+    username = usernameentry_signupscreen.get()
+    password = passwordentry_signupscreen.get()
+    print(username)
+    with (open('user_data.json', 'r+') as sp):
+        userdata = json.load(sp)
+        print(userdata)
+        for accounts in userdata:
+            if username == accounts['Username']:
+                errormessage_signupscreen['text'] = f'The username {username} already exists!'
+                return
+        for i in username:
+            if i.isspace():
+                errormessage_signupscreen['text'] = 'Username cannot contain spaces!'
+                return
+        for i in password:
+            if i.isspace():
+                errormessage_signupscreen['text'] = "Password cannot contain spaces!"
+                return
+        if len(username) < 4:
+            errormessage_signupscreen['text'] = 'Username must be more than 4 characters!'
+        elif len(password) < 4:
+            errormessage_signupscreen['text'] = 'Password must be more than 4 characters!'
+        else:
+                print(type(userdata))
+                userdata.append({"Username": username,
+                "Password": password,
+                "Assignments": [],
+                "Period": [],
+                "Classes": [],
+                "DueDate": [],
+                "TimeDue": []})
+                sp.seek(0)
+                sp.truncate()
+                json.dump(userdata, sp, indent=4)
+                errormessage_signupscreen['text'] = 'Account successfully created!'
+def changeclassesScreen():
+    createclassScreen(main)
+def updateClasses():
+    global classFrameNum
+    classScreen.grid(column=2, row=0, columnspan=8, rowspan=10, sticky='nsew')
+    classeserrormessage = ttk.Label(master=classScreen, text='Classes not found!', background='#333333',foreground='red', font=('Georgia', 20))
+    print(recallclasses())
+    if recallclasses() == []:
+        print("Classes not found!")
+        classeserrormessage.grid(column=3, row=2, sticky='nsew')
+        return
+    else:
+        try:
+            classeserrormessage.grid_forget()
+        except:
+            print('Classes error message not found!')
+    firsttime = True
+    global classesScreenDict
+    classesScreenDict = {}
+    classFrameNum = 0
     recallclasses()
-    for i in classScreen.children:
-        print(i)
-        i.destroy()
-    classScreen.grid(column=2, row=0, sticky='nsew', columnspan=8, rowspan=10)
+    for destroyclasses in classScreen.winfo_children():
+        destroyclasses.destroy()
     classNUM = 0
-    for i in recallclasses():
+    for classes in recallclasses():
+        if classNUM % 3 == 0 or firsttime:
+            createclassScreen(master=classScreen)
+            if not firsttime:
+                classNUM = 0
+            print("Created a class screen!")
+            firsttime = False
         classNUM += 1
-        createclass(column=1, row=classNUM, width=10, height=30, master=classScreen)
-    hideallscreensexcept()
+        createclass(row=classNUM, column=0, width=20, height=10, master=classesScreenDict[classFrameNum], text=classes)
+
 
 def askchatGPT(text, textbox):
     response = Model.generate_content(text)
@@ -115,7 +196,7 @@ def askchatGPT(text, textbox):
 
 
 def changeloginscreentext(message):
-    errorlogin_loginmenu["text"] = message
+    errormessage_loginmenu["text"] = message
 
 
 def login():
@@ -142,17 +223,35 @@ def getChatGPTInput(text, textbox):
     except:
         print('Function getChatGPTInput error!')
 
+def returnloginscreen():
+    loadingscreen.lift(signupscreen)
+    loading()
+    progressionBar.step(50)
+    main.update_idletasks()
+    login_menu.grid(column=0, row=0, sticky='NSEW', columnspan=10, rowspan=10)
+    signupscreen.grid_forget()
+    progressionBar.step(100)
+    loadingcomplete()
 
 def changescreen_signupscreen():
-    signupscreen.grid(column=0, row=0, sticky='NSEW', columnspan=50, rowspan=50)
+    loadingscreen.lift(login_menu)
+    loading()
+    progressionBar.step(50)
+    main.update_idletasks()
+    signupscreengrid()
+    progressionBar.step(100)
+    loadingcomplete()
 
+
+def signupscreengrid():
+    signupscreen.grid(column=0, row=0, sticky='NSEW', columnspan=50, rowspan=50)
 # Test Code, Delete Later
+
 #
-weight_factor = 1
 # Home Screen
 homescreen_menu = ttk.Frame(main, padding=20, style='Card.TFrame', borderwidth=20, height=2222)
 homebutton_homescreen = ttk.Button(homescreen_menu, text='Home', style='Accent.TButton', width=20)
-assignmentsbutton_homescreen = ttk.Button(homescreen_menu, text='Assignments', style='Custom.TButton', width=20, command=changeclassesscreen)
+assignmentsbutton_homescreen = ttk.Button(homescreen_menu, text='Assignments', style='Accent.TButton', width=20, command=updateClasses)
 classesbutton_homescreen = ttk.Button(homescreen_menu, text='Classes', style='Accent.TButton', width=20)
 calanderbutton_homescreen = ttk.Button(homescreen_menu, text='Calendar', style='Accent.TButton', width=20)
 profilebutton_homescreen = ttk.Button(homescreen_menu, text='Profile', style='Accent.TButton', width=20)
@@ -172,6 +271,11 @@ classesbutton_homescreen.grid(column=0, row=3, pady=20)
 assignmentsbutton_homescreen.grid(column=0, row=2, pady=20)
 homescreen_menu.grid(column=0, row=0, sticky='nsew', columnspan=2, rowspan=10)
 homescreen_menu.grid_propagate(0)
+
+# Loading Screen
+loadingscreen = ttk.Frame(master=main, style='Card.TFrame')
+progressionBar = ttk.Progressbar(master=loadingscreen, orient="horizontal", length=600)
+loadingscreen.lift()
 
 # Main Screen Grid configuration
 mainscreen_homescreen.grid_propagate(0)
@@ -207,8 +311,8 @@ passwordentry_loginmenu = ttk.Entry(login_menu, width=25, foreground='white', fo
 print(passwordentry_loginmenu.winfo_class())
 usernameentry_loginmenu = ttk.Entry(login_menu, width=25, foreground='white', font=('Georgia', 8))
 loginbutton_loginmenu = ttk.Button(login_menu, text='Login', command=login, style='Accent.TButton', width=40)
-errorlogin_loginmenu = Label(login_menu, width=40, text='Please enter your username and password', bg='#333333',
-                             fg='red', font=("Georgia", 8))
+errormessage_loginmenu = Label(login_menu, width=40, text='Please enter your username and password', bg='#333333',
+                               fg='red', font=("Georgia", 8))
 signupbutton_loginmenu = ttk.Button(login_menu, text='Sign up', style='Accent.TButton', width=40,
                                     command=changescreen_signupscreen)
 passwordlabel_loginmenu = ttk.Label(master=login_menu, text='Password: ', font=('Georgia', 10), background='#333333', foreground='white')
@@ -216,11 +320,11 @@ usernamelabel_loginmenu = ttk.Label(master=login_menu, text='Username: ', font=(
 label_login = ttk.Label(master=login_menu, image=image, background='#333333')
 passwordentry_loginmenu.grid(column=25, row=20, sticky='e')
 usernameentry_loginmenu.grid(column=25, row=19, sticky='e')
-usernamelabel_loginmenu.grid(column=25, row=19, sticky='w')
-passwordlabel_loginmenu.grid(column=25, row=20, sticky='w')
-loginbutton_loginmenu.grid(column=25, row=22)
-errorlogin_loginmenu.grid(column=25, row=21)
-signupbutton_loginmenu.grid(column=25, row=23)
+usernamelabel_loginmenu.grid(column=25, row=19, sticky='w', pady=5)
+passwordlabel_loginmenu.grid(column=25, row=20, sticky='w', pady=5)
+loginbutton_loginmenu.grid(column=25, row=22, pady=5)
+errormessage_loginmenu.grid(column=25, row=21, pady=5)
+signupbutton_loginmenu.grid(column=25, row=23, pady=5)
 label_login.grid(column=25, row=18)
 
 # Sign Up Screen Widgets
@@ -228,21 +332,22 @@ passwordentry_signupscreen = ttk.Entry(master=signupscreen, foreground='white', 
 passwordentry_signupscreen.grid(column=25, row=20, sticky='e')
 usernameentry_signupscreen = ttk.Entry(master=signupscreen, foreground='white', width=30)
 usernameentry_signupscreen.grid(column=25, row=19, pady=5, sticky='e')
-signupbutton_signupscreen = ttk.Button(master=signupscreen, style='Accent.TButton', text='Sign up')
-signupbutton_signupscreen.grid(column=25, row=21, sticky='ew', pady=5)
-label = ttk.Label(master=signupscreen, image=image, width=12, background='#333333')
-label.grid(column=25, row=18)
+signupbutton_signupscreen = ttk.Button(master=signupscreen, style='Accent.TButton', text='Sign up', command=signup)
+signupbutton_signupscreen.grid(column=25, row=22, sticky='ew', pady=5)
+appLogo = ttk.Label(master=signupscreen, image=image, width=12, background='#333333')
+appLogo.grid(column=25, row=18)
 passwordlabel_signupscreen = ttk.Label(master=signupscreen, text='Password:', font=font_test, background='#333333',
                                        foreground='white', width=8)
 passwordlabel_signupscreen.grid(column=25, row=20, sticky='w', padx=5)
 usernamelabel_signupscreen = ttk.Label(master=signupscreen, text='Username: ', font=font_test, background='#333333',
                                        foreground='white', width=8)
 usernamelabel_signupscreen.grid(column=25, row=19, sticky='w', padx=5)
-
+returnlogin_signupscreen = ttk.Button(master=signupscreen, style='Accent.TButton', text='Return to login', command=returnloginscreen)
+returnlogin_signupscreen.grid(column=25, row=23, sticky='ew', pady=5)
+errormessage_signupscreen = ttk.Label(master=signupscreen, width=20, anchor="center", background="#333333", foreground='red', text='Insert a username and password!')
+errormessage_signupscreen.grid(column=25, row=21, sticky='ew', pady=5)
 # Classes Screen
 classScreen = ttk.Frame(master=main, style='Card.TFrame')
-AddClassEntry_Classes = ttk.Entry(master=classScreen, width=5)
-AddClassEntry_Classes.grid(row=0, column=0)
 # Classes Screen Configuration
 for i in range(0, 6):
     classScreen.columnconfigure(i, weight=weight_factor)
