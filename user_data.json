@@ -1,7 +1,7 @@
 [
     {
-        "Username": "Samantha",
-        "Password": "PuppyLover123",
+        "Username": "w",
+        "Password": "w",
         "Assignments": [
             "Essay due at 10",
             "Quiz at 9"
@@ -10,9 +10,11 @@
             2,
             5
         ],
-        "Class": [
+        "Classes": [
             "English",
-            "Science"
+            "Science",
+            "Math",
+            "Computer Science"
         ],
         "DueDate": [
             "10 April 2024",
@@ -21,6 +23,14 @@
         "TimeDue": [
             "10:00 AM",
             "1:30 PM"
+        ],
+        "AssignmentClass": [
+            "English",
+            "Science"
+        ],
+        "AssignmentDescription": [
+            "Finish your test!",
+            "Practice for your quiz!"
         ]
     },
     {
@@ -34,7 +44,7 @@
             3,
             6
         ],
-        "Class": [
+        "Classes": [
             "Computer Science",
             "Chemistry"
         ],
@@ -58,7 +68,7 @@
             1,
             7
         ],
-        "Class": [
+        "Classes": [
             "History",
             "Math"
         ],
@@ -82,7 +92,7 @@
             4,
             8
         ],
-        "Class": [
+        "Classes": [
             "Geography",
             "Physics"
         ],
@@ -96,8 +106,8 @@
         ]
     },
     {
-        "Username": "Olivia",
-        "Password": "ArtLover2024",
+        "Username": "e",
+        "Password": "e",
         "Assignments": [
             "Art project due at 4",
             "Speech due at 9"
@@ -106,7 +116,7 @@
             2,
             5
         ],
-        "Class": [
+        "Classes": [
             "Art",
             "English"
         ],
