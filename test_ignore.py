@@ -64,10 +64,9 @@ class createclass:
             self.column = column
             self.row = row
             self.frame = ttk.Frame(master=master, width=self.width, style='Card.TFrame', height=self.height)
-            self.frame.grid(column=self.column, row=self.row, pady=40, sticky='nsew', columnspan=3)
+            self.frame.grid(column=self.column, row=self.row, pady=40, sticky='nsew', columnspan=4)
             self.label = ttk.Label(master=self.frame, text=text, background='#333333', foreground='white', font=("Georgia", 12))
             self.label.grid(column=0, row=0, padx=5, pady=5)
-            print(recallassignmentdetails('Math', timedue=True))
             print(f'Created the class {text}!')
 
 class createclassScreen:
@@ -76,17 +75,38 @@ class createclassScreen:
         self.master = master
         self.frame = ttk.Frame(master=master, style="Card.TFrame")
         self.frame.grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
-        self.leftbutton = ttk.Button(master=self.frame, width=10, command=testcmd, text='Left')
-        self.rightbutton = ttk.Button(master=self.frame, width=10, command=testcmd, text='Right')
+        self.leftbutton = ttk.Button(master=self.frame, width=10, command=classesrightchange, text='Left')
+        self.rightbutton = ttk.Button(master=self.frame, width=10, command=classesrightchange, text='Right')
         for i in range(0,6):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
         self.leftbutton.grid(column=2, row=5, sticky='s', pady=20)
         self.rightbutton.grid(column=3, row=5, sticky='s', pady=20)
         classFrameNum += 1
+        print(classFrameNum)
         if classFrameNum != 1:
             self.frame.grid_forget()
         classesScreenDict.update({classFrameNum: self.frame})
+
+def classesrightchange():
+    print(classesScreenDict)
+    global classFrameNum
+    classNumUpdate = 0
+    valueList = []
+    for classes in classesScreenDict:
+        classNumUpdate += 1
+        valueList.append(classNumUpdate)
+    valueList = valueList[::-1]
+    print("Value of classFrameNum: " + str(classFrameNum))
+    if classFrameNum <= classNumUpdate and classFrameNum != 1:
+        indexValue = valueList.index(classFrameNum) + 1
+        print("Value of the key: " + str(indexValue))
+        classesScreenDict[indexValue].grid_forget()
+        classFrameNum = classFrameNum - 1
+        indexValue = valueList.index(classFrameNum) + 1
+        print("Value of the key: " + str(indexValue))
+        classesScreenDict[indexValue].grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
+
 def loading():
     progressionBar.step(0)
     loadingscreen.grid(column=0, row=0, columnspan=10, rowspan=10, sticky='nsew')
@@ -97,7 +117,7 @@ def loadingcomplete():
     progressionBar.step(0)
 
 def recallassignmentdetails(classes, timedue=False, datedue=False, shortdescription=False, notes=False, period=False):
-    with open("user_data.json", 'r')  as sp:
+    with open("user_data.json", 'r') as sp:
         userdata = json.load(sp)
         counter = 0
         for classesIndex in userdata[user]['Classes']:
@@ -107,15 +127,15 @@ def recallassignmentdetails(classes, timedue=False, datedue=False, shortdescript
             if classes == classesIndex:
                 assignmentInformationDict.pop("Assignment Index", counter)
                 if timedue:
-                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                    assignmentInformationDict.update({"Time Due": userdata[user]['TimeDue']})
                 if datedue:
-                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                    assignmentInformationDict.update({"Date Due", userdata[user]['DueDate']})
                 if shortdescription:
-                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                    assignmentInformationDict.update({"Short Description Due", userdata[user]['Assignments']})
                 if notes:
-                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                    assignmentInformationDict.update({"Notes", userdata[user]['AssignmentDescription']})
                 if period:
-                    assignmentInformationDict.pop("Time Due", userdata[user]['TimeDue'])
+                    assignmentInformationDict.update({"Period", userdata[user]['Period']})
                 counter += 1
                 return assignmentInformationDict
 
