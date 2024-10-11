@@ -2,10 +2,11 @@
     {
         "Username": "w",
         "Password": "w",
-        "Assignments": [
-            "Essay due at 10",
-            "Quiz at 9"
-        ],
+        "Assignments":
+        {
+        "English": "Essay due at 10",
+        "Science": "Quiz at 9"
+        },
         "Period": [
             2,
             5
