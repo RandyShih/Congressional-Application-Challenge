@@ -37,37 +37,54 @@ user = None
 style.configure("Custom.TButton")
 style.element_create("custom", 'from', 'default')
 style.layout("Custom.TButton", [('custom.button', {'children': [('customButton.button',
-                               {'sticky': 'nswe',
-                                'children':
-                                    [('customButton.padding',
-                                      {'sticky': 'nswe',
-                                       'children':
-                                           [('customButton.label',
-                                             {'expand': '1', 'sticky': 'nswe'}
-                                             )
-                                            ]
-                                       }
-                                      )
-                                     ]
-                                }
-                               )
-                              ]})]
+                                                                 {'sticky': 'nswe',
+                                                                  'children':
+                                                                      [('customButton.padding',
+                                                                        {'sticky': 'nswe',
+                                                                         'children':
+                                                                             [('customButton.label',
+                                                                               {'expand': '1', 'sticky': 'nswe'}
+                                                                               )
+                                                                              ]
+                                                                         }
+                                                                        )
+                                                                       ]
+                                                                  }
+                                                                 )
+                                                                ]})]
 
-)
+             )
 style.configure('Custom.TButton', background='#292828', borderwidth=2, relief='SUNKEN')
 style.map('Custom.TButton', background=[('active', '#595858')])
 print(font)
+
+
 class createclass:
-        def __init__(self, width, height, column, row, master, text):
-            self.width = width
-            self.height = height
-            self.column = column
-            self.row = row
-            self.frame = ttk.Frame(master=master, width=self.width, style='Card.TFrame', height=self.height)
-            self.frame.grid(column=self.column, row=self.row, pady=40, sticky='nsew', columnspan=4)
-            self.label = ttk.Label(master=self.frame, text=text, background='#333333', foreground='white', font=("Georgia", 12))
-            self.label.grid(column=0, row=0, padx=5, pady=5)
-            print(f'Created the class {text}!')
+    def __init__(self, width, height, column, row, master, className):
+        self.width = width
+        self.height = height
+        self.column = column
+        self.row = row
+        self.frame = ttk.Frame(master=master, width=self.width, style='Card.TFrame', height=self.height)
+        self.frame.grid(column=self.column, row=self.row, pady=40, sticky='nsew', columnspan=4)
+        self.label = ttk.Label(master=self.frame, text=className, background='#333333', foreground='white',
+                               font=("Georgia", 12))
+        self.label.grid(column=0, row=0, padx=5, pady=5)
+        self.classbutton = ttk.Button(master=self.frame, command=testcmd, text='Enter', width=10,
+                                      style='Accent.TButton')
+        self.classbutton.place(relx=.98, rely=.90, anchor='se')
+        self.text = Text(master=self.frame, width=80, height=5, background="#333333", foreground="white", relief="flat")
+        self.text.grid(column=2, row=2, columnspan=1, sticky="ew")
+        self.text.propagate(0)
+        self.scrollbar = ttk.Scrollbar(master=self.text, orient='vertical')
+        self.scrollbar.pack(fill='y', side='right', expand=True, anchor='e')
+        self.text.configure(state='normal')
+        self.text.insert(1.0, 'Hey \n I am a Congressional \n wadwad \n wdwad \n wdwad\n')
+        self.text.configure(state='disabled')
+        print(recallassignmentdetails(timedue=True, datedue=True, shortdescription=False, notes=False, period=False, classes="Math"))
+        print(f'Error recalling the assignments of {className}!')
+        print(f'Created the class {className}!')
+
 
 class createclassScreen:
     def __init__(self, master):
@@ -75,9 +92,9 @@ class createclassScreen:
         self.master = master
         self.frame = ttk.Frame(master=master, style="Card.TFrame")
         self.frame.grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
-        self.leftbutton = ttk.Button(master=self.frame, width=10, command=classesrightchange, text='Left')
+        self.leftbutton = ttk.Button(master=self.frame, width=10, command=classesleftchange, text='Left')
         self.rightbutton = ttk.Button(master=self.frame, width=10, command=classesrightchange, text='Right')
-        for i in range(0,6):
+        for i in range(0, 6):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
         self.leftbutton.grid(column=2, row=5, sticky='s', pady=20)
@@ -87,6 +104,7 @@ class createclassScreen:
         if classFrameNum != 1:
             self.frame.grid_forget()
         classesScreenDict.update({classFrameNum: self.frame})
+
 
 def classesrightchange():
     print(classesScreenDict)
@@ -107,42 +125,78 @@ def classesrightchange():
         print("Value of the key: " + str(indexValue))
         classesScreenDict[indexValue].grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
 
+
 def loading():
     progressionBar.step(0)
     loadingscreen.grid(column=0, row=0, columnspan=10, rowspan=10, sticky='nsew')
     progressionBar.place(rely=.5, relx=.5, anchor=CENTER)
 
+
 def loadingcomplete():
     loadingscreen.grid_forget()
     progressionBar.step(0)
 
-def recallassignmentdetails(classes, timedue=False, datedue=False, shortdescription=False, notes=False, period=False):
+
+def recallassignmentdetails(classes, timedue=False, datedue=False, shortdescription=False, notes=False, period=False, ):
     with open("user_data.json", 'r') as sp:
         userdata = json.load(sp)
         counter = 0
-        for classesIndex in userdata[user]['Classes']:
+        print(classes)
             assignmentInformationDict = {
 
             }
-            if classes == classesIndex:
-                assignmentInformationDict.pop("Assignment Index", counter)
-                if timedue:
-                    assignmentInformationDict.update({"Time Due": userdata[user]['TimeDue']})
-                if datedue:
-                    assignmentInformationDict.update({"Date Due", userdata[user]['DueDate']})
-                if shortdescription:
-                    assignmentInformationDict.update({"Short Description Due", userdata[user]['Assignments']})
-                if notes:
-                    assignmentInformationDict.update({"Notes", userdata[user]['AssignmentDescription']})
-                if period:
-                    assignmentInformationDict.update({"Period", userdata[user]['Period']})
-                counter += 1
-                return assignmentInformationDict
+            for everyClass in userdata[user]["Classes"]:
+                if classes == everyClass:
+                    print(str(classes) + " is equal to " + className)
+                    for details in userdata[user]['Assignments']:
+                        if details.key() == className:
+                            counter += 1
+                            Assignment = {
+
+                            }
+                            Assignment.update({"Class": classes})
+                            if timedue:
+                                Assignment.update({"Time Due": userdata[user]['TimeDue'][counter - 1]})
+                            if datedue:
+                                Assignment.update({"Date Due", userdata[user]['DueDate'][counter - 1]})
+                            if shortdescription:
+                                Assignment.update({"Short Description Due", userdata[user]['Assignments']})
+                            if notes:
+                                Assignment.update({"Notes", userdata[user]['AssignmentDescription'][counter - 1]})
+                            if period:
+                                Assignment.update({"Period", userdata[user]['Period'][counter - 1]})
+        return assignmentInformationDict
+
+
+def classesleftchange():
+    global classFrameNum
+    global classesScreenDict
+    classAMT = 0
+    newClassesList = [
+
+    ]
+    try:
+        for classes in classesScreenDict:
+            classAMT += 1
+            newClassesList.append(classesScreenDict[classAMT])
+    except:
+        print("Classes left change error!")
+    newClassesList = newClassesList[::-1]
+    print("New Classes List: " + str(newClassesList))
+    if classFrameNum != 0 and classFrameNum < classAMT:
+        print("Class Frame Num: " + str(classFrameNum))
+        newClassesList[classFrameNum - 1].grid_forget()
+        classFrameNum = classFrameNum + 1
+        print(classFrameNum)
+        newClassesList[classFrameNum - 1].grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
+
 
 def recallclasses():
     with open('user_data.json') as sp:
         userdata = json.load(sp)
         return userdata[user]['Classes']
+
+
 def index(username):
     usernamefound = False
     with open('user_data.json', 'r') as sp:
@@ -155,13 +209,18 @@ def index(username):
         return usernameindex
     else:
         return "Invalid Username, data not found."
+
+
 def hideallscreensexcept():
     mainscreen_homescreen.grid_forget()
+
+
 def testcmd():
     global classesScreenValue
     global classesScreenDict
     for i, v in classesScreenDict:
         print('e')
+
 
 def signup():
     username = usernameentry_signupscreen.get()
@@ -187,24 +246,29 @@ def signup():
         elif len(password) < 4:
             errormessage_signupscreen['text'] = 'Password must be more than 4 characters!'
         else:
-                print(type(userdata))
-                userdata.append({"Username": username,
-                "Password": password,
-                "Assignments": [],
-                "Period": [],
-                "Classes": [],
-                "DueDate": [],
-                "TimeDue": []})
-                sp.seek(0)
-                sp.truncate()
-                json.dump(userdata, sp, indent=4)
-                errormessage_signupscreen['text'] = 'Account successfully created!'
+            print(type(userdata))
+            userdata.append({"Username": username,
+                             "Password": password,
+                             "Assignments": [],
+                             "Period": [],
+                             "Classes": [],
+                             "DueDate": [],
+                             "TimeDue": []})
+            sp.seek(0)
+            sp.truncate()
+            json.dump(userdata, sp, indent=4)
+            errormessage_signupscreen['text'] = 'Account successfully created!'
+
+
 def changeclassesScreen():
     createclassScreen(main)
+
+
 def updateClasses():
     global classFrameNum
     classScreen.grid(column=2, row=0, columnspan=8, rowspan=10, sticky='nsew')
-    classeserrormessage = ttk.Label(master=classScreen, text='Classes not found!', background='#333333',foreground='red', font=('Georgia', 20))
+    classeserrormessage = ttk.Label(master=classScreen, text='Classes not found!', background='#333333',
+                                    foreground='red', font=('Georgia', 20))
     print(recallclasses())
     if recallclasses() == []:
         print("Classes not found!")
@@ -231,7 +295,7 @@ def updateClasses():
             print("Created a class screen!")
             firsttime = False
         classNUM += 1
-        createclass(row=classNUM, column=1, width=60, height=10, master=classesScreenDict[classFrameNum], text=classes)
+        createclass(row=classNUM, column=1, width=60, height=10, master=classesScreenDict[classFrameNum], className=classes)
 
 
 def askchatGPT(text, textbox):
@@ -270,6 +334,7 @@ def getChatGPTInput(text, textbox):
     except:
         print('Function getChatGPTInput error!')
 
+
 def returnloginscreen():
     loading()
     progressionBar.step(50)
@@ -278,6 +343,7 @@ def returnloginscreen():
     signupscreen.grid_forget()
     progressionBar.step(100)
     loadingcomplete()
+
 
 def changescreen_signupscreen():
     loading()
@@ -290,13 +356,16 @@ def changescreen_signupscreen():
 
 def signupscreengrid():
     signupscreen.grid(column=0, row=0, sticky='NSEW', columnspan=50, rowspan=50)
+
+
 # Test Code, Delete Later
 
 #
 # Home Screen
 homescreen_menu = ttk.Frame(main, padding=20, style='Card.TFrame', borderwidth=20, height=2222)
 homebutton_homescreen = ttk.Button(homescreen_menu, text='Home', style='Accent.TButton', width=20)
-assignmentsbutton_homescreen = ttk.Button(homescreen_menu, text='Assignments', style='Accent.TButton', width=20, command=updateClasses)
+assignmentsbutton_homescreen = ttk.Button(homescreen_menu, text='Assignments', style='Accent.TButton', width=20,
+                                          command=updateClasses)
 classesbutton_homescreen = ttk.Button(homescreen_menu, text='Classes', style='Accent.TButton', width=20)
 calanderbutton_homescreen = ttk.Button(homescreen_menu, text='Calendar', style='Accent.TButton', width=20)
 profilebutton_homescreen = ttk.Button(homescreen_menu, text='Profile', style='Accent.TButton', width=20)
@@ -360,8 +429,10 @@ errormessage_loginmenu = Label(login_menu, width=40, text='Please enter your use
                                fg='red', font=("Georgia", 8))
 signupbutton_loginmenu = ttk.Button(login_menu, text='Sign up', style='Accent.TButton', width=40,
                                     command=changescreen_signupscreen)
-passwordlabel_loginmenu = ttk.Label(master=login_menu, text='Password: ', font=('Georgia', 10), background='#333333', foreground='white')
-usernamelabel_loginmenu = ttk.Label(master=login_menu, text='Username: ', font=('Georgia', 10), background='#333333', foreground='white')
+passwordlabel_loginmenu = ttk.Label(master=login_menu, text='Password: ', font=('Georgia', 10), background='#333333',
+                                    foreground='white')
+usernamelabel_loginmenu = ttk.Label(master=login_menu, text='Username: ', font=('Georgia', 10), background='#333333',
+                                    foreground='white')
 label_login = ttk.Label(master=login_menu, image=image, background='#333333')
 passwordentry_loginmenu.grid(column=25, row=20, sticky='e')
 usernameentry_loginmenu.grid(column=25, row=19, sticky='e')
@@ -387,9 +458,11 @@ passwordlabel_signupscreen.grid(column=25, row=20, sticky='w', padx=5)
 usernamelabel_signupscreen = ttk.Label(master=signupscreen, text='Username: ', font=font_test, background='#333333',
                                        foreground='white', width=8)
 usernamelabel_signupscreen.grid(column=25, row=19, sticky='w', padx=5)
-returnlogin_signupscreen = ttk.Button(master=signupscreen, style='Accent.TButton', text='Return to login', command=returnloginscreen)
+returnlogin_signupscreen = ttk.Button(master=signupscreen, style='Accent.TButton', text='Return to login',
+                                      command=returnloginscreen)
 returnlogin_signupscreen.grid(column=25, row=23, sticky='ew', pady=5)
-errormessage_signupscreen = ttk.Label(master=signupscreen, width=20, anchor="center", background="#333333", foreground='red', text='Insert a username and password!')
+errormessage_signupscreen = ttk.Label(master=signupscreen, width=20, anchor="center", background="#333333",
+                                      foreground='red', text='Insert a username and password!')
 errormessage_signupscreen.grid(column=25, row=21, sticky='ew', pady=5)
 # Classes Screen
 classScreen = ttk.Frame(master=main, style='Card.TFrame')
@@ -398,4 +471,3 @@ for i in range(0, 6):
     classScreen.columnconfigure(i, weight=weight_factor)
     classScreen.rowconfigure(i, weight=weight_factor)
 classScreen.grid_propagate(0)
-main.mainloop()
