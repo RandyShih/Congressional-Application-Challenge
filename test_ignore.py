@@ -33,6 +33,7 @@ main.tk.call('source', 'theme/azure.tcl')
 style.theme_use('azure-dark')
 print(style.theme_names())
 font_test = font.Font(family='Georgia')
+title_font = font.Font(family='Georgia', size=9, weight='bold')
 user = None
 style.configure("Custom.TButton")
 style.element_create("custom", 'from', 'default')
@@ -51,9 +52,13 @@ style.layout("Custom.TButton", [('custom.button', {'children': [('customButton.b
                                                                        ]
                                                                   }
                                                                  )
-                                                                ]})]
-
-             )
+                                                                ]})])
+style.configure('CustomF.TFrame')
+style.element_create('CustomF', 'from', 'clam')
+style.layout("CustomF.TFrame", [("CustomFFrame.TFrame", {'children': [('CustomFFrame.border', {'sticky': 'nswe'})]})]
+)
+style.configure('CustomF.TFrame', background='#2B2B2B')
+print(style.layout('Custom.TFrame'))
 style.configure('Custom.TButton', background='#292828', borderwidth=2, relief='SUNKEN')
 style.map('Custom.TButton', background=[('active', '#595858')])
 print(font)
@@ -61,29 +66,39 @@ print(font)
 
 class createclass:
     def __init__(self, width, height, column, row, master, className):
+        print('Class: ' + str(findclassperiod('Math')))
+        self.textdata = ""
         self.width = width
         self.height = height
         self.column = column
         self.row = row
-        self.frame = ttk.Frame(master=master, width=self.width, style='Card.TFrame', height=self.height)
-        self.frame.grid(column=self.column, row=self.row, pady=40, sticky='nsew', columnspan=4)
-        self.label = ttk.Label(master=self.frame, text=className, background='#333333', foreground='white',
-                               font=("Georgia", 12))
+        self.frame = ttk.Frame(master=master, width=self.width, style='CustomF.TFrame', height=self.height)
+        self.frame.grid(column=self.column, row=self.row, pady=30, sticky='nsew', columnspan=4)
+        self.label = ttk.Label(master=self.frame, text=className, background='#2B2B2B', foreground='white',
+                               font=title_font)
         self.label.grid(column=0, row=0, padx=5, pady=5)
+        self.frame.propagate(0)
         self.classbutton = ttk.Button(master=self.frame, command=testcmd, text='Enter', width=10,
                                       style='Accent.TButton')
         self.classbutton.place(relx=.98, rely=.90, anchor='se')
-        self.text = Text(master=self.frame, width=80, height=5, background="#333333", foreground="white", relief="flat")
-        self.text.grid(column=2, row=2, columnspan=1, sticky="ew")
+        self.text = Text(master=self.frame, width=60, height=4, background="#2B2B2B", foreground="white", relief="flat", font=title_font)
+        self.text.place(relx=.45, rely=.9, anchor='s')
         self.text.propagate(0)
-        self.scrollbar = ttk.Scrollbar(master=self.text, orient='vertical')
+        self.scrollbar = ttk.Scrollbar(self.text, orient="vertical", command=self.text.yview)
+        self.text['yscrollcommand'] = self.scrollbar.set
         self.scrollbar.pack(fill='y', side='right', expand=True, anchor='e')
         self.text.configure(state='normal')
-        self.text.insert(1.0, 'Hey \n I am a Congressional \n wadwad \n wdwad \n wdwad\n')
+        self.text.delete(1.0, END)
+        print(recallassignmentdetails(className))
+        for assignment, detail in recallassignmentdetails(className).items():
+            self.textdata = "Assigment: " + assignment + "\n" + "       Date Due: " + detail["DateDue"] + '\n\n'
+            self.text.insert(1.0, self.textdata)
+            print(str(assignment) + str(detail) + " were added!")
         self.text.configure(state='disabled')
-        print(recallassignmentdetails(timedue=True, datedue=True, shortdescription=False, notes=False, period=False, classes="Math"))
-        print(f'Error recalling the assignments of {className}!')
         print(f'Created the class {className}!')
+
+
+image2 = tk.PhotoImage(file='arrow.png')
 
 
 class createclassScreen:
@@ -92,8 +107,10 @@ class createclassScreen:
         self.master = master
         self.frame = ttk.Frame(master=master, style="Card.TFrame")
         self.frame.grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
-        self.leftbutton = ttk.Button(master=self.frame, width=10, command=classesleftchange, text='Left')
-        self.rightbutton = ttk.Button(master=self.frame, width=10, command=classesrightchange, text='Right')
+        self.leftbutton = ttk.Button(master=self.frame, width=50, command=classesleftchange, text='---------------->', style='Custom.TButton')
+        print("X, y" + str(self.leftbutton.winfo))
+        self.rightbutton = ttk.Button(master=self.frame, width=50, command=classesrightchange, text='Right')
+        self.frame.grid_propagate(False)
         for i in range(0, 6):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
@@ -137,38 +154,22 @@ def loadingcomplete():
     progressionBar.step(0)
 
 
-def recallassignmentdetails(classes, timedue=False, datedue=False, shortdescription=False, notes=False, period=False, ):
+def recallassignmentdetails(classes):
     with open("user_data.json", 'r') as sp:
         userdata = json.load(sp)
-        counter = 0
-        print(classes)
-            assignmentInformationDict = {
+        userassignmentsSPECS = {
 
-            }
-            for everyClass in userdata[user]["Classes"]:
-                if classes == everyClass:
-                    print(str(classes) + " is equal to " + className)
-                    for details in userdata[user]['Assignments']:
-                        if details.key() == className:
-                            counter += 1
-                            Assignment = {
+        }
+        assignmentsDict = userdata[user]['Assignments']
+        for assignment, data in assignmentsDict.items():
+            if classes == data['Class']:
+                userassignmentsSPECS.update({assignment: data})
+        return userassignmentsSPECS
 
-                            }
-                            Assignment.update({"Class": classes})
-                            if timedue:
-                                Assignment.update({"Time Due": userdata[user]['TimeDue'][counter - 1]})
-                            if datedue:
-                                Assignment.update({"Date Due", userdata[user]['DueDate'][counter - 1]})
-                            if shortdescription:
-                                Assignment.update({"Short Description Due", userdata[user]['Assignments']})
-                            if notes:
-                                Assignment.update({"Notes", userdata[user]['AssignmentDescription'][counter - 1]})
-                            if period:
-                                Assignment.update({"Period", userdata[user]['Period'][counter - 1]})
-        return assignmentInformationDict
 
 
 def classesleftchange():
+    print(recallassignmentdetails(classes="Math"))
     global classFrameNum
     global classesScreenDict
     classAMT = 0
@@ -295,7 +296,7 @@ def updateClasses():
             print("Created a class screen!")
             firsttime = False
         classNUM += 1
-        createclass(row=classNUM, column=1, width=60, height=10, master=classesScreenDict[classFrameNum], className=classes)
+        createclass(row=classNUM, column=1, width=60, height=20, master=classesScreenDict[classFrameNum], className=classes)
 
 
 def askchatGPT(text, textbox):
@@ -344,6 +345,14 @@ def returnloginscreen():
     progressionBar.step(100)
     loadingcomplete()
 
+def findclassperiod(classtype):
+    with open('user_data.json', 'r') as sp:
+        userdata = json.load(sp)
+        counter = 0
+        for classes in userdata[user]['Classes']:
+            if classtype == classes:
+                return userdata[user]['Period'][counter]
+            counter += 1
 
 def changescreen_signupscreen():
     loading()
@@ -471,3 +480,4 @@ for i in range(0, 6):
     classScreen.columnconfigure(i, weight=weight_factor)
     classScreen.rowconfigure(i, weight=weight_factor)
 classScreen.grid_propagate(0)
+main.mainloop()

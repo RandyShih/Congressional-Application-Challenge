@@ -2,14 +2,169 @@
     {
         "Username": "w",
         "Password": "w",
-        "Assignments":
-        {
-        "English": "Essay due at 10",
-        "Science": "Quiz at 9"
+        "Assignments": {
+            "CSP Assignment 1": {
+                "TimeDue": "12:00 PM",
+                "DateDue": "November 10 2024",
+                "Description": "Project on cybersecurity risks",
+                "Class": "CSP"
+            },
+            "CSP Quiz 2": {
+                "TimeDue": "1:00 PM",
+                "DateDue": "November 18 2024",
+                "Description": "Quiz on computational thinking concepts",
+                "Class": "CSP"
+            },
+            "Communications Presentation": {
+                "TimeDue": "3:00 PM",
+                "DateDue": "November 5 2024",
+                "Description": "Deliver a speech on effective communication strategies",
+                "Class": "Communications"
+            },
+            "Computer Science Assignment 1": {
+                "TimeDue": "2:00 PM",
+                "DateDue": "October 25 2024",
+                "Description": "Programming assignment - sorting algorithms",
+                "Class": "Computer Science"
+            },
+            "Computer Science Final Test": {
+                "TimeDue": "9:00 AM",
+                "DateDue": "December 8 2024",
+                "Description": "Final test covering algorithms and data structures",
+                "Class": "Computer Science"
+            },
+            "Computer Science Quiz 2": {
+                "TimeDue": "1:00 PM",
+                "DateDue": "November 15 2024",
+                "Description": "Quiz on object-oriented programming concepts",
+                "Class": "Computer Science"
+            },
+            "ELA Essay 2": {
+                "TimeDue": "10:00 AM",
+                "DateDue": "November 5 2024",
+                "Description": "Essay on American Dream in 20th century literature",
+                "Class": "ELA"
+            },
+            "ELA Quiz 3": {
+                "TimeDue": "9:00 AM",
+                "DateDue": "November 15 2024",
+                "Description": "Quiz on literary devices and techniques",
+                "Class": "ELA"
+            },
+            "ELA Reading Assignment": {
+                "TimeDue": "8:00 AM",
+                "DateDue": "October 20 2024",
+                "Description": "Read and analyze 'The Great Gatsby'",
+                "Class": "ELA"
+            },
+            "English Assignment 3": {
+                "TimeDue": "4:00 PM",
+                "DateDue": "November 15 2024",
+                "Description": "Poetry Analysis - Robert Frost",
+                "Class": "English"
+            },
+            "English Essay 1": {
+                "TimeDue": "12:00 PM",
+                "DateDue": "October 20 2024",
+                "Description": "Essay on Shakespeare's influence on modern literature",
+                "Class": "English"
+            },
+            "English Quiz 2": {
+                "TimeDue": "10:00 AM",
+                "DateDue": "October 30 2024",
+                "Description": "Quiz on 'To Kill a Mockingbird' themes",
+                "Class": "English"
+            },
+            "Finance Assignment 2": {
+                "TimeDue": "4:00 PM",
+                "DateDue": "November 10 2024",
+                "Description": "Create a mock investment portfolio",
+                "Class": "Finance"
+            },
+            "Finance Quiz 1": {
+                "TimeDue": "11:00 AM",
+                "DateDue": "October 25 2024",
+                "Description": "Quiz on personal finance and budgeting",
+                "Class": "Finance"
+            },
+            "Math Assignment 2": {
+                "TimeDue": "3:00 PM",
+                "DateDue": "November 10 2024",
+                "Description": "Geometry Homework - Pythagorean Theorem",
+                "Class": "Math"
+            },
+            "Math Final Test": {
+                "TimeDue": "8:00 AM",
+                "DateDue": "December 1 2024",
+                "Description": "Final test covering all course material",
+                "Class": "Math"
+            },
+            "Math Quiz 1": {
+                "TimeDue": "9:00 AM",
+                "DateDue": "November 5 2024",
+                "Description": "Algebra and Trigonometry Quiz",
+                "Class": "Math"
+            },
+            "Science Final Project": {
+                "TimeDue": "3:00 PM",
+                "DateDue": "December 5 2024",
+                "Description": "Final project on climate change impact",
+                "Class": "Science"
+            },
+            "Science Lab Report": {
+                "TimeDue": "5:00 PM",
+                "DateDue": "October 28 2024",
+                "Description": "Lab report on chemical reactions experiment",
+                "Class": "Science"
+            },
+            "Science Quiz 1": {
+                "TimeDue": "11:00 AM",
+                "DateDue": "November 7 2024",
+                "Description": "Quiz on photosynthesis and cell respiration",
+                "Class": "Science"
+            },
+            "Spanish 2 Assignment 2": {
+                "TimeDue": "5:00 PM",
+                "DateDue": "October 28 2024",
+                "Description": "Write an essay in Spanish about your daily routine",
+                "Class": "Spanish 2"
+            },
+            "Spanish 2 Quiz 1": {
+                "TimeDue": "9:00 AM",
+                "DateDue": "October 20 2024",
+                "Description": "Quiz on irregular verb conjugations",
+                "Class": "Spanish 2"
+            },
+            "Spanish Final Test": {
+                "TimeDue": "8:00 AM",
+                "DateDue": "December 1 2024",
+                "Description": "Comprehensive exam on grammar and vocabulary",
+                "Class": "Spanish"
+            },
+            "Spanish Homework 2": {
+                "TimeDue": "6:00 PM",
+                "DateDue": "October 27 2024",
+                "Description": "Translate a paragraph using past tense verbs",
+                "Class": "Spanish"
+            },
+            "Spanish Quiz 1": {
+                "TimeDue": "10:00 AM",
+                "DateDue": "October 22 2024",
+                "Description": "Vocabulary quiz on daily activities",
+                "Class": "Spanish"
+            }
         },
         "Period": [
             2,
-            5
+            5,
+            3,
+            1,
+            6,
+            4,
+            7,
+            8,
+            9,
+            10
         ],
         "Classes": [
             "English",
@@ -22,22 +177,6 @@
             "Spanish 2",
             "Communications",
             "Finance"
-        ],
-        "DueDate": [
-            "10 April 2024",
-            "12 April 2024"
-        ],
-        "TimeDue": [
-            "10:00 AM",
-            "1:30 PM"
-        ],
-        "AssignmentClass": [
-            "English",
-            "Science"
-        ],
-        "AssignmentDescription": [
-            "Finish your test!",
-            "Practice for your quiz!"
         ]
     },
     {
