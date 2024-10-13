@@ -67,35 +67,57 @@ print(font)
 class createclass:
     def __init__(self, width, height, column, row, master, className):
         print('Class: ' + str(findclassperiod('Math')))
-        self.textdata = ""
-        self.width = width
-        self.height = height
-        self.column = column
-        self.row = row
-        self.frame = ttk.Frame(master=master, width=self.width, style='CustomF.TFrame', height=self.height)
-        self.frame.grid(column=self.column, row=self.row, pady=30, sticky='nsew', columnspan=4)
-        self.label = ttk.Label(master=self.frame, text=className, background='#2B2B2B', foreground='white',
-                               font=title_font)
-        self.label.grid(column=0, row=0, padx=5, pady=5)
-        self.frame.propagate(0)
-        self.classbutton = ttk.Button(master=self.frame, command=testcmd, text='Enter', width=10,
-                                      style='Accent.TButton')
-        self.classbutton.place(relx=.98, rely=.90, anchor='se')
-        self.text = Text(master=self.frame, width=60, height=4, background="#2B2B2B", foreground="white", relief="flat", font=title_font)
-        self.text.place(relx=.45, rely=.9, anchor='s')
-        self.text.propagate(0)
-        self.scrollbar = ttk.Scrollbar(self.text, orient="vertical", command=self.text.yview)
-        self.text['yscrollcommand'] = self.scrollbar.set
-        self.scrollbar.pack(fill='y', side='right', expand=True, anchor='e')
-        self.text.configure(state='normal')
-        self.text.delete(1.0, END)
-        print(recallassignmentdetails(className))
-        for assignment, detail in recallassignmentdetails(className).items():
-            self.textdata = "Assigment: " + assignment + "\n" + "       Date Due: " + detail["DateDue"] + '\n\n'
-            self.text.insert(1.0, self.textdata)
-            print(str(assignment) + str(detail) + " were added!")
-        self.text.configure(state='disabled')
-        print(f'Created the class {className}!')
+        if className != 'Insert Class':
+            self.textdata = ""
+            self.width = width
+            self.height = height
+            self.column = column
+            self.row = row
+            self.frame = LabelFrame(master=master, width=self.width, background='#2B2B2B', bd=5, highlightbackground='#2B2B2B', foreground='white', relief='sunken', height=self.height, text=className, font=font_test)
+            self.frame.grid(column=self.column, row=self.row, pady=15, sticky='nsew', columnspan=3)
+            self.frame.propagate(0)
+            self.label = ttk.Label(master=self.frame, text=className, background='#2B2B2B', foreground='white',
+                                   font=title_font)
+            self.classbutton = ttk.Button(master=self.frame, command=testcmd, text='Enter', width=10,
+                                          style='Accent.TButton')
+            self.classbutton.place(relx=.98, rely=.90, anchor='se')
+            self.text = Text(master=self.frame, width=60, height=4, background="#2B2B2B", foreground="white", relief="flat", font=title_font)
+            self.text.place(relx=.45, rely=.9, anchor='s')
+            self.text.propagate(0)
+            self.scrollbar = ttk.Scrollbar(self.text, orient="vertical", command=self.text.yview)
+            self.text['yscrollcommand'] = self.scrollbar.set
+            self.scrollbar.pack(fill='y', side='right', expand=True, anchor='e')
+            self.text.configure(state='normal')
+            self.text.delete(1.0, END)
+            print(recallassignmentdetails(className))
+            for assignment, detail in recallassignmentdetails(className).items():
+                self.textdata = "Assigment: " + assignment + "\n" + "       Date Due: " + detail["DateDue"] + '\n\n'
+                self.text.insert(1.0, self.textdata)
+                print(str(assignment) + str(detail) + " were added!")
+            self.text.configure(state='disabled')
+            print(f'Created the class {className}!')
+        else:
+            self.row = row
+            self.master = master
+            self.column = column
+            self.addClass = LabelFrame(master=self.master, width=40, height=4, background='#2B2B2B', relief='sunken')
+            self.addClass.grid(row=0, column=self.column, pady=50, sticky='nsew', columnspan=3)
+            for i in range(0,10):
+                self.addClass.columnconfigure(i, weight=weight_factor)
+                self.addClass.rowconfigure(i, weight=weight_factor)
+            self.addClassLabel = LabelFrame(master=self.addClass, text='Add a class!', font=('Georgia', 15, 'bold'), foreground='white', background='#333333')
+            self.addClassLabel.grid(column=0, row=4, columnspan=5, sticky='new', padx=20, rowspan=4, pady=10)
+            self.addClassNameLabel = ttk.Label(master=self.addClassLabel, width=10, font=title_font, foreground='white',
+                                               background='#333333', text='Class Name: ')
+            self.addClassPeriodLabel = ttk.Label(master=self.addClassLabel, width=10, font=title_font,
+                                                 foreground='white', background='#333333', text='Class Period: ')
+            self.addClassNameLabel.grid(column=0, row=3, sticky='w', padx=10, pady=15)
+            self.addClassPeriodLabel.grid(column=0, row=5, sticky='w', padx=10, pady=15)
+            self.addClassNameEntry = ttk.Entry(master=self.addClassLabel, width=15, foreground='white')
+            self.addClassPeriodEntry = ttk.Entry(master=self.addClassLabel, width=15, foreground='white')
+            self.addClassNameEntry.grid(column=1, row=3, sticky='e')
+            self.addClassPeriodEntry.grid(column=1, row=5, sticky='e')
+
 
 
 image2 = tk.PhotoImage(file='arrow.png')
@@ -107,14 +129,13 @@ class createclassScreen:
         self.master = master
         self.frame = ttk.Frame(master=master, style="Card.TFrame")
         self.frame.grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
-        self.leftbutton = ttk.Button(master=self.frame, width=50, command=classesleftchange, text='---------------->', style='Custom.TButton')
-        print("X, y" + str(self.leftbutton.winfo))
-        self.rightbutton = ttk.Button(master=self.frame, width=50, command=classesrightchange, text='Right')
+        self.leftbutton = ttk.Button(master=self.frame, width=50, command=classesleftchange, text='Left', style='Accent.TButton')
+        self.rightbutton = ttk.Button(master=self.frame, width=50, command=classesrightchange, text='Right', style='Accent.TButton')
         self.frame.grid_propagate(False)
-        for i in range(0, 6):
+        for i in range(0, 5):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
-        self.leftbutton.grid(column=2, row=5, sticky='s', pady=20)
+            self.leftbutton.grid(column=2, row=5, sticky='s', pady=20)
         self.rightbutton.grid(column=3, row=5, sticky='s', pady=20)
         classFrameNum += 1
         print(classFrameNum)
@@ -289,14 +310,14 @@ def updateClasses():
         destroyclasses.destroy()
     classNUM = 0
     for classes in recallclasses():
-        if classNUM % 3 == 0 or firsttime:
+        if classNUM % 4 == 0 or firsttime:
             createclassScreen(master=classScreen)
             if not firsttime:
                 classNUM = 0
             print("Created a class screen!")
             firsttime = False
         classNUM += 1
-        createclass(row=classNUM, column=1, width=60, height=20, master=classesScreenDict[classFrameNum], className=classes)
+        createclass(row=classNUM-1, column=1, width=1, height=20, master=classesScreenDict[classFrameNum], className=classes)
 
 
 def askchatGPT(text, textbox):
@@ -386,6 +407,9 @@ ignore_text = Text(master=mainscreen_homescreen, width=50, height=20, borderwidt
 textinput_homescreen = ttk.Entry(master=mainscreen_homescreen, width=30)
 askaibutton_homescreen = ttk.Button(master=mainscreen_homescreen, style='Accent.TButton', text='Ask AI!',
                                     command=lambda: getChatGPTInput(textinput_homescreen.get(), ignore_text))
+HomeScreenIcon = tk.PhotoImage(file="R_optimized (1).png")
+appIcon_homescreen = ttk.Label(master=homescreen_menu, image=HomeScreenIcon, background='#333333')
+appIcon_homescreen.grid(row=0, column=0)
 settingsbutton_homescreen.grid(column=0, row=6, pady=20)
 homebutton_homescreen.grid(column=0, row=1, pady=20)
 profilebutton_homescreen.grid(column=0, row=5, pady=20)

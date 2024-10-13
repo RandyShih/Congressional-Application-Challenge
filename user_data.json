@@ -167,6 +167,7 @@
             10
         ],
         "Classes": [
+            "Insert Class",
             "English",
             "Science",
             "Math",
@@ -305,6 +306,24 @@
     {
         "Username": "dwadwadwadww",
         "Password": "dwadww",
+        "Assignments": [],
+        "Period": [],
+        "Classes": [],
+        "DueDate": [],
+        "TimeDue": []
+    },
+    {
+        "Username": "ohiowhoidwahiodhwaiodwa",
+        "Password": "awdawdwadwad",
+        "Assignments": [],
+        "Period": [],
+        "Classes": [],
+        "DueDate": [],
+        "TimeDue": []
+    },
+    {
+        "Username": "wadwadwad",
+        "Password": "wadwadwadwa",
         "Assignments": [],
         "Period": [],
         "Classes": [],
