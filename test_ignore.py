@@ -74,7 +74,7 @@ comboBoxData = None
 assignmentScreenList = [
 
 ]
-
+yearFrameNum = 0
 
 class createAssignments:
     print('e')
@@ -209,39 +209,54 @@ class createclassScreen:
 
 class createAssignmentScreen:
     global assignmentScreenList
-
-    def __init__(self, row, master, text):
-        self.row = row
+    global yearFrameNum
+    def __init__(self, master, text):
         self.master = master
         self.text = text
         self.frame = ttk.Frame(master=self.master, style="Card.TFrame")
-        self.frame.grid(column=0, row=0, sticky="nsew", columnspan=5, rowspan=5)
+        self.frame.grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
         print('Frame created!')
         self.frame.grid_propagate(False)
         for i in range(0, 11):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
-        assignmentScreenList.append(self.frame)
         self.yearLabelFrame = LabelFrame(master=self.frame, text=self.text, background='#333333', foreground='white',
-                                         font=title_font, height=100, width=100)
-        self.yearLabelFrame.grid(row=0, column=0, columnspan=5, rowspan=11, sticky='nsew')
-        self.tset = ttk.Button(master=self.frame, text='Hey', width=100)
-        self.tset.grid(row=2, column=2, columnspan=3, rowspan=3, sticky='nsew')
-        createAssignments(master=self.yearLabelFrame, row=0)
+                                         font=title_font, height=1, width=1, relief='sunken')
+        self.leftbutton = ttk.Button(master=self.frame, text='Left', width=100)
+        self.rightbutton = ttk.Button(master=self.frame, text='Right', width=100)
+        self.leftbutton.grid(column=0, row=11, rowspan=1, pady=10, padx=10)
+        self.rightbutton.grid(column=1, row=11, rowspan=1, pady=10, padx=10)
+        assignmentScreenList.append(self.yearLabelFrame)
+        for i in range(0, 6):
+            self.yearLabelFrame.rowconfigure(i, weight=weight_factor)
+            self.yearLabelFrame.columnconfigure(i, weight=weight_factor)
+        self.yearLabelFrame.grid(row=0, column=0, columnspan=4, rowspan=5, sticky='nsew', pady=10)
+        if yearFrameNum != 0:
+            print(self.frame)
+            self.frame.grid_forget()
+        print(assignmentScreenList)
 
 
 class createAssignments:
-    def __init__(self, row, master):
+    def __init__(self, row, master, month):
         self.row = row
         self.master = master
-        self.frame = ttk.Label(master=self.master, text='hey')
-        self.frame.grid(column=2, row=self.row, columnspan=2, rowspan=2, sticky='nsew')
+        self.month = month
+        self.frame = LabelFrame(master=self.master, text=self.month, font=title_font, height=100, background='#2B2B2B')
+        self.frame.grid(column=0, row=self.row, columnspan=2, rowspan=1, sticky='ew', padx=15, pady=20)
+        print('Assignment Created!')
 
 
 def createAssignment():
+    global assignmentScreenList
+    global yearFrameNum
     yearFrameNum = 0
+    monthFrameNum = 0
     dayFrameNum = 0
     firsttime = True
+    assignmentScreenList = [
+
+    ]
     assignmentDateIndex = {
 
     }
@@ -282,18 +297,28 @@ def createAssignment():
         assignmentDateIndex.update({year: sorted(set(yearMonthList))})
     for i in assignmentScreen.winfo_children():
         i.destroy()
-    #for year, month in assignmentDateIndex.items():
-    createAssignmentScreen(master=assignmentScreen, text='HEY', row=0)
-    assignmentScreen.grid(column=2, row=0, columnspan=8, rowspan=10)
+    assignmentScreen.grid(row=0, column=2, columnspan=8, rowspan=10, sticky='nsew')
+    assignmentScreen.lift()
+    for year, months in assignmentDateIndex.items():
+        monthFrameNum = 0
+        print("Year Frame NUM: " + str(yearFrameNum))
+        createAssignmentScreen(master=assignmentScreen, text=year)
+        yearFrameNum += 1
+        for month in months:
+            monthFrameNum += 1
+            createAssignments(master=assignmentScreenList[yearFrameNum-1], row=monthFrameNum, month=month)
+            if monthFrameNum % 5 == 0:
+                monthFrameNum = 0
+                createAssignmentScreen(master=assignmentScreen, text=year)
+                yearFrameNum += 1
 
 
-
+# Assignment Screen Configuration
 assignmentScreen = ttk.Frame(master=main, style='Card.TFrame')
 for i in range(0, 11):
     assignmentScreen.rowconfigure(i, weight=weight_factor)
     assignmentScreen.columnconfigure(i, weight=weight_factor)
 assignmentScreen.propagate(0)
-
 
 def getTime(assignment):
     with open('user_data.json', 'r') as sp:
@@ -633,11 +658,10 @@ def login():
         try:
             userpassword = userdata[index(username)]['Password']
             if userpassword == password:
-                global user
                 changeloginscreentext("Successfully logged in!")
                 login_menu.grid_forget()
+                global user
                 user = index(username)
-                updateClasses()
             else:
                 changeloginscreentext("Wrong password!")
         except:
@@ -707,7 +731,7 @@ textInput_homeScreen = ttk.Entry(master=mainScreen_homeScreen, width=30)
 HomeScreenIcon = tk.PhotoImage(file="R_optimized (1).png")
 appIcon_homescreen = ttk.Label(master=homescreen_menu, image=HomeScreenIcon, background='#333333')
 askAI_homescreen = ttk.Frame(master=main, height=100, width=10, style='Card.TFrame')
-askAI_homescreen.grid(row=2, column=0, sticky='NSEW', columnspan=2, rowspan=7, pady=2)
+askAI_homescreen.grid(row=3, column=0, sticky='NSEW', columnspan=2, rowspan=4, pady=2)
 askAIText_homeScreen = Text(master=askAI_homescreen, width=15, height=10, background="#2B2B2B", foreground='white')
 askAI_homescreen.propagate(False)
 for i in range(0, 3):
@@ -722,8 +746,12 @@ askAIButton = ttk.Button(master=askAI_homescreen, width=5, text='Ask AI!',
                          command=lambda: askchatGPT(askAIEntry.get(), askAIText_homeScreen))
 askAIButton.grid(row=2, column=1, stick='ew')
 appIcon_homescreen.grid(row=0, column=0)
-
-assignmentsButton_homeScreen.grid(column=0, row=2, pady=20, sticky='ns')
+settingsButton_homeScreen.grid(column=0, row=4, pady=20)
+homeButton_homeScreen.grid(column=0, row=1, pady=20)
+# profileButton_homeScreen.grid(column=0, row=5, pady=20)
+# calanderButton_homeScreen.grid(column=0, row=4, pady=20)
+classesButton_homeScreen.grid(column=0, row=3, pady=20)
+assignmentsButton_homeScreen.grid(column=0, row=2, pady=20)
 homescreen_menu.grid(column=0, row=0, sticky='nsew', columnspan=2, rowspan=5)
 homescreen_menu.grid_propagate(0)
 
