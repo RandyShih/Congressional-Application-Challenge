@@ -3,330 +3,183 @@
         "Username": "w",
         "Password": "w",
         "Assignments": {
-            "CSP Assignment 1": {
-                "TimeDue": "12:00 PM",
-                "DateDue": "November 10 2024",
-                "Description": "Project on cybersecurity risks",
-                "Class": "CSP"
-            },
-            "CSP Quiz 2": {
-                "TimeDue": "1:00 PM",
-                "DateDue": "November 18 2024",
-                "Description": "Quiz on computational thinking concepts",
-                "Class": "CSP"
-            },
-            "Communications Presentation": {
-                "TimeDue": "3:00 PM",
-                "DateDue": "November 5 2024",
-                "Description": "Deliver a speech on effective communication strategies",
-                "Class": "Communications"
-            },
-            "Computer Science Assignment 1": {
-                "TimeDue": "2:00 PM",
-                "DateDue": "October 25 2024",
-                "Description": "Programming assignment - sorting algorithms",
-                "Class": "Computer Science"
-            },
-            "Computer Science Final Test": {
-                "TimeDue": "9:00 AM",
-                "DateDue": "December 8 2024",
-                "Description": "Final test covering algorithms and data structures",
-                "Class": "Computer Science"
-            },
-            "Computer Science Quiz 2": {
-                "TimeDue": "1:00 PM",
-                "DateDue": "November 15 2024",
-                "Description": "Quiz on object-oriented programming concepts",
-                "Class": "Computer Science"
-            },
-            "ELA Essay 2": {
-                "TimeDue": "10:00 AM",
-                "DateDue": "November 5 2024",
-                "Description": "Essay on American Dream in 20th century literature",
-                "Class": "ELA"
-            },
-            "ELA Quiz 3": {
-                "TimeDue": "9:00 AM",
-                "DateDue": "November 15 2024",
-                "Description": "Quiz on literary devices and techniques",
-                "Class": "ELA"
-            },
-            "ELA Reading Assignment": {
-                "TimeDue": "8:00 AM",
-                "DateDue": "October 20 2024",
-                "Description": "Read and analyze 'The Great Gatsby'",
-                "Class": "ELA"
-            },
-            "English Assignment 3": {
-                "TimeDue": "4:00 PM",
-                "DateDue": "November 15 2024",
-                "Description": "Poetry Analysis - Robert Frost",
-                "Class": "English"
-            },
-            "English Essay 1": {
-                "TimeDue": "12:00 PM",
-                "DateDue": "October 20 2024",
-                "Description": "Essay on Shakespeare's influence on modern literature",
-                "Class": "English"
-            },
-            "English Quiz 2": {
-                "TimeDue": "10:00 AM",
-                "DateDue": "October 30 2024",
-                "Description": "Quiz on 'To Kill a Mockingbird' themes",
-                "Class": "English"
-            },
-            "Finance Assignment 2": {
-                "TimeDue": "4:00 PM",
-                "DateDue": "November 10 2024",
-                "Description": "Create a mock investment portfolio",
+            "Finance Assignment 1": {
+                "TimeDue": "02:00 PM",
+                "DateDue": "January 22 2025",
+                "Description": "Analyze the financial statements of a company",
                 "Class": "Finance"
-            },
-            "Finance Quiz 1": {
-                "TimeDue": "11:00 AM",
-                "DateDue": "October 25 2024",
-                "Description": "Quiz on personal finance and budgeting",
-                "Class": "Finance"
-            },
-            "Math Assignment 2": {
-                "TimeDue": "3:00 PM",
-                "DateDue": "November 10 2024",
-                "Description": "Geometry Homework - Pythagorean Theorem",
-                "Class": "Math"
-            },
-            "Math Final Test": {
-                "TimeDue": "8:00 AM",
-                "DateDue": "December 1 2024",
-                "Description": "Final test covering all course material",
-                "Class": "Math"
             },
             "Math Quiz 1": {
-                "TimeDue": "9:00 AM",
-                "DateDue": "November 5 2024",
-                "Description": "Algebra and Trigonometry Quiz",
+                "TimeDue": "08:00 AM",
+                "DateDue": "January 29 2026",
+                "Description": "Quiz on algebraic expressions and factoring",
                 "Class": "Math"
             },
-            "Science Final Project": {
-                "TimeDue": "3:00 PM",
-                "DateDue": "December 5 2024",
-                "Description": "Final project on climate change impact",
-                "Class": "Science"
+            "Communications Group Presentation": {
+                "TimeDue": "03:00 PM",
+                "DateDue": "February 20 2025",
+                "Description": "Group presentation on effective communication in business",
+                "Class": "Communications"
             },
-            "Science Lab Report": {
-                "TimeDue": "5:00 PM",
-                "DateDue": "October 28 2024",
-                "Description": "Lab report on chemical reactions experiment",
-                "Class": "Science"
-            },
-            "Science Quiz 1": {
-                "TimeDue": "11:00 AM",
-                "DateDue": "November 7 2024",
-                "Description": "Quiz on photosynthesis and cell respiration",
-                "Class": "Science"
-            },
-            "Spanish 2 Assignment 2": {
-                "TimeDue": "5:00 PM",
-                "DateDue": "October 28 2024",
-                "Description": "Write an essay in Spanish about your daily routine",
-                "Class": "Spanish 2"
-            },
-            "Spanish 2 Quiz 1": {
-                "TimeDue": "9:00 AM",
-                "DateDue": "October 20 2024",
-                "Description": "Quiz on irregular verb conjugations",
-                "Class": "Spanish 2"
-            },
-            "Spanish Final Test": {
-                "TimeDue": "8:00 AM",
-                "DateDue": "December 1 2024",
-                "Description": "Comprehensive exam on grammar and vocabulary",
+            "Spanish Homework 1": {
+                "TimeDue": "06:00 PM",
+                "DateDue": "February 25 2026",
+                "Description": "Translate a short passage using future tense",
                 "Class": "Spanish"
             },
-            "Spanish Homework 2": {
-                "TimeDue": "6:00 PM",
-                "DateDue": "October 27 2024",
-                "Description": "Translate a paragraph using past tense verbs",
-                "Class": "Spanish"
+            "Finance Midterm Test": {
+                "TimeDue": "09:00 AM",
+                "DateDue": "March 18 2026",
+                "Description": "Midterm covering personal finance concepts",
+                "Class": "Finance"
             },
-            "Spanish Quiz 1": {
+            "Math Assignment 3": {
+                "TimeDue": "04:00 PM",
+                "DateDue": "March 22 2025",
+                "Description": "Assignment on calculating derivatives",
+                "Class": "Math"
+            },
+            "Spanish Quiz 3": {
                 "TimeDue": "10:00 AM",
-                "DateDue": "October 22 2024",
-                "Description": "Vocabulary quiz on daily activities",
+                "DateDue": "April 22 2025",
+                "Description": "Quiz on conjugating irregular verbs",
                 "Class": "Spanish"
+            },
+            "Math Homework 4": {
+                "TimeDue": "06:00 PM",
+                "DateDue": "April 30 2026",
+                "Description": "Practice problems on logarithmic functions",
+                "Class": "Math"
+            },
+            "Finance Final Presentation": {
+                "TimeDue": "03:00 PM",
+                "DateDue": "May 20 2025",
+                "Description": "Present a mock investment strategy",
+                "Class": "Finance"
+            },
+            "Spanish Oral Presentation": {
+                "TimeDue": "02:00 PM",
+                "DateDue": "May 27 2026",
+                "Description": "Oral presentation on a historical figure from a Spanish-speaking country",
+                "Class": "Spanish"
+            },
+            "Math Final Exam": {
+                "TimeDue": "08:00 AM",
+                "DateDue": "June 10 2026",
+                "Description": "Final exam covering all calculus topics",
+                "Class": "Math"
+            },
+            "Spanish Homework 3": {
+                "TimeDue": "05:00 PM",
+                "DateDue": "June 15 2025",
+                "Description": "Write an essay using conditional tenses",
+                "Class": "Spanish"
+            },
+            "Finance Assignment 4": {
+                "TimeDue": "03:00 PM",
+                "DateDue": "July 15 2027",
+                "Description": "Analyze a stock market trend over 6 months",
+                "Class": "Finance"
+            },
+            "Spanish Homework 4": {
+                "TimeDue": "06:00 PM",
+                "DateDue": "July 20 2026",
+                "Description": "Translate a dialogue using the subjunctive mood",
+                "Class": "Spanish"
+            },
+            "Math Quiz 3": {
+                "TimeDue": "09:00 AM",
+                "DateDue": "August 18 2026",
+                "Description": "Quiz on solving complex integrals",
+                "Class": "Math"
+            },
+            "Spanish Quiz 2": {
+                "TimeDue": "11:00 AM",
+                "DateDue": "August 27 2025",
+                "Description": "Vocabulary quiz on food and dining",
+                "Class": "Spanish"
+            },
+            "Finance Quiz 2": {
+                "TimeDue": "01:00 PM",
+                "DateDue": "September 14 2027",
+                "Description": "Quiz on understanding interest rates",
+                "Class": "Finance"
+            },
+            "Math Homework 5": {
+                "TimeDue": "04:00 PM",
+                "DateDue": "September 21 2026",
+                "Description": "Homework on advanced trigonometric identities",
+                "Class": "Math"
+            },
+            "Math Quiz 2": {
+                "TimeDue": "09:00 AM",
+                "DateDue": "October 19 2026",
+                "Description": "Quiz on solving linear equations",
+                "Class": "Math"
+            },
+            "Spanish Oral Exam 1": {
+                "TimeDue": "02:00 PM",
+                "DateDue": "October 28 2025",
+                "Description": "Conversational exam on introducing yourself in Spanish",
+                "Class": "Spanish"
+            },
+            "Finance Case Study 3": {
+                "TimeDue": "03:30 PM",
+                "DateDue": "November 18 2027",
+                "Description": "Analyze a real-world investment scenario",
+                "Class": "Finance"
+            },
+            "Math Homework 3": {
+                "TimeDue": "05:00 PM",
+                "DateDue": "November 22 2026",
+                "Description": "Trigonometry problems on sine and cosine functions",
+                "Class": "Math"
+            },
+            "Communications Final Speech": {
+                "TimeDue": "10:00 AM",
+                "DateDue": "December 05 2027",
+                "Description": "Deliver a persuasive speech on a current issue",
+                "Class": "Communications"
+            },
+            "Spanish Final Oral Exam": {
+                "TimeDue": "02:00 PM",
+                "DateDue": "December 10 2025",
+                "Description": "Final oral exam covering advanced conversation topics",
+                "Class": "Spanish"
+            },
+            "Math Final Project": {
+                "TimeDue": "04:00 PM",
+                "DateDue": "December 15 2026",
+                "Description": "Complete a project on applying calculus to real-world problems",
+                "Class": "Math"
             }
         },
         "Period": [
             2,
-            5,
-            3,
             1,
-            6,
-            4,
-            7,
-            8,
             9,
-            10
+            10,
+            12,
+            15
         ],
         "Classes": [
             "Insert Class",
-            "English",
-            "Science",
             "Math",
-            "Computer Science",
-            "ELA",
             "Spanish",
-            "CSP",
-            "Spanish 2",
             "Communications",
-            "Finance"
+            "Finance",
+            "wdawdawd",
+            "Dog"
         ]
     },
     {
-        "Username": "Jake",
-        "Password": "Skateboard2024",
-        "Assignments": [
-            "Project due at 6",
-            "Lab work due at 7"
-        ],
-        "Period": [
-            3,
-            6
-        ],
+        "Username": "dwadawd",
+        "Password": "awdwadwad",
+        "Assignments": {},
+        "Period": [],
         "Classes": [
-            "Computer Science",
-            "Chemistry"
+            "Insert Class"
         ],
-        "DueDate": [
-            "20 April 2024",
-            "22 April 2024"
-        ],
-        "TimeDue": [
-            "6:00 PM",
-            "2:00 PM"
-        ]
-    },
-    {
-        "Username": "Emily",
-        "Password": "Dancer123",
-        "Assignments": [
-            "Presentation due at 5",
-            "Final Exam at 10"
-        ],
-        "Period": [
-            1,
-            7
-        ],
-        "Classes": [
-            "History",
-            "Math"
-        ],
-        "DueDate": [
-            "25 April 2024",
-            "30 April 2024"
-        ],
-        "TimeDue": [
-            "9:00 AM",
-            "10:30 AM"
-        ]
-    },
-    {
-        "Username": "Michael",
-        "Password": "BasketballPro21",
-        "Assignments": [
-            "Assignment due at 7",
-            "Test at 9"
-        ],
-        "Period": [
-            4,
-            8
-        ],
-        "Classes": [
-            "Geography",
-            "Physics"
-        ],
-        "DueDate": [
-            "18 April 2024",
-            "21 April 2024"
-        ],
-        "TimeDue": [
-            "11:00 AM",
-            "3:30 PM"
-        ]
-    },
-    {
-        "Username": "e",
-        "Password": "e",
-        "Assignments": [
-            "Art project due at 4",
-            "Speech due at 9"
-        ],
-        "Period": [
-            2,
-            5
-        ],
-        "Classes": [
-            "Art",
-            "English"
-        ],
-        "DueDate": [
-            "14 April 2024",
-            "19 April 2024"
-        ],
-        "TimeDue": [
-            "2:00 PM",
-            "9:30 AM"
-        ]
-    },
-    {
-        "Username": "heyeywadwa",
-        "Password": "wadwadwadwad",
-        "Assignments": [],
-        "Period": [],
-        "Classes": [],
-        "DueDate": [],
-        "TimeDue": []
-    },
-    {
-        "Username": "shawn",
-        "Password": "ilikecats",
-        "Assignments": [],
-        "Period": [],
-        "Classes": [],
-        "DueDate": [],
-        "TimeDue": []
-    },
-    {
-        "Username": "dwadwadwad",
-        "Password": "dwadwadwad",
-        "Assignments": [],
-        "Period": [],
-        "Classes": [],
-        "DueDate": [],
-        "TimeDue": []
-    },
-    {
-        "Username": "dwadwadwadww",
-        "Password": "dwadww",
-        "Assignments": [],
-        "Period": [],
-        "Classes": [],
-        "DueDate": [],
-        "TimeDue": []
-    },
-    {
-        "Username": "ohiowhoidwahiodhwaiodwa",
-        "Password": "awdawdwadwad",
-        "Assignments": [],
-        "Period": [],
-        "Classes": [],
-        "DueDate": [],
-        "TimeDue": []
-    },
-    {
-        "Username": "wadwadwad",
-        "Password": "wadwadwadwa",
-        "Assignments": [],
-        "Period": [],
-        "Classes": [],
         "DueDate": [],
         "TimeDue": []
     }
