@@ -215,37 +215,60 @@ class createAssignmentScreen:
         self.text = text
         self.frame = ttk.Frame(master=self.master, style="Card.TFrame")
         self.frame.grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
-        print('Frame created!')
+        print('Frame created for: ' + str(text))
         self.frame.grid_propagate(False)
         for i in range(0, 11):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
-        self.yearLabelFrame = LabelFrame(master=self.frame, text=self.text, background='#333333', foreground='white',
-                                         font=title_font, height=1, width=1, relief='sunken')
-        self.leftbutton = ttk.Button(master=self.frame, text='Left', width=100)
-        self.rightbutton = ttk.Button(master=self.frame, text='Right', width=100)
-        self.leftbutton.grid(column=0, row=11, rowspan=1, pady=10, padx=10)
-        self.rightbutton.grid(column=1, row=11, rowspan=1, pady=10, padx=10)
+        self.yearLabelFrame = LabelFrame(master=self.frame, text=self.text, background='#2B2B2B', foreground='white',
+                                         font=('Georgia', 20, 'bold'), height=1, width=1, relief='sunken', borderwidth=4)
+        self.yearLabelFrame.propagate(0)
+        self.leftbutton = ttk.Button(master=self.frame, text='Left', width=20, command=leftAssignments)
+        self.rightbutton = ttk.Button(master=self.frame, text='Right', width=20, command=rightAssignments)
+        self.leftbutton.grid(column=4, row=10, rowspan=1, pady=10, padx=10)
+        self.rightbutton.grid(column=7, row=10, rowspan=1, pady=10, padx=10)
         assignmentScreenList.append(self.yearLabelFrame)
-        for i in range(0, 6):
+        for i in range(0, 4):
             self.yearLabelFrame.rowconfigure(i, weight=weight_factor)
             self.yearLabelFrame.columnconfigure(i, weight=weight_factor)
-        self.yearLabelFrame.grid(row=0, column=0, columnspan=4, rowspan=5, sticky='nsew', pady=10)
+        self.yearLabelFrame.grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
+        self.addClassFrame = LabelFrame(master=self.frame, text='Add a Class!', background='#333333')
+        self.addClassFrame.grid(column=3, row=1, sticky='ew', columnspan=3, rowspan=4)
         if yearFrameNum != 0:
-            print(self.frame)
             self.frame.grid_forget()
-        print(assignmentScreenList)
-
+    def test(self):
+        self.frame.grid_forget()
 
 class createAssignments:
     def __init__(self, row, master, month):
         self.row = row
         self.master = master
-        self.month = month
-        self.frame = LabelFrame(master=self.master, text=self.month, font=title_font, height=100, background='#2B2B2B')
-        self.frame.grid(column=0, row=self.row, columnspan=2, rowspan=1, sticky='ew', padx=15, pady=20)
-        print('Assignment Created!')
+        self.month = "Month: " + monthFinder(month)
+        self.frame = LabelFrame(master=self.master, text=self.month, font=('Georgia', 12, 'bold'), height=100, background='#333333', foreground='white')
+        self.frame.grid(column=0, row=self.row, columnspan=4, rowspan=1, sticky='nsew', padx=15, pady=20)
 
+def rightAssignments():
+    global assignmentScreenList
+    global yearFrameNum
+    childrenCounter = 0
+    for children in assignmentScreenList:
+        childrenCounter += 1
+    if yearFrameNum <= childrenCounter and yearFrameNum != 0:
+        assignmentScreenList[-1::][yearFrameNum-1].grid_forget()
+        yearFrameNum -= 1
+        assignmentScreenList[-1::][yearFrameNum-1].grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
+
+
+def leftAssignments():
+    global assignmentScreenList
+    global yearFrameNum
+    childrenCounter = 0
+    for children in assignmentScreenList:
+        childrenCounter += 1
+    if yearFrameNum < childrenCounter and yearFrameNum != 0:
+        assignmentScreenList[-1::][yearFrameNum-1].grid_forget()
+        yearFrameNum += 1
+        assignmentScreenList[-1::][yearFrameNum-1].grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
 
 def createAssignment():
     global assignmentScreenList
@@ -253,7 +276,12 @@ def createAssignment():
     yearFrameNum = 0
     monthFrameNum = 0
     dayFrameNum = 0
+    monthindex = 0
+    stringResponse = ""
     firsttime = True
+    yearMonthList = [
+
+    ]
     assignmentScreenList = [
 
     ]
@@ -275,6 +303,12 @@ def createAssignment():
     sortedDayList = [
 
     ]
+    monthList = [
+
+    ]
+    monthYearDict = {
+
+    }
     counter = 0
     with open('user_data.json', 'r') as sp:
         userdata = json.load(sp)
@@ -286,6 +320,10 @@ def createAssignment():
         dayList.append(int(dayFinder(assignment)))
     for day in sorted(dayList):
         sortedDayList.append(day)
+    for assignment, key in assignments.items():
+        monthList.append(monthIndexer(key['DateDue']))
+    for assignment, key in assignments.items():
+        monthYearDict.update({monthIndexer(key['DateDue']): yearFinder(assignment)})
     for year in sorted(yearDate):
         yearMonthList = [
 
@@ -300,17 +338,25 @@ def createAssignment():
     assignmentScreen.grid(row=0, column=2, columnspan=8, rowspan=10, sticky='nsew')
     assignmentScreen.lift()
     for year, months in assignmentDateIndex.items():
+        monthIndex = 0
         monthFrameNum = 0
-        print("Year Frame NUM: " + str(yearFrameNum))
         createAssignmentScreen(master=assignmentScreen, text=year)
         yearFrameNum += 1
-        for month in months:
-            monthFrameNum += 1
-            createAssignments(master=assignmentScreenList[yearFrameNum-1], row=monthFrameNum, month=month)
-            if monthFrameNum % 5 == 0:
-                monthFrameNum = 0
-                createAssignmentScreen(master=assignmentScreen, text=year)
-                yearFrameNum += 1
+        print("New Year: " + '\n' + "    Year Frame NUM: " + str(yearFrameNum) + '\n' + "    monthList: " + str(monthList) + '\n' + "    yearDate: " + str(sorted(yearDate)))
+        for monthN in monthList:
+            monthIndex += 1
+            # print(str(months) + " " + str(monthN) + " " + str(sorted(yearDate)[monthIndex-1]) + " " + str(year))
+            if sorted(yearDate)[monthIndex-1] == year:
+                stringResponse += "    Assignment for month, year created: " + str(monthN) + ", " + str(year) + '\n'
+                createAssignments(row=monthFrameNum, master=assignmentScreenList[monthFrameNum-1], month=monthN)
+                monthFrameNum += 1
+                if monthFrameNum % 2 == 0:
+                    print(stringResponse)
+                    stringResponse = ""
+                    monthFrameNum = 0
+                    print("Assignment screen created for: " + "Year: " + str(year) + ", Month: " + str(monthN))
+                    createAssignmentScreen(master=assignmentScreen, text=year)
+                    yearFrameNum += 1
 
 
 # Assignment Screen Configuration
@@ -379,7 +425,33 @@ def monthIndexer(Date):
     else:
         return 14
 
-
+def monthFinder(Date):
+    if Date == 1:
+        return 'January'
+    elif Date == 2:
+        return 'February'
+    elif Date == 3:
+        return 'March'
+    elif Date == 4:
+        return 'April'
+    elif Date == 5:
+        return 'May'
+    elif Date == 6:
+        return 'June'
+    elif Date == 7:
+        return 'July'
+    elif Date == 8:
+        return 'August'
+    elif Date == 9:
+        return 'September'
+    elif Date == 10:
+        return 'October'
+    elif Date == 11:
+        return 'November'
+    elif Date == 12:
+        return 'December'
+    else:
+        return "No month found..."
 def addClass():
     global addClassWidgets
     print(addClassWidgets)
@@ -602,6 +674,7 @@ def changeclassesScreen():
 def updateClasses():
     global classFrameNum
     global addClassWidgets
+    classScreen.lift()
     classScreen.grid(column=2, row=0, columnspan=8, rowspan=10, sticky='nsew')
     classeserrormessage = ttk.Label(master=classScreen, text='Classes not found!', background='#333333',
                                     foreground='red', font=('Georgia', 20))

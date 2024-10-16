@@ -5,25 +5,25 @@
         "Assignments": {
             "Math Quiz 1": {
                 "TimeDue": "08:00 AM",
-                "DateDue": "January 29 2026",
+                "DateDue": "April 29 2026",
                 "Description": "Quiz on algebraic expressions and factoring",
                 "Class": "Math"
             },
             "Communications Group Presentation": {
                 "TimeDue": "03:00 PM",
-                "DateDue": "February 20 2025",
+                "DateDue": "April 20 2025",
                 "Description": "Group presentation on effective communication in business",
                 "Class": "Communications"
             },
             "Spanish Homework 1": {
                 "TimeDue": "06:00 PM",
-                "DateDue": "February 25 2026",
+                "DateDue": "April 25 2026",
                 "Description": "Translate a short passage using future tense",
                 "Class": "Spanish"
             },
             "Math Assignment 3": {
                 "TimeDue": "04:00 PM",
-                "DateDue": "March 22 2025",
+                "DateDue": "April 22 2025",
                 "Description": "Assignment on calculating derivatives",
                 "Class": "Math"
             },
@@ -47,7 +47,7 @@
             },
             "Math Final Exam": {
                 "TimeDue": "08:00 AM",
-                "DateDue": "June 10 2026",
+                "DateDue": "April 10 2026",
                 "Description": "Final exam covering all calculus topics",
                 "Class": "Math"
             },
@@ -65,7 +65,7 @@
             },
             "Math Quiz 3": {
                 "TimeDue": "09:00 AM",
-                "DateDue": "August 18 2026",
+                "DateDue": "April 18 2026",
                 "Description": "Quiz on solving complex integrals",
                 "Class": "Math"
             },
@@ -122,16 +122,14 @@
             2,
             1,
             9,
-            12,
-            15
+            12
         ],
         "Classes": [
             "Insert Class",
             "Math",
             "Spanish",
             "Communications",
-            "wdawdawd",
-            "Dog"
+            "wdawdawd"
         ]
     },
     {
