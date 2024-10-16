@@ -76,9 +76,6 @@ assignmentScreenList = [
 ]
 yearFrameNum = 0
 
-class createAssignments:
-    print('e')
-
 
 class createclass:
     def __init__(self, width, height, column, row, master, className):
@@ -215,7 +212,6 @@ class createAssignmentScreen:
         self.text = text
         self.frame = ttk.Frame(master=self.master, style="Card.TFrame")
         self.frame.grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
-        print('Frame created for: ' + str(text))
         self.frame.grid_propagate(False)
         for i in range(0, 11):
             self.frame.rowconfigure(i, weight=weight_factor)
@@ -234,10 +230,7 @@ class createAssignmentScreen:
         self.yearLabelFrame.grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
         self.addClassFrame = LabelFrame(master=self.frame, text='Add a Class!', background='#333333')
         self.addClassFrame.grid(column=3, row=1, sticky='ew', columnspan=3, rowspan=4)
-        if yearFrameNum != 0:
-            self.frame.grid_forget()
-    def test(self):
-        self.frame.grid_forget()
+
 
 class createAssignments:
     def __init__(self, row, master, month):
@@ -253,10 +246,12 @@ def rightAssignments():
     childrenCounter = 0
     for children in assignmentScreenList:
         childrenCounter += 1
+    print(str(childrenCounter) + str(yearFrameNum))
     if yearFrameNum <= childrenCounter and yearFrameNum != 0:
-        assignmentScreenList[-1::][yearFrameNum-1].grid_forget()
+        print(str(assignmentScreenList[::-1]))
+        assignmentScreenList[::-1][yearFrameNum-1].grid_forget()
         yearFrameNum -= 1
-        assignmentScreenList[-1::][yearFrameNum-1].grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
+        assignmentScreenList[::-1][yearFrameNum-1].grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
 
 
 def leftAssignments():
@@ -265,10 +260,11 @@ def leftAssignments():
     childrenCounter = 0
     for children in assignmentScreenList:
         childrenCounter += 1
-    if yearFrameNum < childrenCounter and yearFrameNum != 0:
-        assignmentScreenList[-1::][yearFrameNum-1].grid_forget()
+    print(str(childrenCounter) + str(yearFrameNum))
+    if yearFrameNum < childrenCounter:
+        assignmentScreenList[::-1][yearFrameNum-1].grid_forget()
         yearFrameNum += 1
-        assignmentScreenList[-1::][yearFrameNum-1].grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
+        assignmentScreenList[::-1][yearFrameNum-1].grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
 
 def createAssignment():
     global assignmentScreenList
@@ -347,16 +343,22 @@ def createAssignment():
             monthIndex += 1
             # print(str(months) + " " + str(monthN) + " " + str(sorted(yearDate)[monthIndex-1]) + " " + str(year))
             if sorted(yearDate)[monthIndex-1] == year:
-                stringResponse += "    Assignment for month, year created: " + str(monthN) + ", " + str(year) + '\n'
-                createAssignments(row=monthFrameNum, master=assignmentScreenList[monthFrameNum-1], month=monthN)
-                monthFrameNum += 1
                 if monthFrameNum % 2 == 0:
                     print(stringResponse)
                     stringResponse = ""
                     monthFrameNum = 0
                     print("Assignment screen created for: " + "Year: " + str(year) + ", Month: " + str(monthN))
                     createAssignmentScreen(master=assignmentScreen, text=year)
+                    # print("Assignment Screen List: " + str(assignmentScreenList))
                     yearFrameNum += 1
+                stringResponse += "    Assignment for month, year created: " + str(monthN) + ", " + str(year) + '\n'
+                #stringResponse += "    Month Frame: " + str(monthFrameNum) + ", Year Frame Num: " + str(yearFrameNum) + '\n'
+                #stringResponse += "    Assignment Screen List Index: " + str(assignmentScreenList[monthFrameNum-1]) + '\n'
+                #stringResponse += "    Assignment Screen List: " + str(assignmentScreenList) + '\n'
+                print(assignmentScreenList[yearFrameNum-1])
+                createAssignments(row=monthFrameNum, master=assignmentScreenList[yearFrameNum-1], month=monthN)
+                monthFrameNum += 1
+
 
 
 # Assignment Screen Configuration
