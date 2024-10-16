@@ -231,7 +231,6 @@ class createAssignmentScreen:
         self.addClassFrame = LabelFrame(master=self.frame, text='Add a Class!', background='#333333')
         self.addClassFrame.grid(column=3, row=1, sticky='ew', columnspan=3, rowspan=4)
 
-
 class createAssignments:
     def __init__(self, row, master, month):
         self.row = row
@@ -784,7 +783,9 @@ def signupscreengrid():
 
 
 # Test Code, Delete Later
-
+def devLog():
+    print('hey')
+openPanel = ttk.Button(master=main, width=10,
 #
 
 # Home Screen
