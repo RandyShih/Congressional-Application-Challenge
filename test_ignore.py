@@ -71,7 +71,10 @@ addClassWidgets = [
 
 ]
 comboBoxData = None
-assignmentScreenList = [
+assignmentList = [
+
+]
+assignmentScreenList =[
 
 ]
 yearFrameNum = 0
@@ -205,7 +208,7 @@ class createclassScreen:
 
 
 class createAssignmentScreen:
-    global assignmentScreenList
+    global assignmentList
     global yearFrameNum
     def __init__(self, master, text):
         self.master = master
@@ -223,13 +226,17 @@ class createAssignmentScreen:
         self.rightbutton = ttk.Button(master=self.frame, text='Right', width=20, command=rightAssignments)
         self.leftbutton.grid(column=4, row=10, rowspan=1, pady=10, padx=10)
         self.rightbutton.grid(column=7, row=10, rowspan=1, pady=10, padx=10)
-        assignmentScreenList.append(self.yearLabelFrame)
+        assignmentList.append(self.yearLabelFrame)
+        assignmentScreenList.append(self.frame)
         for i in range(0, 4):
             self.yearLabelFrame.rowconfigure(i, weight=weight_factor)
             self.yearLabelFrame.columnconfigure(i, weight=weight_factor)
         self.yearLabelFrame.grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
-        self.addClassFrame = LabelFrame(master=self.frame, text='Add a Class!', background='#333333')
-        self.addClassFrame.grid(column=3, row=1, sticky='ew', columnspan=3, rowspan=4)
+        self.addClassFrame = LabelFrame(master=self.frame, text='Add a Class!', background='#2B2B2B', foreground='white',
+                                         font=('Georgia', 20, 'bold'), height=1, width=1, relief='sunken', borderwidth=4)
+        self.addClassFrame.grid(column=5, row=1, sticky='nsew', columnspan=5, rowspan=8, pady=10, padx=10)
+        if yearFrameNum != 1:
+            self.frame.grid_forget()
 
 
 class createAssignments:
@@ -237,8 +244,8 @@ class createAssignments:
         self.row = row
         self.master = master
         self.month = "Month: " + monthFinder(month)
-        self.frame = LabelFrame(master=self.master, text=self.month, font=('Georgia', 12, 'bold'), height=100, background='#333333', foreground='white')
-        self.frame.grid(column=0, row=self.row, columnspan=4, rowspan=1, sticky='nsew', padx=15, pady=20)
+        self.frameAssignment = LabelFrame(master=self.master, text=self.month, font=('Georgia', 12, 'bold'), height=100, background='#333333', foreground='white')
+        self.frameAssignment.grid(column=0, row=self.row, columnspan=4, rowspan=1, sticky='nsew', padx=15, pady=20)
 
 def rightAssignments():
     global assignmentScreenList
@@ -249,9 +256,9 @@ def rightAssignments():
     print(str(childrenCounter) + str(yearFrameNum))
     if yearFrameNum <= childrenCounter and yearFrameNum != 0:
         print(str(assignmentScreenList[::-1]))
-        assignmentScreenList[::-1][yearFrameNum-1].grid_forget()
+        assignmentScreenList[::-1][yearFrameNum - 1].grid_forget()
         yearFrameNum -= 1
-        assignmentScreenList[::-1][yearFrameNum-1].grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
+        assignmentScreenList[::-1][yearFrameNum - 1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
 
 
 def leftAssignments():
@@ -262,23 +269,23 @@ def leftAssignments():
         childrenCounter += 1
     print(str(childrenCounter) + str(yearFrameNum))
     if yearFrameNum < childrenCounter:
-        assignmentScreenList[::-1][yearFrameNum-1].grid_forget()
+        assignmentScreenList[::-1][yearFrameNum - 1].grid_forget()
         yearFrameNum += 1
-        assignmentScreenList[::-1][yearFrameNum-1].grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
+        assignmentScreenList[::-1][yearFrameNum - 1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
 
 def createAssignment():
-    global assignmentScreenList
+    global assignmentList
     global yearFrameNum
     yearFrameNum = 0
     monthFrameNum = 0
     dayFrameNum = 0
     monthindex = 0
     stringResponse = ""
-    firsttime = True
+    initialize = True
     yearMonthList = [
 
     ]
-    assignmentScreenList = [
+    assignmentList = [
 
     ]
     assignmentDateIndex = {
@@ -305,6 +312,8 @@ def createAssignment():
     monthYearDict = {
 
     }
+    for i in assignmentScreen.winfo_children():
+        i.destroy()
     counter = 0
     with open('user_data.json', 'r') as sp:
         userdata = json.load(sp)
@@ -329,15 +338,16 @@ def createAssignment():
                 if int(year) == int(yearM):
                     yearMonthList.append(month)
         assignmentDateIndex.update({year: sorted(set(yearMonthList))})
-    for i in assignmentScreen.winfo_children():
-        i.destroy()
+
     assignmentScreen.grid(row=0, column=2, columnspan=8, rowspan=10, sticky='nsew')
     assignmentScreen.lift()
     for year, months in assignmentDateIndex.items():
         monthIndex = 0
         monthFrameNum = 0
-        createAssignmentScreen(master=assignmentScreen, text=year)
-        yearFrameNum += 1
+        if initialize == True:
+            createAssignmentScreen(master=assignmentScreen, text=year)
+            yearFrameNum += 1
+            initialize = False
         print("New Year: " + '\n' + "    Year Frame NUM: " + str(yearFrameNum) + '\n' + "    monthList: " + str(monthList) + '\n' + "    yearDate: " + str(sorted(yearDate)))
         for monthN in monthList:
             monthIndex += 1
@@ -355,8 +365,8 @@ def createAssignment():
                 #stringResponse += "    Month Frame: " + str(monthFrameNum) + ", Year Frame Num: " + str(yearFrameNum) + '\n'
                 #stringResponse += "    Assignment Screen List Index: " + str(assignmentScreenList[monthFrameNum-1]) + '\n'
                 #stringResponse += "    Assignment Screen List: " + str(assignmentScreenList) + '\n'
-                print(assignmentScreenList[yearFrameNum-1])
-                createAssignments(row=monthFrameNum, master=assignmentScreenList[yearFrameNum-1], month=monthN)
+                print(assignmentList[yearFrameNum - 1])
+                createAssignments(row=monthFrameNum, master=assignmentList[yearFrameNum - 1], month=monthN)
                 monthFrameNum += 1
 
 
