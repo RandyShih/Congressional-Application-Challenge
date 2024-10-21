@@ -10,6 +10,7 @@ increase_value = 0
 classesScreenValue = 1
 classFrameNum = 0
 weight_factor = 1
+assignmentCounter = 0
 AIConfigure = True
 
 try:
@@ -100,7 +101,7 @@ class createclass:
                                           style='Accent.TButton')
             self.classbutton.place(relx=.98, rely=.90, anchor='se')
             self.text = Text(master=self.frame, width=60, height=4, background="#2B2B2B", foreground="white",
-                             relief="flat", font=title_font)
+                             relief="flat", font=title_font, wrap=WORD)
             self.text.place(relx=.45, rely=.9, anchor='s')
             self.text.propagate(0)
             self.scrollbar = ttk.Scrollbar(self.text, orient="vertical", command=self.text.yview)
@@ -198,8 +199,8 @@ class createclassScreen:
         for i in range(0, 5):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
-            self.leftbutton.grid(column=2, row=5, sticky='s', pady=20)
-        self.rightbutton.grid(column=3, row=5, sticky='s', pady=20)
+        self.leftbutton.grid(column=2, row=4)
+        self.rightbutton.grid(column=3, row=4)
         classFrameNum += 1
         print(classFrameNum)
         if classFrameNum != 1:
@@ -217,54 +218,66 @@ class createAssignmentScreen:
         self.frame = ttk.Frame(master=self.master, style="Card.TFrame")
         self.frame.grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
         self.frame.grid_propagate(False)
-        for i in range(0, 11):
+        print('\n' + "Assignment Screen Created for: " + str(text) + '\n' + "     Frame: " + str(self.frame) + '\n' + "     Year Frame Num: " + str(yearFrameNum))
+        for i in range(0, 10):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
         self.yearLabelFrame = LabelFrame(master=self.frame, text=self.text, background='#2B2B2B', foreground='white',
                                          font=('Georgia', 20, 'bold'), height=1, width=1, relief='sunken',
                                          borderwidth=4)
         self.yearLabelFrame.grid_propagate(False)
-        self.leftbutton = ttk.Button(master=self.frame, text='Left', width=20, command=leftAssignments)
-        self.rightbutton = ttk.Button(master=self.frame, text='Right', width=20, command=rightAssignments)
-        self.leftbutton.grid(column=4, row=10, rowspan=1, pady=10, padx=10)
-        self.rightbutton.grid(column=7, row=10, rowspan=1, pady=10, padx=10)
+        self.leftbutton = ttk.Button(master=self.frame, text='Left', width=40, command=leftAssignments, style='Accent.TButton')
+        self.rightbutton = ttk.Button(master=self.frame, text='Right', width=40, command=rightAssignments, style='Accent.TButton')
+        self.leftbutton.grid(column=3, row=10, rowspan=1, pady=20, padx=10)
+        self.rightbutton.grid(column=6, row=10, rowspan=1, pady=20, padx=10)
         assignmentList.append(self.yearLabelFrame)
         assignmentScreenList.append(self.frame)
-        for i in range(0, 4):
+        for i in range(0, 8):
             self.yearLabelFrame.rowconfigure(i, weight=weight_factor)
             self.yearLabelFrame.columnconfigure(i, weight=weight_factor)
-        self.yearLabelFrame.grid(row=1, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
-        self.addClassFrame = LabelFrame(master=self.frame, text='Add a Class!', background='#2B2B2B',
-                                        foreground='white',
-                                        font=('Georgia', 20, 'bold'), height=1, width=1, relief='sunken', borderwidth=4)
-        self.addClassFrame.grid(column=5, row=1, sticky='nsew', columnspan=5, rowspan=8, pady=10, padx=10)
+        self.yearLabelFrame.grid(row=2, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
+        self.addAssignmentFrame = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
+        self.addAssignmentFrame.grid(column=5, row=2, sticky='nsew', columnspan=4, rowspan=8, pady=10, padx=10)
+        self.addExtraCurricularActivity = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
+        self.addExtraCurricularActivity.grid(column=1, row=0, sticky='nsew', rowspan=2, columnspan=8, padx=10, pady=20)
         if yearFrameNum != 1:
             self.frame.grid_forget()
 
 
 class createAssignments:
     def __init__(self, row, master, month, rowspan):
+
         self.row = row
         self.master = master
+        self.rowspan = rowspan
         self.month = str(month) + ", Month: " + monthFinder(month)
+        if self.rowspan == 8:
+            self.assignmentLabel = ttk.Label()
+            print('     Elongated Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(master))
+        elif self.rowspan == 4:
+            print('     Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(master))
+        else:
+            print('Class createAssignment Error!')
         self.frameAssignment = LabelFrame(master=self.master, text=self.month, font=('Georgia', 12, 'bold'), height=100,
                                           background='#333333', foreground='white')
-        self.frameAssignment.grid(column=0, row=self.row, columnspan=4, rowspan=rowspan, sticky='nsew', padx=15,
+        self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew', padx=15,
                                   pady=20)
+
 
 
 def rightAssignments():
     global assignmentScreenList
     global yearFrameNum
+    global assignmentCounter
+    print("Assignment Counter: " + str(assignmentCounter))
     childrenCounter = 0
     for children in assignmentScreenList:
         childrenCounter += 1
-    print(str(childrenCounter) + str(yearFrameNum))
-    if yearFrameNum <= childrenCounter and yearFrameNum != 0:
-        print(str(assignmentScreenList[::-1]))
-        assignmentScreenList[::-1][yearFrameNum - 1].grid_forget()
+    if yearFrameNum <= childrenCounter and yearFrameNum != 1:
+        assignmentScreenList[::-1][yearFrameNum-1].grid_forget()
         yearFrameNum -= 1
-        assignmentScreenList[::-1][yearFrameNum - 1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
+        assignmentScreenList[::-1][yearFrameNum-1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
+        print(assignmentScreenList[::-1][yearFrameNum - 1])
 
 
 def leftAssignments():
@@ -273,23 +286,24 @@ def leftAssignments():
     childrenCounter = 0
     for children in assignmentScreenList:
         childrenCounter += 1
-    print(str(childrenCounter) + str(yearFrameNum))
     if yearFrameNum < childrenCounter:
-        assignmentScreenList[::-1][yearFrameNum - 1].grid_forget()
+        assignmentScreenList[::-1][yearFrameNum-1].grid_forget()
         yearFrameNum += 1
-        assignmentScreenList[::-1][yearFrameNum - 1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
+        assignmentScreenList[::-1][yearFrameNum-1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
 
 
 def createAssignment():
     global assignmentList
     global yearFrameNum
+    global assignmentCounter
     yearFrameNum = 0
     monthFrameNum = 0
     dayFrameNum = 0
     monthindex = 0
     amtMonthCreated = 0
     monthSPECIFICCounter = 0
-    monthInitializeEnlongate = 0
+    monthInitializeEnlongate = 0.0
+    assignmentCounter = 0
     stringResponse = ""
     initialize = True
     yearMonthList = [
@@ -359,55 +373,62 @@ def createAssignment():
         dateMarker = [
 
         ]
-        print("Assignment Date Index: " + str(assignmentDateIndex))
+        ##print("Assignment Date Index: " + str(assignmentDateIndex))
         monthIndex = 0
         monthFrameNum = 0
-        if initialize == True:
-            createAssignmentScreen(master=assignmentScreen, text=year)
-            yearFrameNum += 1
-            initialize = False
         print("New Year: " + '\n' + "    Year Frame NUM: " + str(yearFrameNum) + '\n' + "    monthList: " + str(
-            monthList) + '\n' + "    yearDate: " + str(sorted(yearDate)) + '\n' + 'Year: ' + str(year))
+            monthList) + '\n' + "    yearDate: " + str(sorted(yearDate)) + '\n' + '     assignmentDateIndex: ' + str(assignmentDateIndex))
         for monthN in months:
-            if monthInitializeEnlongate > 0:
-                monthInitializeEnlongate -= 1
+            if monthInitializeEnlongate > 0.0:
+                print("Skipped: " + str(monthN))
+                monthInitializeEnlongate -= 0.5
                 continue
+            print("MonthN: " + str(monthN))
             monthIndex += 1
             if monthN not in dateMarker and monthFrameNum == 0 and monthSPECIFICCounter == 0:
                 for monthsE in months:
                     if monthsE == monthN:
                         dateMarker.append(monthN)
                         monthSPECIFICCounter += 1
+                        print(months)
                         if monthSPECIFICCounter % 2 == 0:
                             monthSPECIFICCounter -= 2
-                            monthInitializeEnlongate += 1
-                            print("Elongate initialized! " + "Value: " + str(monthInitializeEnlongate))
+                            monthInitializeEnlongate += 1.0
+                            print('\n' + "Elongate initialized! " + "Value: " + str(monthInitializeEnlongate))
             if monthInitializeEnlongate > 0:
-                for amtNum in range(0, monthInitializeEnlongate):
+                for amtNum in range(0, int(monthInitializeEnlongate)):
+                    yearFrameNum += 1
                     createAssignmentScreen(master=assignmentScreen, text=year)
                     createAssignments(row=monthFrameNum, master=assignmentList[yearFrameNum - 1], month=monthN,
-                                      rowspan=3)
-                    print("    Assignment screen created for: " + "Year: " + str(year) + ", Month: " + str(monthN))
-                    print("    Elongated Assignment for month, year created: " + str(monthN) + ", " + str(year) + '\n')
-                    yearFrameNum += 1
+                                      rowspan=8)
+                    assignmentCounter += 2
+                    ##print("    Assignment screen created for: " + "Year: " + str(year) + ", Month: " + str(monthN))
+                    ##print("    Elongated Assignment for month, year created: " + str(monthN) + ", " + str(year) + '\n')
+                monthInitializeEnlongate -= 0.5
             else:
                 if monthSPECIFICCounter == 1:
                     monthSPECIFICCounter -= 1
-                monthFrameNum += 1
                 if monthFrameNum % 2 == 0:
-                    print(stringResponse)
+                    ##print(stringResponse)
                     stringResponse = ""
                     monthFrameNum = 0
-                    print("Assignment screen created for: " + "Year: " + str(year) + ", Month: " + str(
-                        monthN) + ", monthSPECIFICCounter: " + str(monthSPECIFICCounter))
+                    ##print("Assignment screen created for: " + "Year: " + str(year) + ", Month: " + str(
+                        ##monthN) + ", monthSPECIFICCounter: " + str(monthSPECIFICCounter))
+                    yearFrameNum += 1
                     createAssignmentScreen(master=assignmentScreen, text=year)
                     # print("Assignment Screen List: " + str(assignmentScreenList))
-                    yearFrameNum += 1
+                monthFrameNum += 1
+                if monthFrameNum == 1:
+                    createAssignments(row=0, master=assignmentList[yearFrameNum - 1], month=monthN, rowspan=4)
+                    assignmentCounter += 1
+                else:
+                    createAssignments(row=4, master=assignmentList[yearFrameNum - 1], month=monthN, rowspan=4)
+                    assignmentCounter += 1
                 #stringResponse += "    Assignment for month, year created: " + str(monthN) + ", " + str(year) + '\n'
                 #stringResponse += "    Month Frame: " + str(monthFrameNum) + ", Year Frame Num: " + str(yearFrameNum) + '\n'
                 #stringResponse += "    Assignment Screen List Index: " + str(assignmentScreenList[monthFrameNum-1]) + '\n'
                 #stringResponse += "    Assignment Screen List: " + str(assignmentScreenList) + '\n'
-                createAssignments(row=monthFrameNum, master=assignmentList[yearFrameNum - 1], month=monthN, rowspan=1)
+
 
 
 # Assignment Screen Configuration
@@ -509,40 +530,42 @@ def monthFinder(Date):
 
 def addClass():
     global addClassWidgets
-    print(addClassWidgets)
     className = addClassWidgets[0].get()
     classPeriod = addClassWidgets[1].get()
     errorLabel = addClassWidgets[2]
     intNum = False
-    with open('user_data.json', 'r+') as sp:
-        userdata = json.load(sp)
-        if className in userdata[user]['Classes']:
-            errorLabel['text'] = 'Class already exists!'
-            return
-        if int(classPeriod) in userdata[user]['Period']:
-            errorLabel['text'] = 'Period already exists!'
-            return
-        if len(className) < 15 and len(className) > 2:
-            userdata[user]['Classes'].append(className)
-        else:
-            errorLabel['text'] = 'Invalid class name!'
-            return
-        try:
-            int(classPeriod)
-            intNum = True
-        except:
-            intNum = False
-        if len(classPeriod) < 3 and intNum:
-            userdata[user]['Period'].append(int(classPeriod))
-        else:
-            errorLabel['text'] = 'Invalid period!'
-            return
-        sp.seek(0)
-        sp.truncate()
-        json.dump(userdata, sp, indent=4)
-        errorLabel['text'] = 'Class added!'
-        sp.close()
-    updateClasses()
+    try:
+        with open('user_data.json', 'r+') as sp:
+            userdata = json.load(sp)
+            if className in userdata[user]['Classes']:
+                errorLabel['text'] = 'Class already exists!'
+                return
+            if int(classPeriod) in userdata[user]['Period']:
+                errorLabel['text'] = 'Period already exists!'
+                return
+            if len(className) < 15 and len(className) > 2:
+                userdata[user]['Classes'].append(className)
+            else:
+                errorLabel['text'] = 'Invalid class name!'
+                return
+            try:
+                int(classPeriod)
+                intNum = True
+            except:
+                intNum = False
+            if len(classPeriod) < 3 and intNum:
+                userdata[user]['Period'].append(int(classPeriod))
+            else:
+                errorLabel['text'] = 'Invalid period!'
+                return
+            sp.seek(0)
+            sp.truncate()
+            json.dump(userdata, sp, indent=4)
+            errorLabel['text'] = 'Class added!'
+            sp.close()
+        updateClasses()
+    except:
+        print("Add class error!")
 
 
 def removeClass():
@@ -589,10 +612,21 @@ def classesrightchange():
         classesScreenDict[indexValue].grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
 
 
-def loading():
-    progressionBar.step(0)
-    loadingscreen.grid(column=0, row=0, columnspan=10, rowspan=10, sticky='nsew')
-    progressionBar.place(rely=.5, relx=.5, anchor=CENTER)
+def loading(step):
+    global loadingscreen
+    global progressionBar
+    if step != 100:
+        time.sleep(0.2)
+        progressionBar.step(step)
+        loadingscreen.grid(column=0, row=0, columnspan=10, rowspan=10, sticky='nsew')
+        loadingscreen.lift()
+        loadingscreen.update()
+    else:
+        time.sleep(1)
+        progressionBar.step(100)
+        loadingscreen.lift()
+        loadingscreen.grid_forget()
+        progressionBar.step(0)
 
 
 def loadingcomplete():
@@ -730,6 +764,7 @@ def updateClasses():
     global classFrameNum
     global addClassWidgets
     classScreen.lift()
+    loading(0)
     classScreen.grid(column=2, row=0, columnspan=8, rowspan=10, sticky='nsew')
     classeserrormessage = ttk.Label(master=classScreen, text='Classes not found!', background='#333333',
                                     foreground='red', font=('Georgia', 20))
@@ -743,6 +778,7 @@ def updateClasses():
             classeserrormessage.grid_forget()
         except:
             print('Classes error message not found!')
+    loading(33)
     firsttime = True
     global classesScreenDict
     classesScreenDict = {}
@@ -751,6 +787,7 @@ def updateClasses():
     addClassWidgets = [
 
     ]
+    loading(66)
     for destroyclasses in classScreen.winfo_children():
         destroyclasses.destroy()
     classNUM = 0
@@ -764,14 +801,18 @@ def updateClasses():
         classNUM += 1
         createclass(row=classNUM - 1, column=1, width=1, height=20, master=classesScreenDict[classFrameNum],
                     className=classes)
+    loading(100)
 
 
 def askchatGPT(text, textbox):
-    response = Model.generate_content(text)
-    textbox.configure(state='normal')
-    textbox.delete('1.0', END)
-    textbox.insert('1.0', response.text)
-    textbox.configure(state='disabled')
+    try:
+        response = Model.generate_content(text)
+        textbox.configure(state='normal')
+        textbox.delete('1.0', END)
+        textbox.insert('1.0', response.text)
+        textbox.configure(state='disabled')
+    except:
+        print('Content is empty!')
 
 
 def changeloginscreentext(message):
@@ -804,13 +845,12 @@ def getChatGPTInput(text, textbox):
 
 
 def returnloginscreen():
-    loading()
-    progressionBar.step(50)
+    loading(0)
     main.update_idletasks()
     login_menu.grid(column=0, row=0, sticky='NSEW', columnspan=10, rowspan=10)
+    loading(50)
     signupscreen.grid_forget()
-    progressionBar.step(100)
-    loadingcomplete()
+    loading(100)
 
 
 def findclassperiod(classtype):
@@ -824,12 +864,9 @@ def findclassperiod(classtype):
 
 
 def changescreen_signupscreen():
-    loading()
-    progressionBar.step(50)
-    main.update_idletasks()
+    loading(50)
     signupscreengrid()
-    progressionBar.step(100)
-    loadingcomplete()
+    loading(100)
 
 
 def signupscreengrid():
@@ -841,7 +878,7 @@ def signupscreengrid():
 #
 
 # Home Screen
-homescreen_menu = ttk.Frame(main, padding=20, style='Card.TFrame', borderwidth=20, height=2222)
+homescreen_menu = ttk.Frame(main, padding=20, style='Card.TFrame', borderwidth=20, height=200)
 homeButton_homeScreen = ttk.Button(homescreen_menu, text='Home', style='Accent.TButton', width=40)
 assignmentsButton_homeScreen = ttk.Button(homescreen_menu, text='Assignments', style='Accent.TButton', width=40,
                                           command=createAssignment)
@@ -856,32 +893,34 @@ ignore_text = Text(master=mainScreen_homeScreen, width=50, height=20, borderwidt
                    font=font_test, state='disabled')
 textInput_homeScreen = ttk.Entry(master=mainScreen_homeScreen, width=30)
 
-HomeScreenIcon = tk.PhotoImage(file="R_optimized (1).png")
+HomeScreenIcon = tk.PhotoImage(file="smallerAppIcon.png")
 appIcon_homescreen = ttk.Label(master=homescreen_menu, image=HomeScreenIcon, background='#333333')
-askAI_homescreen = ttk.Frame(master=main, height=100, width=10, style='Card.TFrame')
-askAI_homescreen.grid(row=3, column=0, sticky='NSEW', columnspan=2, rowspan=4, pady=2)
-askAIText_homeScreen = Text(master=askAI_homescreen, width=15, height=10, background="#2B2B2B", foreground='white')
+askAI_homescreen = ttk.Frame(master=main, height=10, width=20, style='Card.TFrame')
+askAI_homescreen.grid(row=6, column=0, sticky='NSEW', columnspan=2, rowspan=4)
+askAIText_homeScreen = Text(master=askAI_homescreen, width=15, height=10, background="#2B2B2B", foreground='white', wrap=WORD)
 askAI_homescreen.propagate(False)
-for i in range(0, 3):
+for i in range(0, 6):
     print(i)
     askAI_homescreen.rowconfigure(i, weight=weight_factor)
     askAI_homescreen.columnconfigure(i, weight=weight_factor)
-askAIText_homeScreen.grid(row=0, column=1, sticky='nsew', pady=10)
+askAILabel = ttk.Label(master=askAI_homescreen, text='                      Ask an AI!', background='#2B2B2B', font=('Georgia', 10, 'bold'), justify="center", foreground='white')
+askAILabel.grid(row=1, column=2, columnspan=2, sticky='nsew')
+askAIText_homeScreen.grid(row=2, column=1, sticky='nsew', pady=10, columnspan=4)
 askAIEntry = ttk.Entry(master=askAI_homescreen, width=20, foreground='white')
-askAIEntry.grid(row=1, column=1)
+askAIEntry.grid(row=3, column=1, columnspan=4)
 askAIText_homeScreen.configure(state='disabled')
 askAIButton = ttk.Button(master=askAI_homescreen, width=5, text='Ask AI!',
-                         command=lambda: askchatGPT(askAIEntry.get(), askAIText_homeScreen))
-askAIButton.grid(row=2, column=1, stick='ew')
+                         command=lambda: askchatGPT(askAIEntry.get(), askAIText_homeScreen), style='Accent.TButton')
+askAIButton.grid(row=4, column=1, stick='ew', pady=5, columnspan=4)
 appIcon_homescreen.grid(row=0, column=0)
-settingsButton_homeScreen.grid(column=0, row=4, pady=20)
-homeButton_homeScreen.grid(column=0, row=1, pady=20)
+settingsButton_homeScreen.grid(column=0, row=4, pady=15)
+homeButton_homeScreen.grid(column=0, row=1, pady=15)
 # profileButton_homeScreen.grid(column=0, row=5, pady=20)
 # calanderButton_homeScreen.grid(column=0, row=4, pady=20)
-classesButton_homeScreen.grid(column=0, row=3, pady=20)
-assignmentsButton_homeScreen.grid(column=0, row=2, pady=20)
-homescreen_menu.grid(column=0, row=0, sticky='nsew', columnspan=2, rowspan=5)
-homescreen_menu.grid_propagate(0)
+classesButton_homeScreen.grid(column=0, row=3, pady=15)
+assignmentsButton_homeScreen.grid(column=0, row=2, pady=15)
+homescreen_menu.grid(column=0, row=0, sticky='nsew', columnspan=2, rowspan=6)
+homescreen_menu.grid_propagate(False)
 
 
 def disableAICall():
@@ -894,11 +933,6 @@ def disableAICall():
 
 if not AIConfigure:
     disableAICall()
-
-# Loading Screen
-loadingscreen = ttk.Frame(master=main, style='Card.TFrame')
-progressionBar = ttk.Progressbar(master=loadingscreen, orient="horizontal", length=600)
-loadingscreen.lift()
 
 # Main Screen Grid configuration
 mainScreen_homeScreen.grid_propagate(0)
@@ -927,7 +961,7 @@ for i in range(0, 50):
     signupscreen.rowconfigure(i, weight=weight_factor)
     signupscreen.columnconfigure(i, weight=weight_factor)
 signupscreen.columnconfigure(25, weight=5)
-image = tk.PhotoImage(file="R.png", master=login_menu)
+image = tk.PhotoImage(file="appIcon.png", master=login_menu)
 
 # Login Screen Widgets
 passwordentry_loginmenu = ttk.Entry(login_menu, width=25, foreground='white', font=('Georgia', 8))
@@ -980,4 +1014,11 @@ for i in range(0, 6):
     classScreen.columnconfigure(i, weight=weight_factor)
     classScreen.rowconfigure(i, weight=weight_factor)
 classScreen.grid_propagate(0)
+# Loading Screen
+loadingscreen = ttk.Frame(master=main, style='Card.TFrame')
+progressionBar = ttk.Progressbar(master=loadingscreen, orient="horizontal", length=600)
+progressionBar.place(rely=.6, relx=.5, anchor=CENTER)
+appIconLoading = ttk.Label(master=loadingscreen, image=image, background='#333333')
+appIconLoading.place(rely=.4, relx=.5, anchor=CENTER)
+
 main.mainloop()

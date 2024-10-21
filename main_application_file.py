@@ -149,7 +149,7 @@ errorlogin_loginmenu = Label(login_menu, width=50, text='Please enter your usern
 errorlogin_loginmenu.grid(column=25, row=21)
 signupbutton_loginmenu = ttk.Button(login_menu, text='Sign up', style='Accent.TButton', width=40, command=changescreen_signupscreen)
 signupbutton_loginmenu.grid(column=25, row=23)
-image = tk.PhotoImage(file="R.png", master=login_menu)
+image = tk.PhotoImage(file="appIcon.png", master=login_menu)
 label_login = ttk.Label(master=login_menu, image=image, background='#333333')
 label_login.grid(column=25, row=18)
 # Sign Up Screen Widgets
