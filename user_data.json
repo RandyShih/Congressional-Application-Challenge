@@ -7,115 +7,127 @@
                 "TimeDue": "08:00 AM",
                 "DateDue": "April 29 2026",
                 "Description": "Quiz on algebraic expressions and factoring",
-                "Class": "Math"
+                "Class": "Math",
+                "Complete": "True"
             },
             "Communications Group Presentation": {
                 "TimeDue": "03:00 PM",
                 "DateDue": "April 20 2025",
                 "Description": "Group presentation on effective communication in business",
-                "Class": "Communications"
+                "Class": "Communications",
+                "Complete": "True"
             },
             "Spanish Homework 1": {
                 "TimeDue": "06:00 PM",
                 "DateDue": "April 25 2026",
                 "Description": "Translate a short passage using future tense",
-                "Class": "Spanish"
+                "Class": "Spanish",
+                "Complete": "True"
             },
             "Math Assignment 3": {
                 "TimeDue": "04:00 PM",
                 "DateDue": "April 22 2025",
                 "Description": "Assignment on calculating derivatives",
-                "Class": "Math"
+                "Class": "Math",
+                "Complete": "True"
             },
             "Spanish Quiz 3": {
                 "TimeDue": "10:00 AM",
                 "DateDue": "April 22 2025",
                 "Description": "Quiz on conjugating irregular verbs",
-                "Class": "Spanish"
+                "Class": "Spanish",
+                "Complete": "True"
             },
             "Math Homework 4": {
                 "TimeDue": "06:00 PM",
                 "DateDue": "April 30 2026",
                 "Description": "Practice problems on logarithmic functions",
-                "Class": "Math"
+                "Class": "Math",
+                "Complete": "True"
             },
             "Spanish Oral Presentation": {
                 "TimeDue": "02:00 PM",
                 "DateDue": "May 27 2026",
                 "Description": "Oral presentation on a historical figure from a Spanish-speaking country",
-                "Class": "Spanish"
+                "Class": "Spanish",
+                "Complete": "True"
             },
             "Math Final Exam": {
                 "TimeDue": "08:00 AM",
                 "DateDue": "April 10 2026",
                 "Description": "Final exam covering all calculus topics",
-                "Class": "Math"
+                "Class": "Math",
+                "Complete": "False"
             },
             "Spanish Homework 3": {
                 "TimeDue": "05:00 PM",
                 "DateDue": "June 15 2025",
                 "Description": "Write an essay using conditional tenses",
-                "Class": "Spanish"
+                "Class": "Spanish",
+                "Complete": "True"
             },
             "Spanish Homework 4": {
                 "TimeDue": "06:00 PM",
                 "DateDue": "July 20 2026",
                 "Description": "Translate a dialogue using the subjunctive mood",
-                "Class": "Spanish"
+                "Class": "Spanish",
+                "Complete": "False"
             },
             "Math Quiz 3": {
                 "TimeDue": "09:00 AM",
                 "DateDue": "April 18 2026",
                 "Description": "Quiz on solving complex integrals",
-                "Class": "Math"
+                "Class": "Math",
+                "Complete": "True"
             },
             "Spanish Quiz 2": {
                 "TimeDue": "11:00 AM",
                 "DateDue": "August 27 2025",
                 "Description": "Vocabulary quiz on food and dining",
-                "Class": "Spanish"
+                "Class": "Spanish",
+                "Complete": "False"
             },
             "Math Homework 5": {
                 "TimeDue": "04:00 PM",
                 "DateDue": "September 21 2026",
                 "Description": "Homework on advanced trigonometric identities",
-                "Class": "Math"
+                "Class": "Math",
+                "Complete": "False"
             },
             "Math Quiz 2": {
                 "TimeDue": "09:00 AM",
                 "DateDue": "October 19 2026",
                 "Description": "Quiz on solving linear equations",
-                "Class": "Math"
+                "Class": "Math",
+                "Complete": "False"
             },
             "Spanish Oral Exam 1": {
                 "TimeDue": "02:00 PM",
                 "DateDue": "October 28 2025",
                 "Description": "Conversational exam on introducing yourself in Spanish",
-                "Class": "Spanish"
-            },
-            "Math Homework 3": {
-                "TimeDue": "05:00 PM",
-                "DateDue": "November 22 2026",
-                "Description": "Trigonometry problems on sine and cosine functions",
-                "Class": "Math"
+                "Class": "Spanish",
+                "Complete": "False"
             },
             "Communications Final Speech": {
                 "TimeDue": "10:00 AM",
                 "DateDue": "December 05 2027",
                 "Description": "Deliver a persuasive speech on a current issue",
-                "Class": "Communications"
+                "Class": "Communications",
+                "Complete": "False"
             },
             "Spanish Final Oral Exam": {
                 "TimeDue": "02:00 PM",
                 "DateDue": "December 10 2025",
                 "Description": "Final oral exam covering advanced conversation topics",
-                "Class": "Spanish"
+                "Class": "Spanish",
+                "Complete": "True"
             },
             "Math Final Project": {
                 "TimeDue": "04:00 PM",
                 "DateDue": "December 15 2026",
                 "Description": "Complete a project on applying calculus to real-world problems",
-                "Class": "Math"
+                "Class": "Math",
+                "Complete": "True"
             }
         },
         "Period": [

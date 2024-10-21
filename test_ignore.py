@@ -213,6 +213,9 @@ class createAssignmentScreen:
     global yearFrameNum
 
     def __init__(self, master, text):
+        self.comboBoxData = [
+
+        ]
         self.master = master
         self.text = text
         self.frame = ttk.Frame(master=self.master, style="Card.TFrame")
@@ -240,9 +243,50 @@ class createAssignmentScreen:
         self.addAssignmentFrame.grid(column=5, row=2, sticky='nsew', columnspan=4, rowspan=8, pady=10, padx=10)
         self.addExtraCurricularActivity = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
         self.addExtraCurricularActivity.grid(column=1, row=0, sticky='nsew', rowspan=2, columnspan=8, padx=10, pady=20)
+        self.addAssignmentLabelFrame = LabelFrame(master=self.addAssignmentFrame, text="Add an Assignment", font=title_font, background='#333333', foreground='white')
+        self.removeAssignmentLabelFrame = LabelFrame(master=self.addAssignmentFrame, text="Remove an Assignment", font=title_font, background='#333333', foreground='white')
+        self.removeAssignmentComboBox = ttk.Combobox(master=self.removeAssignmentLabelFrame, width=40, foreground='white')
+        with open('user_data.json', 'r') as sp:
+            user_data = json.load(sp)
+            for assignment, value in user_data[user]['Assignments'].items():
+                if user_data[user]['Assignments'][assignment]['Complete'] == 'True':
+                    self.comboBoxData.append(assignment + " " + '✅')
+                else:
+                    self.comboBoxData.append(assignment + " " + '❌')
+        self.removeAssignmentComboBox['value'] = self.comboBoxData
+        self.removeAssignmentComboBox.grid(column=0, row=0, sticky='nsew', padx=25, pady=10)
+        self.removeAssignmentButton = ttk.Button(master=self.removeAssignmentLabelFrame, text='Remove', width=20, style='Accent.TButton', command=lambda: deleteAssignment(self.removeAssignmentComboBox.get()))
+        self.removeAssignmentButton.grid(column=0, row=1, sticky='nsew', padx=25, pady=10)
+        self.removeAssignmentMarkAsCompleted = ttk.Button(master=self.removeAssignmentLabelFrame, text='Mark as complete', width=20, style='Accent.TButton', command=lambda: self.updateRemoveComboBox(True))
+        self.removeAssignmentMarkAsCompleted.grid(column=0, row=2, sticky='nsew', padx=25, pady=10)
+        self.removeAssignmentMarkAsInComplete = ttk.Button(master=self.removeAssignmentLabelFrame, text='Mark as incomplete', width=20, style='Accent.TButton', command=lambda: self.updateRemoveComboBox(False))
+        self.removeAssignmentMarkAsInComplete.grid(column=0, row=3, sticky='nsew', padx=25, pady=10)
+        self.removeAssignmentComboBox.current(0)
+        self.addAssignmentFrame.grid_propagate(False)
+        self.addAssignmentLabelFrame.grid_propagate(False)
+        self.removeAssignmentLabelFrame.grid_propagate(False)
+        for val in range(0,6):
+            self.addAssignmentFrame.rowconfigure(val, weight=weight_factor)
+            self.addAssignmentFrame.columnconfigure(val, weight=weight_factor)
+        self.addAssignmentLabelFrame.grid(row=0, column=0, sticky='nsew', pady=10, rowspan=3, columnspan=6, padx=30)
+        self.removeAssignmentLabelFrame.grid(row=3, column=0, sticky='nsew', pady=10, rowspan=3, padx=30, columnspan=6)
         if yearFrameNum != 1:
             self.frame.grid_forget()
+    def updateRemoveComboBox(self, bool):
+        markAssignment(self.removeAssignmentComboBox.get()[:-2], bool)
+        index = self.comboBoxData.index(self.removeAssignmentComboBox.get())
+        self.comboBoxData = [
 
+        ]
+        with open('user_data.json', 'r') as sp:
+            user_data = json.load(sp)
+            for assignment, value in user_data[user]['Assignments'].items():
+                if user_data[user]['Assignments'][assignment]['Complete'] == 'True':
+                    self.comboBoxData.append(assignment + " " + '✅')
+                else:
+                    self.comboBoxData.append(assignment + " " + '❌')
+        self.removeAssignmentComboBox['value'] = self.comboBoxData
+        self.removeAssignmentComboBox.current(index)
 
 class createAssignments:
     def __init__(self, row, master, month, rowspan):
@@ -264,7 +308,25 @@ class createAssignments:
                                   pady=20)
 
 
+def deleteAssignment(assignment):
+    with open('user_data.json', 'r+') as sp:
+        user_data = json.load(sp)
+        del user_data[user]['Assignments'][assignment[:-2]]
+        sp.seek(0)
+        sp.truncate()
+        json.dump(user_data, sp, indent=4)
+    createAssignment()
 
+def markAssignment(assignment, bool):
+    with open('user_data.json', 'r+') as sp:
+        user_data = json.load(sp)
+        if bool:
+            user_data[user]['Assignments'][assignment]['Complete'] = 'True'
+        else:
+            user_data[user]['Assignments'][assignment]['Complete'] = 'False'
+        sp.seek(0)
+        sp.truncate()
+        json.dump(user_data, sp, indent=4)
 def rightAssignments():
     global assignmentScreenList
     global yearFrameNum
