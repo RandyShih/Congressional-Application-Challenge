@@ -114,7 +114,7 @@ class createclass:
             print(recallassignmentdetails(className))
             try:
                 for assignment, detail in recallassignmentdetails(className).items():
-                    self.textdata = "Assigment: " + assignment + "\n" + "       Date Due: " + detail[
+                    self.textdata = "Assigment: " + assignment + '\n'  + "       Class: " + detail['Class'] +  "\n" + "       Date Due: " + detail[
                         "DateDue"] + "\n" + "       Time Due: " + detail["TimeDue"] + "\n" + "       Description: " + \
                                     detail['Description'] + '\n\n'
                     self.text.insert(1.0, self.textdata)
@@ -123,7 +123,6 @@ class createclass:
             except:
                 pass
             print(f'Created the class {className}!')
-        else:
             global comboBoxData
             global addClassWidgets
             self.row = row
@@ -164,7 +163,8 @@ class createclass:
             self.removeClassComboBox = ttk.Combobox(master=self.removeClassLabelFrame, foreground='white')
             self.comboBoxData = []
             for classes in recallclasses():
-                if classes != 'Insert Class':
+                if classes != 'Insert Class' and classes != 'Example Class':
+                    print(classes)
                     self.comboBoxData.append(classes)
             self.removeClassComboBox['value'] = self.comboBoxData
             self.removeClassComboBox.grid(column=1, row=2, sticky='sn', pady=10, padx=30)
@@ -265,10 +265,11 @@ class createAssignmentScreen:
         with open('user_data.json', 'r') as sp:
             user_data = json.load(sp)
             for assignment, value in user_data[user]['Assignments'].items():
-                if user_data[user]['Assignments'][assignment]['Complete'] == 'True':
-                    self.comboBoxDataAssignments.append(assignment + " " + '✅')
-                else:
-                    self.comboBoxDataAssignments.append(assignment + " " + '❌')
+                if assignment != 'Example Assignment':
+                    if user_data[user]['Assignments'][assignment]['Complete'] == 'True':
+                        self.comboBoxDataAssignments.append(assignment + " " + '✅')
+                    else:
+                        self.comboBoxDataAssignments.append(assignment + " " + '❌')
         self.removeAssignmentComboBox['value'] = self.comboBoxDataAssignments
         self.removeAssignmentComboBox.grid(column=0, row=0, sticky='nsew', padx=25, pady=10)
         self.removeAssignmentButton = ttk.Button(master=self.removeAssignmentLabelFrame, text='Remove', width=20,
@@ -283,7 +284,10 @@ class createAssignmentScreen:
                                                            text='Mark as incomplete', width=20, style='Accent.TButton',
                                                            command=lambda: self.updateRemoveComboBox(False))
         self.removeAssignmentMarkAsInComplete.grid(column=0, row=3, sticky='nsew', padx=25, pady=10)
-        self.removeAssignmentComboBox.current(0)
+        try:
+            self.removeAssignmentComboBox.current(0)
+        except:
+            print('Error')
         self.pertinentAssignmentLabelFrame.grid_propagate(False)
         self.pertinentAssignmentSecondLabelFrame.grid_propagate(False)
         self.removeAssignmentLabelFrame.grid_propagate(False)
@@ -340,10 +344,13 @@ class createAssignmentScreen:
         self.addAssignmentDescriptionEntry.grid(row=1, column=11, sticky='w', pady=5, padx=5)
         self.addAssignmentClassLabel.grid(row=0, column=24, sticky='w', pady=5, padx=5)
         for classes in recallclasses():
-            if classes != 'Insert Class':
+            if classes != 'Insert Class' and classes != 'Example Class':
                 self.comboBoxDataClasses.append(classes)
         self.addAssignmentClassComboBox['value'] = self.comboBoxDataClasses
-        self.addAssignmentClassComboBox.current(0)
+        try:
+            self.addAssignmentClassComboBox.current(0)
+        except:
+            print('Error')
         self.addAssignmentClassComboBox.grid(row=0, column=25, sticky='e', pady=5, columnspan=2)
         self.addAssignmentButton.grid(row=1, column=24, stick='ew', columnspan=20, padx=20, pady=5)
 
@@ -364,10 +371,11 @@ class createAssignmentScreen:
         with open('user_data.json', 'r') as sp:
             user_data = json.load(sp)
             for assignment, value in user_data[user]['Assignments'].items():
-                if user_data[user]['Assignments'][assignment]['Complete'] == 'True':
-                    self.comboBoxDataAssignments.append(assignment + " " + '✅')
-                else:
-                    self.comboBoxDataAssignments.append(assignment + " " + '❌')
+                if assignment != 'Example Assignment':
+                    if user_data[user]['Assignments'][assignment]['Complete'] == 'True':
+                        self.comboBoxDataAssignments.append(assignment + " " + '✅')
+                    else:
+                        self.comboBoxDataAssignments.append(assignment + " " + '❌')
         self.removeAssignmentComboBox['value'] = self.comboBoxDataAssignments
         self.removeAssignmentComboBox.current(index)
 
@@ -377,6 +385,7 @@ class createAssignmentScreen:
         self.dateDueINTTrue = True
         self.timeDueINTTrue = True
         self.assignmentNameCheck = True
+        self.classCheck = True
         self.dueDateChecked = False
         self.timeDueChecked = False
         self.assignmentName = self.addAssignmentNameEntry.get()
@@ -386,6 +395,8 @@ class createAssignmentScreen:
         self.className = self.addAssignmentClassComboBox.get()
         self.dateDueListSplit = split('/', self.dateDue)
         self.timeDueListSplit = split(':', self.timeDue)
+        if self.className not in recallclasses():
+            self.classCheck = False
         for val in self.dateDueListSplit:
             self.dateDueListCounter += 1
             try:
@@ -442,7 +453,7 @@ class createAssignmentScreen:
             self.addAssignmentTimeEntry.delete(0, END)
             self.addAssignmentTimeEntry['foreground'] = 'red'
             self.addAssignmentTimeEntry.insert(0, 'HH:MM, EX: 21:54')
-        if self.dueDateChecked and self.timeDueChecked and self.assignmentNameCheck:
+        if self.dueDateChecked and self.timeDueChecked and self.assignmentNameCheck and self.classCheck:
             with open('user_data.json', 'r+') as sp:
                 self.user_data = json.load(sp)
                 self.assignmentDataDict = {}
@@ -489,28 +500,95 @@ class createAssignmentScreen:
                 sp.seek(0)
                 sp.truncate()
                 json.dump(self.user_data, sp, indent=4)
-        createAssignment()
+            createAssignment()
 
 
 class createAssignments:
     def __init__(self, row, master, month, rowspan):
-
+        global assignmentCounter
+        self.assignmentCounter = assignmentCounter
         self.row = row
         self.master = master
         self.rowspan = rowspan
         self.month = str(month) + ", Month: " + monthFinder(month)
-        if self.rowspan == 8:
-            self.assignmentLabel = ttk.Label()
-            print('     Elongated Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(
-                master))
-        elif self.rowspan == 4:
-            print('     Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(master))
-        else:
-            print('Class createAssignment Error!')
         self.frameAssignment = LabelFrame(master=self.master, text=self.month, font=('Georgia', 12, 'bold'), height=100,
                                           background='#333333', foreground='white')
-        self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew', padx=15,
-                                  pady=20)
+        if self.rowspan == 8:
+            self.textP1 = None
+            self.textP2 = None
+            self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew',
+                                      padx=15,
+                                      pady=20)
+            print('     Elongated Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(
+                master))
+            with open('user_data.json', 'r') as sp:
+                self.user_data = json.load(sp)
+                assignmentNamesList = [
+
+                ]
+                for assignmentsM, detailsM in self.user_data[user]['Assignments'].items():
+                    assignmentNamesList.append(assignmentsM)
+                self.details = self.user_data[user]['Assignments']
+                print(assignmentCounter)
+                self.textP1 = "Assignment: " + assignmentNamesList[assignmentCounter-2] + '\n' + "       Class: " + self.details[assignmentNamesList[assignmentCounter-1]]['Class'] + "\n" + "       Date Due: " + self.details[assignmentNamesList[assignmentCounter-2]]["DateDue"] + "\n" + "       Time Due: " + self.details[assignmentNamesList[assignmentCounter-2]]["TimeDue"] + "\n" + "       Description: " + self.details[assignmentNamesList[assignmentCounter-2]]['Description'] + '\n' + "       Completed: " + self.details[assignmentNamesList[assignmentCounter-2]]['Complete'] + '\n\n'
+                self.textP2 = "Assignment: " + assignmentNamesList[assignmentCounter-1] + '\n' + "       Class: " + self.details[assignmentNamesList[assignmentCounter-2]]['Class'] + "\n" + "       Date Due: " + self.details[assignmentNamesList[assignmentCounter-1]]["DateDue"] + "\n" + "       Time Due: " + self.details[assignmentNamesList[assignmentCounter-1]]["TimeDue"] + "\n" + "       Description: " + self.details[assignmentNamesList[assignmentCounter-1]]['Description'] + '\n' + "       Completed: " + self.details[assignmentNamesList[assignmentCounter-1]]['Complete'] + '\n\n'
+            self.assignmentInformationTextP1 = Text(master=self.frameAssignment, width=35, height=12, foreground='white', background='#2B2B2B', wrap=WORD)
+            self.assignmentInformationTextP2 = Text(master=self.frameAssignment, width=35, height=12, foreground='white', background='#2B2B2B', wrap=WORD)
+            self.assignmentsScrollbarP1 = ttk.Scrollbar(self.assignmentInformationTextP1, orient='vertical', command=self.assignmentInformationTextP1.yview)
+            self.assignmentsScrollbarP2 = ttk.Scrollbar(self.assignmentInformationTextP2, orient='vertical', command=self.assignmentInformationTextP2.yview)
+            self.assignmentInformationTextP1['state'] = 'normal'
+            self.assignmentInformationTextP2['state'] = 'normal'
+            self.assignmentInformationTextP1['yscrollcommand'] = self.assignmentsScrollbarP1.set
+            self.assignmentInformationTextP1.delete('1.0', END)
+            self.assignmentInformationTextP2.delete('1.0', END)
+            self.assignmentInformationTextP1.insert('1.0', self.textP1)
+            self.assignmentInformationTextP2.insert('1.0', self.textP2)
+            self.assignmentInformationTextP2['yscrollcommand'] = self.assignmentsScrollbarP2.set
+            self.assignmentsScrollbarP1.pack(fill='y', anchor='e', side='right', expand=True)
+            self.assignmentsScrollbarP2.pack(fill='y', anchor='e', side='right', expand=True)
+            self.assignmentInformationTextP1.place(relx=.1, rely=0)
+            self.assignmentInformationTextP2.place(relx=.1, rely=.5)
+            self.assignmentInformationTextP1['state'] = 'disabled'
+            self.assignmentInformationTextP2['state'] = 'disabled'
+            self.assignmentInformationTextP1.propagate(0)
+            self.assignmentInformationTextP2.propagate(0)
+        elif self.rowspan == 4:
+            with open('user_data.json', 'r') as sp:
+                self.user_data = json.load(sp)
+                assignmentNamesList = [
+
+                ]
+                self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew',
+                                          padx=15,
+                                          pady=20)
+                for assignmentsM, detailsM in self.user_data[user]['Assignments'].items():
+                    assignmentNamesList.append(assignmentsM)
+                self.details = self.user_data[user]['Assignments']
+                self.shortSpanText = "Assignment: " + assignmentNamesList[assignmentCounter - 1] + '\n' + self.details[assignmentNamesList[assignmentCounter-1]]['Class'] + "\n" + "       Date Due: " + \
+                              self.details[assignmentNamesList[assignmentCounter - 1]][
+                                  "DateDue"] + "\n" + "       Time Due: " + \
+                              self.details[assignmentNamesList[assignmentCounter - 1]][
+                                  "TimeDue"] + "\n" + "       Description: " + \
+                              self.details[assignmentNamesList[assignmentCounter - 1]][
+                                  'Description'] + '\n' + "       Completed: " + \
+                              self.details[assignmentNamesList[assignmentCounter - 1]]['Complete'] + '\n\n'
+                self.assignmentInformationShortSpanText = Text(master=self.frameAssignment, width=35, height=10,
+                                                        foreground='white', background='#2B2B2B', wrap=WORD)
+                self.assignmentsScrollbarShortSpanText = ttk.Scrollbar(self.assignmentInformationShortSpanText, orient='vertical',
+                                                            command=self.assignmentInformationShortSpanText.yview)
+                self.assignmentInformationShortSpanText['state'] = 'normal'
+                self.assignmentInformationShortSpanText['yscrollcommand'] = self.assignmentsScrollbarShortSpanText.set
+                self.assignmentInformationShortSpanText.delete('1.0', END)
+                self.assignmentInformationShortSpanText.insert('1.0', self.shortSpanText)
+                self.assignmentsScrollbarShortSpanText.pack(fill='y', anchor='e', side='right', expand=True)
+                self.assignmentInformationShortSpanText.place(relx=.1, rely=0)
+                self.assignmentInformationShortSpanText['state'] = 'disabled'
+                self.assignmentInformationShortSpanText.propagate(0)
+                print('     Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(master))
+        else:
+            print('Class createAssignment Error!')
+
+
 
 
 def addAssignment(assignmentname, timedue, datedue, description, className):
@@ -699,10 +777,10 @@ def createAssignment():
             if monthInitializeEnlongate > 0:
                 for amtNum in range(0, int(monthInitializeEnlongate)):
                     yearFrameNum += 1
+                    assignmentCounter += 2
                     createAssignmentScreen(master=assignmentScreen, text=year)
                     createAssignments(row=monthFrameNum, master=assignmentList[yearFrameNum - 1], month=monthN,
                                       rowspan=8)
-                    assignmentCounter += 2
                     ##print("    Assignment screen created for: " + "Year: " + str(year) + ", Month: " + str(monthN))
                     ##print("    Elongated Assignment for month, year created: " + str(monthN) + ", " + str(year) + '\n')
                 monthInitializeEnlongate -= 0.5
@@ -720,11 +798,11 @@ def createAssignment():
                     # print("Assignment Screen List: " + str(assignmentScreenList))
                 monthFrameNum += 1
                 if monthFrameNum == 1:
+                    assignmentCounter += 1
                     createAssignments(row=0, master=assignmentList[yearFrameNum - 1], month=monthN, rowspan=4)
-                    assignmentCounter += 1
                 else:
-                    createAssignments(row=4, master=assignmentList[yearFrameNum - 1], month=monthN, rowspan=4)
                     assignmentCounter += 1
+                    createAssignments(row=4, master=assignmentList[yearFrameNum - 1], month=monthN, rowspan=4)
                 #stringResponse += "    Assignment for month, year created: " + str(monthN) + ", " + str(year) + '\n'
                 #stringResponse += "    Month Frame: " + str(monthFrameNum) + ", Year Frame Num: " + str(yearFrameNum) + '\n'
                 #stringResponse += "    Assignment Screen List Index: " + str(assignmentScreenList[monthFrameNum-1]) + '\n'
@@ -831,39 +909,39 @@ def monthFinder(Date):
 
 def addClass():
     global addClassWidgets
+    print(addClassWidgets)
     className = addClassWidgets[0].get()
     classPeriod = addClassWidgets[1].get()
     errorLabel = addClassWidgets[2]
     intNum = False
-    try:
-        with open('user_data.json', 'r+') as sp:
-            userdata = json.load(sp)
-            if className in userdata[user]['Classes']:
-                errorLabel['text'] = 'Class already exists!'
-                return
-            if int(classPeriod) in userdata[user]['Period']:
-                errorLabel['text'] = 'Period already exists!'
-                return
-            if len(className) < 15 and len(className) > 2:
-                userdata[user]['Classes'].append(className)
-            else:
-                errorLabel['text'] = 'Invalid class name!'
-                return
-            try:
-                int(classPeriod)
-                intNum = True
-            except:
-                intNum = False
-            if len(classPeriod) < 3 and intNum:
-                userdata[user]['Period'].append(int(classPeriod))
-            else:
-                errorLabel['text'] = 'Invalid period!'
-                return
-            sp.seek(0)
-            sp.truncate()
-            json.dump(userdata, sp, indent=4)
-            errorLabel['text'] = 'Class added!'
-            sp.close()
+    with open('user_data.json', 'r+') as sp:
+        userdata = json.load(sp)
+        if className in userdata[user]['Classes']:
+            errorLabel['text'] = 'Class already exists!'
+            return
+        if int(classPeriod) in userdata[user]['Period']:
+            errorLabel['text'] = 'Period already exists!'
+            return
+        if len(className) < 15 and len(className) > 2:
+            userdata[user]['Classes'].append(className)
+        else:
+            errorLabel['text'] = 'Invalid class name!'
+            return
+        try:
+            int(classPeriod)
+            intNum = True
+        except:
+            intNum = False
+         if len(classPeriod) < 3 and intNum:
+            userdata[user]['Period'].append(int(classPeriod))
+        else:
+            errorLabel['text'] = 'Invalid period!'
+            return
+        sp.seek(0)
+        sp.truncate()
+        json.dump(userdata, sp, indent=4)
+        errorLabel['text'] = 'Class added!'
+        sp.close()
         updateClasses()
     except:
         print("Add class error!")
@@ -1041,9 +1119,14 @@ def signup():
             print(type(userdata))
             userdata.append({"Username": username,
                              "Password": password,
-                             "Assignments": {},
-                             "Period": [],
-                             "Classes": ['Insert Class'],
+                             "Assignments": {"Example Assignment": {
+                "TimeDue": "04:00 PM",
+                "DateDue": "September 21 4000",
+                "Description": "Homework on advanced trigonometric identities",
+                "Class": "Example Assignment",
+                "Complete": "False"}},
+                             "Period": [100],
+                             "Classes": ['Insert Class', 'Example Class'],
                              "DueDate": [],
                              "TimeDue": []})
             sp.seek(0)
@@ -1094,9 +1177,12 @@ def updateClasses():
                 classNUM = 0
             print("Created a class screen!")
             firsttime = False
-        classNUM += 1
-        createclass(row=classNUM - 1, column=1, width=1, height=20, master=classesScreenDict[classFrameNum],
-                    className=classes)
+        try:
+            classNUM += 1
+            createclass(row=classNUM - 1, column=1, width=1, height=20, master=classesScreenDict[classFrameNum],
+                        className=classes)
+        except:
+            print('Error')
     loading(25, False)
 
 
