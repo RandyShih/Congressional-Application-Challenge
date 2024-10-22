@@ -4,6 +4,8 @@ from tkinter import *
 from tkinter import font
 import json as json
 import time as time
+import re as re
+from re import split
 from tkinter import messagebox
 
 increase_value = 0
@@ -213,7 +215,10 @@ class createAssignmentScreen:
     global yearFrameNum
 
     def __init__(self, master, text):
-        self.comboBoxData = [
+        self.comboBoxDataAssignments = [
+
+        ]
+        self.comboBoxDataClasses = [
 
         ]
         self.master = master
@@ -239,21 +244,21 @@ class createAssignmentScreen:
             self.yearLabelFrame.rowconfigure(i, weight=weight_factor)
             self.yearLabelFrame.columnconfigure(i, weight=weight_factor)
         self.yearLabelFrame.grid(row=2, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
-        self.addAssignmentFrame = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
-        self.addAssignmentFrame.grid(column=5, row=2, sticky='nsew', columnspan=4, rowspan=8, pady=10, padx=10)
-        self.addExtraCurricularActivity = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
-        self.addExtraCurricularActivity.grid(column=1, row=0, sticky='nsew', rowspan=2, columnspan=8, padx=10, pady=20)
-        self.addAssignmentLabelFrame = LabelFrame(master=self.addAssignmentFrame, text="Add an Assignment", font=title_font, background='#333333', foreground='white')
-        self.removeAssignmentLabelFrame = LabelFrame(master=self.addAssignmentFrame, text="Remove an Assignment", font=title_font, background='#333333', foreground='white')
+        self.pertinentAssignmentLabelFrame = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
+        self.pertinentAssignmentLabelFrame.grid(column=5, row=2, sticky='nsew', columnspan=4, rowspan=8, pady=10, padx=10)
+        self.addAssignmentLabelFrame = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
+        self.addAssignmentLabelFrame.grid(column=1, row=0, sticky='nsew', rowspan=2, columnspan=8, padx=10, pady=20)
+        self.pertinentAssignmentSecondLabelFrame = LabelFrame(master=self.pertinentAssignmentLabelFrame, text="Due now!", font=title_font, background='#333333', foreground='white')
+        self.removeAssignmentLabelFrame = LabelFrame(master=self.pertinentAssignmentLabelFrame, text="Remove an Assignment", font=title_font, background='#333333', foreground='white')
         self.removeAssignmentComboBox = ttk.Combobox(master=self.removeAssignmentLabelFrame, width=40, foreground='white')
         with open('user_data.json', 'r') as sp:
             user_data = json.load(sp)
             for assignment, value in user_data[user]['Assignments'].items():
                 if user_data[user]['Assignments'][assignment]['Complete'] == 'True':
-                    self.comboBoxData.append(assignment + " " + '✅')
+                    self.comboBoxDataAssignments.append(assignment + " " + '✅')
                 else:
-                    self.comboBoxData.append(assignment + " " + '❌')
-        self.removeAssignmentComboBox['value'] = self.comboBoxData
+                    self.comboBoxDataAssignments.append(assignment + " " + '❌')
+        self.removeAssignmentComboBox['value'] = self.comboBoxDataAssignments
         self.removeAssignmentComboBox.grid(column=0, row=0, sticky='nsew', padx=25, pady=10)
         self.removeAssignmentButton = ttk.Button(master=self.removeAssignmentLabelFrame, text='Remove', width=20, style='Accent.TButton', command=lambda: deleteAssignment(self.removeAssignmentComboBox.get()))
         self.removeAssignmentButton.grid(column=0, row=1, sticky='nsew', padx=25, pady=10)
@@ -262,31 +267,192 @@ class createAssignmentScreen:
         self.removeAssignmentMarkAsInComplete = ttk.Button(master=self.removeAssignmentLabelFrame, text='Mark as incomplete', width=20, style='Accent.TButton', command=lambda: self.updateRemoveComboBox(False))
         self.removeAssignmentMarkAsInComplete.grid(column=0, row=3, sticky='nsew', padx=25, pady=10)
         self.removeAssignmentComboBox.current(0)
-        self.addAssignmentFrame.grid_propagate(False)
-        self.addAssignmentLabelFrame.grid_propagate(False)
+        self.pertinentAssignmentLabelFrame.grid_propagate(False)
+        self.pertinentAssignmentSecondLabelFrame.grid_propagate(False)
         self.removeAssignmentLabelFrame.grid_propagate(False)
         for val in range(0,6):
-            self.addAssignmentFrame.rowconfigure(val, weight=weight_factor)
-            self.addAssignmentFrame.columnconfigure(val, weight=weight_factor)
-        self.addAssignmentLabelFrame.grid(row=0, column=0, sticky='nsew', pady=10, rowspan=3, columnspan=6, padx=30)
+            self.pertinentAssignmentLabelFrame.rowconfigure(val, weight=weight_factor)
+            self.pertinentAssignmentLabelFrame.columnconfigure(val, weight=weight_factor)
+        self.pertinentAssignmentSecondLabelFrame.grid(row=0, column=0, sticky='nsew', pady=10, rowspan=3, columnspan=6, padx=30)
         self.removeAssignmentLabelFrame.grid(row=3, column=0, sticky='nsew', pady=10, rowspan=3, padx=30, columnspan=6)
+        self.addAssignmentSecondLabelFrame = LabelFrame(master=self.addAssignmentLabelFrame, text='Add an Assignment!', font=title_font, height=100, width=725, foreground='white', background='#333333')
+        self.addAssignmentSecondLabelFrame.grid(row=0, column=0, sticky='nsew', rowspan=3, columnspan=3, pady=12, padx=18)
+        self.addAssignmentLabelFrame.grid_propagate(False)
+        for val in range (0,100):
+            self.addAssignmentSecondLabelFrame.rowconfigure(val, weight=weight_factor)
+            self.addAssignmentSecondLabelFrame.columnconfigure(val, weight=weight_factor)
+        self.addAssignmentNameEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15, foreground='white')
+        self.addAssignmentTimeEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15, foreground='white')
+        self.addAssignmentDateDueEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15, foreground='white')
+        self.addAssignmentDescriptionEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15, foreground='white')
+        self.addAssignmentClassComboBox = ttk.Combobox(master=self.addAssignmentSecondLabelFrame, foreground='white', width=15)
+        self.addAssignmentButton = ttk.Button(master=self.addAssignmentSecondLabelFrame, style='Accent.TButton', text='Add Assignment', command=self.createAssignment)
+
+        self.addAssignmentNameLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=15, text=' Assignment Name:', background='#333333', foreground='white', font=title_font)
+        self.addAssignmentTimeLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10, text=' Set a Time:', background='#333333', foreground='white', font=title_font)
+        self.addAssignmentDateDueLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10, background='#333333', foreground='white', text='Date Due:', font=title_font)
+        self.addAssignmentDescriptionLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10, background='#333333', foreground='white', text='Description:', font=title_font)
+        self.addAssignmentClassLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10, text='Select a Class:', background='#333333', foreground='white', font=title_font)
+
+        self.addAssignmentSecondLabelFrame.grid_propagate(False)
+        self.addAssignmentTimeEntry.grid(row=1, column=4, pady=5, sticky='w', padx=5)
+        self.addAssignmentTimeLabel.grid(row=1, column=3, pady=5, sticky='e', padx=5)
+        self.addAssignmentNameLabel.grid(row=0, column=3, sticky='e', pady=5, padx=5)
+        self.addAssignmentNameEntry.grid(row=0, column=4, sticky='w', pady=5, padx=5)
+        self.addAssignmentDateDueLabel.grid(row=0, column=10, pady=5, sticky='e', padx=10)
+        self.addAssignmentDateDueEntry.grid(row=0, column=11, pady=5, sticky='w', padx=5)
+        self.addAssignmentDescriptionLabel.grid(row=1, column=10, sticky='e', pady=5, padx=10)
+        self.addAssignmentDescriptionEntry.grid(row=1, column=11, sticky='w', pady=5, padx=5)
+        self.addAssignmentClassLabel.grid(row=0, column=24, sticky='w', pady=5, padx=5)
+        for classes in recallclasses():
+            if classes != 'Insert Class':
+                self.comboBoxDataClasses.append(classes)
+        self.addAssignmentClassComboBox['value'] = self.comboBoxDataClasses
+        self.addAssignmentClassComboBox.current(0)
+        self.addAssignmentClassComboBox.grid(row=0, column=25, sticky='e', pady=5, columnspan=2)
+        self.addAssignmentButton.grid(row=1, column=24, stick='ew', columnspan=20, padx=20, pady=5)
+
+        self.assignmentName = self.addAssignmentNameEntry.get()
+        self.timeDue = self.addAssignmentTimeEntry.get()
+        self.dateDue = self.addAssignmentDateDueEntry.get()
+        self.description = self.addAssignmentDescriptionEntry.get()
+        self.className = self.addAssignmentClassComboBox.get()
         if yearFrameNum != 1:
             self.frame.grid_forget()
     def updateRemoveComboBox(self, bool):
         markAssignment(self.removeAssignmentComboBox.get()[:-2], bool)
-        index = self.comboBoxData.index(self.removeAssignmentComboBox.get())
-        self.comboBoxData = [
+        index = self.comboBoxDataAssignments.index(self.removeAssignmentComboBox.get())
+        self.comboBoxDataAssignments = [
 
         ]
         with open('user_data.json', 'r') as sp:
             user_data = json.load(sp)
             for assignment, value in user_data[user]['Assignments'].items():
                 if user_data[user]['Assignments'][assignment]['Complete'] == 'True':
-                    self.comboBoxData.append(assignment + " " + '✅')
+                    self.comboBoxDataAssignments.append(assignment + " " + '✅')
                 else:
-                    self.comboBoxData.append(assignment + " " + '❌')
-        self.removeAssignmentComboBox['value'] = self.comboBoxData
+                    self.comboBoxDataAssignments.append(assignment + " " + '❌')
+        self.removeAssignmentComboBox['value'] = self.comboBoxDataAssignments
         self.removeAssignmentComboBox.current(index)
+    def createAssignment(self):
+        self.dateDueListCounter = 0
+        self.timeDueCounter = 0
+        self.dateDueINTTrue = True
+        self.timeDueINTTrue = True
+        self.assignmentNameCheck = True
+        self.dueDateChecked = False
+        self.timeDueChecked = False
+        self.assignmentName = self.addAssignmentNameEntry.get()
+        self.timeDue = self.addAssignmentTimeEntry.get()
+        self.dateDue = self.addAssignmentDateDueEntry.get()
+        self.description = self.addAssignmentDescriptionEntry.get()
+        self.className = self.addAssignmentClassComboBox.get()
+        self.dateDueListSplit = split('/', self.dateDue)
+        self.timeDueListSplit = split(':', self.timeDue)
+        for val in self.dateDueListSplit:
+            self.dateDueListCounter += 1
+            try:
+                int(val)
+            except:
+                self.dateDueINTTrue = False
+
+        for val in self.timeDueListSplit:
+            self.timeDueCounter += 1
+            try:
+                int(val)
+            except:
+                self.timeDueINTTrue = False
+        if self.assignmentName in recallassignmentdetails(self.className):
+            self.assignmentNameCheck = False
+            self.addAssignmentNameEntry.delete(0, END)
+            self.addAssignmentNameEntry['foreground'] = 'red'
+            self.addAssignmentNameEntry.insert(0, 'Name exists!')
+        if self.dateDueListCounter == 3 and self.dateDueINTTrue:
+            if int(self.dateDueListSplit[0]) > 31 or int(self.dateDueListSplit[0]) == 0:
+                self.addAssignmentDateDueEntry.delete(0, END)
+                self.addAssignmentDateDueEntry['foreground'] = 'red'
+                self.addAssignmentDateDueEntry.insert(0, 'Invalid Day!')
+            elif int(self.dateDueListSplit[1]) > 12 or int(self.dateDueListSplit[1]) == 0:
+                self.addAssignmentDateDueEntry.delete(0, END)
+                self.addAssignmentDateDueEntry['foreground'] = 'red'
+                self.addAssignmentDateDueEntry.insert(0, 'Invalid Month!')
+            elif len(self.dateDueListSplit[2]) != 4:
+                self.addAssignmentDateDueEntry.delete(0, END)
+                self.addAssignmentDateDueEntry['foreground'] = 'red'
+                self.addAssignmentDateDueEntry.insert(0, 'Invalid Year!')
+            else:
+                self.dueDateChecked = True
+        else:
+            self.addAssignmentDateDueEntry.delete(0, END)
+            self.addAssignmentDateDueEntry['foreground'] = 'red'
+            self.addAssignmentDateDueEntry.insert(0, 'DD/MM/YYYY')
+        if self.timeDueCounter == 2 and self.timeDueINTTrue:
+            if int(self.timeDueListSplit[0]) > 24:
+                self.addAssignmentTimeEntry.delete(0, END)
+                self.addAssignmentTimeEntry['foreground'] = 'red'
+                self.addAssignmentTimeEntry.insert(0, 'Invalid Hour!')
+            elif int(self.timeDueListSplit[1]) > 59:
+                self.addAssignmentTimeEntry.delete(0, END)
+                self.addAssignmentTimeEntry['foreground'] = 'red'
+                self.addAssignmentTimeEntry.insert(0, 'Invalid Minute!')
+            elif int(self.timeDueListSplit[1]) != 0 and int(self.timeDueListSplit[0]) == 24:
+                self.addAssignmentTimeEntry.delete(0, END)
+                self.addAssignmentTimeEntry['foreground'] = 'red'
+                self.addAssignmentTimeEntry.insert(0, 'Invalid Minute!')
+            else:
+                self.timeDueChecked = True
+        else:
+            self.addAssignmentTimeEntry.delete(0, END)
+            self.addAssignmentTimeEntry['foreground'] = 'red'
+            self.addAssignmentTimeEntry.insert(0, 'HH:MM, EX: 21:54')
+        if self.dueDateChecked and self.timeDueChecked and self.assignmentNameCheck:
+            with open('user_data.json', 'r+') as sp:
+                self.user_data = json.load(sp)
+                self.assignmentDataDict = {}
+                self.timeDueValue = 0
+                self.dueDateValue = 0
+                self.timeDueMinute = 0
+                self.dateDueDay = 0
+                self.dateDueMonth = 0
+                if len(self.timeDueListSplit[1]) == 1:
+                    self.timeDueMinute = '0' + str(self.timeDueListSplit[1])
+                else:
+                    self.timeDueMinute = str(self.timeDueListSplit[1])
+                if int(self.timeDueListSplit[0]) <= 12:
+                    if int(self.timeDueListSplit[0]) == 12:
+                        self.timeDueValue = str(self.timeDueListSplit[0]) + ":" + self.timeDueMinute + " PM"
+                    elif int(self.timeDueListSplit[0]) == 0:
+                        self.timeDueValue = "12" + ":" + self.timeDueMinute + " AM"
+                    elif len(self.timeDueListSplit[0]) == 2:
+                        self.timeDueValue = str(self.timeDueListSplit[0]) + ":" + self.timeDueMinute + " AM"
+                    else:
+                        self.timeDueValue = "0" + str(self.timeDueListSplit[0]) + ":" + self.timeDueMinute + " AM"
+                else:
+                    if int(self.timeDueListSplit[0])-12 == 12:
+                        self.timeDueValue = str(int(self.timeDueListSplit[0])-12) + ":" + self.timeDueMinute + " AM"
+                    else:
+                        self.timeDueValue = str(int(self.timeDueListSplit[0])-12) + ":" + self.timeDueMinute + " PM"
+                if len(self.dateDueListSplit[0]) == 1:
+                    self.dateDueDay = '0' + str(self.dateDueListSplit[0])
+                else:
+                    self.dateDueDay = str(self.dateDueListSplit[0])
+                if len(self.dateDueListSplit[1]) == 1:
+                    self.dateDueMonth = '0' + str(self.dateDueListSplit[1])
+                else:
+                    self.dateDueMonth = str(self.dateDueListSplit[1])
+                self.dueDateValue = monthFinder(int(self.dateDueListSplit[1])) + ' ' + self.dateDueDay + ' ' + self.dateDueListSplit[2]
+                self.assignmentDataDict.update({"TimeDue": self.timeDueValue})
+                self.assignmentDataDict.update({"DateDue": self.dueDateValue})
+                self.assignmentDataDict.update({"Description": self.description})
+                self.assignmentDataDict.update({"Class": self.className})
+                self.assignmentDataDict.update({"Complete": "False"})
+                self.assignmentDataMainDict = {self.assignmentName:self.assignmentDataDict}
+                self.user_data[user]['Assignments'].update(self.assignmentDataMainDict)
+                sp.seek(0)
+                sp.truncate()
+                json.dump(self.user_data, sp, indent=4)
+
+
 
 class createAssignments:
     def __init__(self, row, master, month, rowspan):
@@ -307,7 +473,23 @@ class createAssignments:
         self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew', padx=15,
                                   pady=20)
 
-
+def addAssignment(assignmentname, timedue, datedue, description, className):
+    with open('user_data.json', 'r') as sp:
+        user_data = json.load(sp)
+        assignmentDict = {
+            "TimeDue": timedue,
+            "DateDue": datedue,
+            "Description": description,
+            "Class": className,
+            "Complete": "True"
+        }
+        if assignmentname not in user_data[user]['Assignments']:
+            user_data[user]['Assignments'].update({assignmentname, assignmentDict})
+            sp.seek(0)
+            sp.truncate()
+            json.dump(user_data, sp, indent=4)
+        else:
+            print('Duplicate assignment name!')
 def deleteAssignment(assignment):
     with open('user_data.json', 'r+') as sp:
         user_data = json.load(sp)
@@ -318,15 +500,18 @@ def deleteAssignment(assignment):
     createAssignment()
 
 def markAssignment(assignment, bool):
-    with open('user_data.json', 'r+') as sp:
-        user_data = json.load(sp)
-        if bool:
-            user_data[user]['Assignments'][assignment]['Complete'] = 'True'
-        else:
-            user_data[user]['Assignments'][assignment]['Complete'] = 'False'
-        sp.seek(0)
-        sp.truncate()
-        json.dump(user_data, sp, indent=4)
+    try:
+        with open('user_data.json', 'r+') as sp:
+            user_data = json.load(sp)
+            if bool:
+                user_data[user]['Assignments'][assignment]['Complete'] = 'True'
+            else:
+                user_data[user]['Assignments'][assignment]['Complete'] = 'False'
+            sp.seek(0)
+            sp.truncate()
+            json.dump(user_data, sp, indent=4)
+    except:
+        print("Unknown assignment")
 def rightAssignments():
     global assignmentScreenList
     global yearFrameNum
@@ -687,6 +872,7 @@ def loading(step):
         time.sleep(1)
         progressionBar.step(100)
         loadingscreen.lift()
+        main.update_idletasks()
         loadingscreen.grid_forget()
         progressionBar.step(0)
 

@@ -50,7 +50,7 @@
                 "DateDue": "May 27 2026",
                 "Description": "Oral presentation on a historical figure from a Spanish-speaking country",
                 "Class": "Spanish",
-                "Complete": "True"
+                "Complete": "False"
             },
             "Math Final Exam": {
                 "TimeDue": "08:00 AM",
@@ -120,7 +120,7 @@
                 "DateDue": "December 10 2025",
                 "Description": "Final oral exam covering advanced conversation topics",
                 "Class": "Spanish",
-                "Complete": "True"
+                "Complete": "False"
             },
             "Math Final Project": {
                 "TimeDue": "04:00 PM",
