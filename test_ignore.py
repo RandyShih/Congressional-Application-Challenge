@@ -226,7 +226,8 @@ class createAssignmentScreen:
         self.frame = ttk.Frame(master=self.master, style="Card.TFrame")
         self.frame.grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
         self.frame.grid_propagate(False)
-        print('\n' + "Assignment Screen Created for: " + str(text) + '\n' + "     Frame: " + str(self.frame) + '\n' + "     Year Frame Num: " + str(yearFrameNum))
+        print('\n' + "Assignment Screen Created for: " + str(text) + '\n' + "     Frame: " + str(
+            self.frame) + '\n' + "     Year Frame Num: " + str(yearFrameNum))
         for i in range(0, 10):
             self.frame.rowconfigure(i, weight=weight_factor)
             self.frame.columnconfigure(i, weight=weight_factor)
@@ -234,8 +235,10 @@ class createAssignmentScreen:
                                          font=('Georgia', 20, 'bold'), height=1, width=1, relief='sunken',
                                          borderwidth=4)
         self.yearLabelFrame.grid_propagate(False)
-        self.leftbutton = ttk.Button(master=self.frame, text='Left', width=40, command=leftAssignments, style='Accent.TButton')
-        self.rightbutton = ttk.Button(master=self.frame, text='Right', width=40, command=rightAssignments, style='Accent.TButton')
+        self.leftbutton = ttk.Button(master=self.frame, text='Left', width=40, command=leftAssignments,
+                                     style='Accent.TButton')
+        self.rightbutton = ttk.Button(master=self.frame, text='Right', width=40, command=rightAssignments,
+                                      style='Accent.TButton')
         self.leftbutton.grid(column=3, row=10, rowspan=1, pady=20, padx=10)
         self.rightbutton.grid(column=6, row=10, rowspan=1, pady=20, padx=10)
         assignmentList.append(self.yearLabelFrame)
@@ -244,13 +247,21 @@ class createAssignmentScreen:
             self.yearLabelFrame.rowconfigure(i, weight=weight_factor)
             self.yearLabelFrame.columnconfigure(i, weight=weight_factor)
         self.yearLabelFrame.grid(row=2, column=1, columnspan=4, rowspan=8, pady=10, sticky='nsew', padx=10)
-        self.pertinentAssignmentLabelFrame = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
-        self.pertinentAssignmentLabelFrame.grid(column=5, row=2, sticky='nsew', columnspan=4, rowspan=8, pady=10, padx=10)
-        self.addAssignmentLabelFrame = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken', borderwidth=4)
+        self.pertinentAssignmentLabelFrame = LabelFrame(master=self.frame, background='#2B2B2B', width=1,
+                                                        relief='sunken', borderwidth=4)
+        self.pertinentAssignmentLabelFrame.grid(column=5, row=2, sticky='nsew', columnspan=4, rowspan=8, pady=10,
+                                                padx=10)
+        self.addAssignmentLabelFrame = LabelFrame(master=self.frame, background='#2B2B2B', width=1, relief='sunken',
+                                                  borderwidth=4)
         self.addAssignmentLabelFrame.grid(column=1, row=0, sticky='nsew', rowspan=2, columnspan=8, padx=10, pady=20)
-        self.pertinentAssignmentSecondLabelFrame = LabelFrame(master=self.pertinentAssignmentLabelFrame, text="Due now!", font=title_font, background='#333333', foreground='white')
-        self.removeAssignmentLabelFrame = LabelFrame(master=self.pertinentAssignmentLabelFrame, text="Remove an Assignment", font=title_font, background='#333333', foreground='white')
-        self.removeAssignmentComboBox = ttk.Combobox(master=self.removeAssignmentLabelFrame, width=40, foreground='white')
+        self.pertinentAssignmentSecondLabelFrame = LabelFrame(master=self.pertinentAssignmentLabelFrame,
+                                                              text="Due now!", font=title_font, background='#333333',
+                                                              foreground='white')
+        self.removeAssignmentLabelFrame = LabelFrame(master=self.pertinentAssignmentLabelFrame,
+                                                     text="Remove an Assignment", font=title_font, background='#333333',
+                                                     foreground='white')
+        self.removeAssignmentComboBox = ttk.Combobox(master=self.removeAssignmentLabelFrame, width=40,
+                                                     foreground='white')
         with open('user_data.json', 'r') as sp:
             user_data = json.load(sp)
             for assignment, value in user_data[user]['Assignments'].items():
@@ -260,39 +271,63 @@ class createAssignmentScreen:
                     self.comboBoxDataAssignments.append(assignment + " " + '❌')
         self.removeAssignmentComboBox['value'] = self.comboBoxDataAssignments
         self.removeAssignmentComboBox.grid(column=0, row=0, sticky='nsew', padx=25, pady=10)
-        self.removeAssignmentButton = ttk.Button(master=self.removeAssignmentLabelFrame, text='Remove', width=20, style='Accent.TButton', command=lambda: deleteAssignment(self.removeAssignmentComboBox.get()))
+        self.removeAssignmentButton = ttk.Button(master=self.removeAssignmentLabelFrame, text='Remove', width=20,
+                                                 style='Accent.TButton',
+                                                 command=lambda: deleteAssignment(self.removeAssignmentComboBox.get()))
         self.removeAssignmentButton.grid(column=0, row=1, sticky='nsew', padx=25, pady=10)
-        self.removeAssignmentMarkAsCompleted = ttk.Button(master=self.removeAssignmentLabelFrame, text='Mark as complete', width=20, style='Accent.TButton', command=lambda: self.updateRemoveComboBox(True))
+        self.removeAssignmentMarkAsCompleted = ttk.Button(master=self.removeAssignmentLabelFrame,
+                                                          text='Mark as complete', width=20, style='Accent.TButton',
+                                                          command=lambda: self.updateRemoveComboBox(True))
         self.removeAssignmentMarkAsCompleted.grid(column=0, row=2, sticky='nsew', padx=25, pady=10)
-        self.removeAssignmentMarkAsInComplete = ttk.Button(master=self.removeAssignmentLabelFrame, text='Mark as incomplete', width=20, style='Accent.TButton', command=lambda: self.updateRemoveComboBox(False))
+        self.removeAssignmentMarkAsInComplete = ttk.Button(master=self.removeAssignmentLabelFrame,
+                                                           text='Mark as incomplete', width=20, style='Accent.TButton',
+                                                           command=lambda: self.updateRemoveComboBox(False))
         self.removeAssignmentMarkAsInComplete.grid(column=0, row=3, sticky='nsew', padx=25, pady=10)
         self.removeAssignmentComboBox.current(0)
         self.pertinentAssignmentLabelFrame.grid_propagate(False)
         self.pertinentAssignmentSecondLabelFrame.grid_propagate(False)
         self.removeAssignmentLabelFrame.grid_propagate(False)
-        for val in range(0,6):
+        for val in range(0, 6):
             self.pertinentAssignmentLabelFrame.rowconfigure(val, weight=weight_factor)
             self.pertinentAssignmentLabelFrame.columnconfigure(val, weight=weight_factor)
-        self.pertinentAssignmentSecondLabelFrame.grid(row=0, column=0, sticky='nsew', pady=10, rowspan=3, columnspan=6, padx=30)
+        self.pertinentAssignmentSecondLabelFrame.grid(row=0, column=0, sticky='nsew', pady=10, rowspan=3, columnspan=6,
+                                                      padx=30)
         self.removeAssignmentLabelFrame.grid(row=3, column=0, sticky='nsew', pady=10, rowspan=3, padx=30, columnspan=6)
-        self.addAssignmentSecondLabelFrame = LabelFrame(master=self.addAssignmentLabelFrame, text='Add an Assignment!', font=title_font, height=100, width=725, foreground='white', background='#333333')
-        self.addAssignmentSecondLabelFrame.grid(row=0, column=0, sticky='nsew', rowspan=3, columnspan=3, pady=12, padx=18)
+        self.addAssignmentSecondLabelFrame = LabelFrame(master=self.addAssignmentLabelFrame, text='Add an Assignment!',
+                                                        font=title_font, height=100, width=725, foreground='white',
+                                                        background='#333333')
+        self.addAssignmentSecondLabelFrame.grid(row=0, column=0, sticky='nsew', rowspan=3, columnspan=3, pady=12,
+                                                padx=18)
         self.addAssignmentLabelFrame.grid_propagate(False)
-        for val in range (0,100):
+        for val in range(0, 100):
             self.addAssignmentSecondLabelFrame.rowconfigure(val, weight=weight_factor)
             self.addAssignmentSecondLabelFrame.columnconfigure(val, weight=weight_factor)
         self.addAssignmentNameEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15, foreground='white')
         self.addAssignmentTimeEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15, foreground='white')
-        self.addAssignmentDateDueEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15, foreground='white')
-        self.addAssignmentDescriptionEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15, foreground='white')
-        self.addAssignmentClassComboBox = ttk.Combobox(master=self.addAssignmentSecondLabelFrame, foreground='white', width=15)
-        self.addAssignmentButton = ttk.Button(master=self.addAssignmentSecondLabelFrame, style='Accent.TButton', text='Add Assignment', command=self.createAssignment)
+        self.addAssignmentDateDueEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15,
+                                                   foreground='white')
+        self.addAssignmentDescriptionEntry = ttk.Entry(master=self.addAssignmentSecondLabelFrame, width=15,
+                                                       foreground='white')
+        self.addAssignmentClassComboBox = ttk.Combobox(master=self.addAssignmentSecondLabelFrame, foreground='white',
+                                                       width=15)
+        self.addAssignmentButton = ttk.Button(master=self.addAssignmentSecondLabelFrame, style='Accent.TButton',
+                                              text='Add Assignment', command=self.createAssignment)
 
-        self.addAssignmentNameLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=15, text=' Assignment Name:', background='#333333', foreground='white', font=title_font)
-        self.addAssignmentTimeLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10, text=' Set a Time:', background='#333333', foreground='white', font=title_font)
-        self.addAssignmentDateDueLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10, background='#333333', foreground='white', text='Date Due:', font=title_font)
-        self.addAssignmentDescriptionLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10, background='#333333', foreground='white', text='Description:', font=title_font)
-        self.addAssignmentClassLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10, text='Select a Class:', background='#333333', foreground='white', font=title_font)
+        self.addAssignmentNameLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=15,
+                                                text=' Assignment Name:', background='#333333', foreground='white',
+                                                font=title_font)
+        self.addAssignmentTimeLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10,
+                                                text=' Set a Time:', background='#333333', foreground='white',
+                                                font=title_font)
+        self.addAssignmentDateDueLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10,
+                                                   background='#333333', foreground='white', text='Date Due:',
+                                                   font=title_font)
+        self.addAssignmentDescriptionLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10,
+                                                       background='#333333', foreground='white', text='Description:',
+                                                       font=title_font)
+        self.addAssignmentClassLabel = ttk.Label(master=self.addAssignmentSecondLabelFrame, width=10,
+                                                 text='Select a Class:', background='#333333', foreground='white',
+                                                 font=title_font)
 
         self.addAssignmentSecondLabelFrame.grid_propagate(False)
         self.addAssignmentTimeEntry.grid(row=1, column=4, pady=5, sticky='w', padx=5)
@@ -319,6 +354,7 @@ class createAssignmentScreen:
         self.className = self.addAssignmentClassComboBox.get()
         if yearFrameNum != 1:
             self.frame.grid_forget()
+
     def updateRemoveComboBox(self, bool):
         markAssignment(self.removeAssignmentComboBox.get()[:-2], bool)
         index = self.comboBoxDataAssignments.index(self.removeAssignmentComboBox.get())
@@ -334,6 +370,7 @@ class createAssignmentScreen:
                     self.comboBoxDataAssignments.append(assignment + " " + '❌')
         self.removeAssignmentComboBox['value'] = self.comboBoxDataAssignments
         self.removeAssignmentComboBox.current(index)
+
     def createAssignment(self):
         self.dateDueListCounter = 0
         self.timeDueCounter = 0
@@ -428,10 +465,10 @@ class createAssignmentScreen:
                     else:
                         self.timeDueValue = "0" + str(self.timeDueListSplit[0]) + ":" + self.timeDueMinute + " AM"
                 else:
-                    if int(self.timeDueListSplit[0])-12 == 12:
-                        self.timeDueValue = str(int(self.timeDueListSplit[0])-12) + ":" + self.timeDueMinute + " AM"
+                    if int(self.timeDueListSplit[0]) - 12 == 12:
+                        self.timeDueValue = str(int(self.timeDueListSplit[0]) - 12) + ":" + self.timeDueMinute + " AM"
                     else:
-                        self.timeDueValue = str(int(self.timeDueListSplit[0])-12) + ":" + self.timeDueMinute + " PM"
+                        self.timeDueValue = str(int(self.timeDueListSplit[0]) - 12) + ":" + self.timeDueMinute + " PM"
                 if len(self.dateDueListSplit[0]) == 1:
                     self.dateDueDay = '0' + str(self.dateDueListSplit[0])
                 else:
@@ -440,18 +477,19 @@ class createAssignmentScreen:
                     self.dateDueMonth = '0' + str(self.dateDueListSplit[1])
                 else:
                     self.dateDueMonth = str(self.dateDueListSplit[1])
-                self.dueDateValue = monthFinder(int(self.dateDueListSplit[1])) + ' ' + self.dateDueDay + ' ' + self.dateDueListSplit[2]
+                self.dueDateValue = monthFinder(int(self.dateDueListSplit[1])) + ' ' + self.dateDueDay + ' ' + \
+                                    self.dateDueListSplit[2]
                 self.assignmentDataDict.update({"TimeDue": self.timeDueValue})
                 self.assignmentDataDict.update({"DateDue": self.dueDateValue})
                 self.assignmentDataDict.update({"Description": self.description})
                 self.assignmentDataDict.update({"Class": self.className})
                 self.assignmentDataDict.update({"Complete": "False"})
-                self.assignmentDataMainDict = {self.assignmentName:self.assignmentDataDict}
+                self.assignmentDataMainDict = {self.assignmentName: self.assignmentDataDict}
                 self.user_data[user]['Assignments'].update(self.assignmentDataMainDict)
                 sp.seek(0)
                 sp.truncate()
                 json.dump(self.user_data, sp, indent=4)
-
+        createAssignment()
 
 
 class createAssignments:
@@ -463,7 +501,8 @@ class createAssignments:
         self.month = str(month) + ", Month: " + monthFinder(month)
         if self.rowspan == 8:
             self.assignmentLabel = ttk.Label()
-            print('     Elongated Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(master))
+            print('     Elongated Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(
+                master))
         elif self.rowspan == 4:
             print('     Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(master))
         else:
@@ -472,6 +511,7 @@ class createAssignments:
                                           background='#333333', foreground='white')
         self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew', padx=15,
                                   pady=20)
+
 
 def addAssignment(assignmentname, timedue, datedue, description, className):
     with open('user_data.json', 'r') as sp:
@@ -490,6 +530,8 @@ def addAssignment(assignmentname, timedue, datedue, description, className):
             json.dump(user_data, sp, indent=4)
         else:
             print('Duplicate assignment name!')
+
+
 def deleteAssignment(assignment):
     with open('user_data.json', 'r+') as sp:
         user_data = json.load(sp)
@@ -498,6 +540,7 @@ def deleteAssignment(assignment):
         sp.truncate()
         json.dump(user_data, sp, indent=4)
     createAssignment()
+
 
 def markAssignment(assignment, bool):
     try:
@@ -512,6 +555,8 @@ def markAssignment(assignment, bool):
             json.dump(user_data, sp, indent=4)
     except:
         print("Unknown assignment")
+
+
 def rightAssignments():
     global assignmentScreenList
     global yearFrameNum
@@ -521,9 +566,9 @@ def rightAssignments():
     for children in assignmentScreenList:
         childrenCounter += 1
     if yearFrameNum <= childrenCounter and yearFrameNum != 1:
-        assignmentScreenList[::-1][yearFrameNum-1].grid_forget()
+        assignmentScreenList[::-1][yearFrameNum - 1].grid_forget()
         yearFrameNum -= 1
-        assignmentScreenList[::-1][yearFrameNum-1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
+        assignmentScreenList[::-1][yearFrameNum - 1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
         print(assignmentScreenList[::-1][yearFrameNum - 1])
 
 
@@ -534,15 +579,19 @@ def leftAssignments():
     for children in assignmentScreenList:
         childrenCounter += 1
     if yearFrameNum < childrenCounter:
-        assignmentScreenList[::-1][yearFrameNum-1].grid_forget()
+        assignmentScreenList[::-1][yearFrameNum - 1].grid_forget()
         yearFrameNum += 1
-        assignmentScreenList[::-1][yearFrameNum-1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
+        assignmentScreenList[::-1][yearFrameNum - 1].grid(column=0, row=0, sticky="nsew", columnspan=11, rowspan=11)
 
 
 def createAssignment():
     global assignmentList
     global yearFrameNum
     global assignmentCounter
+    global assignmentScreenList
+    assignmentScreenList = [
+
+    ]
     yearFrameNum = 0
     monthFrameNum = 0
     dayFrameNum = 0
@@ -553,6 +602,7 @@ def createAssignment():
     assignmentCounter = 0
     stringResponse = ""
     initialize = True
+    loading(0)
     yearMonthList = [
 
     ]
@@ -586,6 +636,7 @@ def createAssignment():
     dateMarker = [
 
     ]
+    loading(25)
     for i in assignmentScreen.winfo_children():
         i.destroy()
     counter = 0
@@ -597,6 +648,7 @@ def createAssignment():
         yearDate.append(int(data['DateDue'][-4:]))
         monthDict.update({assignment: {monthIndexer(data['DateDue']): yearFinder(assignment)}})
         dayList.append(int(dayFinder(assignment)))
+    loading(25)
     for day in sorted(dayList):
         sortedDayList.append(day)
     for assignment, key in assignments.items():
@@ -616,6 +668,7 @@ def createAssignment():
     assignmentScreen.grid(row=0, column=2, columnspan=8, rowspan=10, sticky='nsew')
     assignmentScreen.lift()
     assignmentScreen.grid_propagate(False)
+    loading(25)
     for year, months in assignmentDateIndex.items():
         dateMarker = [
 
@@ -624,7 +677,8 @@ def createAssignment():
         monthIndex = 0
         monthFrameNum = 0
         print("New Year: " + '\n' + "    Year Frame NUM: " + str(yearFrameNum) + '\n' + "    monthList: " + str(
-            monthList) + '\n' + "    yearDate: " + str(sorted(yearDate)) + '\n' + '     assignmentDateIndex: ' + str(assignmentDateIndex))
+            monthList) + '\n' + "    yearDate: " + str(sorted(yearDate)) + '\n' + '     assignmentDateIndex: ' + str(
+            assignmentDateIndex))
         for monthN in months:
             if monthInitializeEnlongate > 0.0:
                 print("Skipped: " + str(monthN))
@@ -660,7 +714,7 @@ def createAssignment():
                     stringResponse = ""
                     monthFrameNum = 0
                     ##print("Assignment screen created for: " + "Year: " + str(year) + ", Month: " + str(
-                        ##monthN) + ", monthSPECIFICCounter: " + str(monthSPECIFICCounter))
+                    ##monthN) + ", monthSPECIFICCounter: " + str(monthSPECIFICCounter))
                     yearFrameNum += 1
                     createAssignmentScreen(master=assignmentScreen, text=year)
                     # print("Assignment Screen List: " + str(assignmentScreenList))
@@ -675,7 +729,7 @@ def createAssignment():
                 #stringResponse += "    Month Frame: " + str(monthFrameNum) + ", Year Frame Num: " + str(yearFrameNum) + '\n'
                 #stringResponse += "    Assignment Screen List Index: " + str(assignmentScreenList[monthFrameNum-1]) + '\n'
                 #stringResponse += "    Assignment Screen List: " + str(assignmentScreenList) + '\n'
-
+    loading(25, False)
 
 
 # Assignment Screen Configuration
@@ -859,10 +913,10 @@ def classesrightchange():
         classesScreenDict[indexValue].grid(column=0, row=0, sticky="NSEW", columnspan=6, rowspan=6)
 
 
-def loading(step):
+def loading(step, continueLoading=True):
     global loadingscreen
     global progressionBar
-    if step != 100:
+    if continueLoading:
         time.sleep(0.2)
         progressionBar.step(step)
         loadingscreen.grid(column=0, row=0, columnspan=10, rowspan=10, sticky='nsew')
@@ -870,16 +924,10 @@ def loading(step):
         loadingscreen.update()
     else:
         time.sleep(1)
-        progressionBar.step(100)
         loadingscreen.lift()
         main.update_idletasks()
         loadingscreen.grid_forget()
-        progressionBar.step(0)
-
-
-def loadingcomplete():
-    loadingscreen.grid_forget()
-    progressionBar.step(0)
+        progressionBar['value'] = 0
 
 
 def getClassData(classes):
@@ -1012,7 +1060,7 @@ def updateClasses():
     global classFrameNum
     global addClassWidgets
     classScreen.lift()
-    loading(0)
+    loading(25)
     classScreen.grid(column=2, row=0, columnspan=8, rowspan=10, sticky='nsew')
     classeserrormessage = ttk.Label(master=classScreen, text='Classes not found!', background='#333333',
                                     foreground='red', font=('Georgia', 20))
@@ -1026,7 +1074,7 @@ def updateClasses():
             classeserrormessage.grid_forget()
         except:
             print('Classes error message not found!')
-    loading(33)
+    loading(25)
     firsttime = True
     global classesScreenDict
     classesScreenDict = {}
@@ -1035,7 +1083,7 @@ def updateClasses():
     addClassWidgets = [
 
     ]
-    loading(66)
+    loading(25)
     for destroyclasses in classScreen.winfo_children():
         destroyclasses.destroy()
     classNUM = 0
@@ -1049,7 +1097,7 @@ def updateClasses():
         classNUM += 1
         createclass(row=classNUM - 1, column=1, width=1, height=20, master=classesScreenDict[classFrameNum],
                     className=classes)
-    loading(100)
+    loading(25, False)
 
 
 def askchatGPT(text, textbox):
@@ -1093,12 +1141,12 @@ def getChatGPTInput(text, textbox):
 
 
 def returnloginscreen():
-    loading(0)
+    loading(33)
     main.update_idletasks()
     login_menu.grid(column=0, row=0, sticky='NSEW', columnspan=10, rowspan=10)
-    loading(50)
+    loading(33)
     signupscreen.grid_forget()
-    loading(100)
+    loading(33, False)
 
 
 def findclassperiod(classtype):
@@ -1114,7 +1162,7 @@ def findclassperiod(classtype):
 def changescreen_signupscreen():
     loading(50)
     signupscreengrid()
-    loading(100)
+    loading(50, False)
 
 
 def signupscreengrid():
@@ -1145,13 +1193,15 @@ HomeScreenIcon = tk.PhotoImage(file="smallerAppIcon.png")
 appIcon_homescreen = ttk.Label(master=homescreen_menu, image=HomeScreenIcon, background='#333333')
 askAI_homescreen = ttk.Frame(master=main, height=10, width=20, style='Card.TFrame')
 askAI_homescreen.grid(row=6, column=0, sticky='NSEW', columnspan=2, rowspan=4)
-askAIText_homeScreen = Text(master=askAI_homescreen, width=15, height=10, background="#2B2B2B", foreground='white', wrap=WORD)
+askAIText_homeScreen = Text(master=askAI_homescreen, width=15, height=10, background="#2B2B2B", foreground='white',
+                            wrap=WORD)
 askAI_homescreen.propagate(False)
 for i in range(0, 6):
     print(i)
     askAI_homescreen.rowconfigure(i, weight=weight_factor)
     askAI_homescreen.columnconfigure(i, weight=weight_factor)
-askAILabel = ttk.Label(master=askAI_homescreen, text='                      Ask an AI!', background='#2B2B2B', font=('Georgia', 10, 'bold'), justify="center", foreground='white')
+askAILabel = ttk.Label(master=askAI_homescreen, text='                      Ask an AI!', background='#2B2B2B',
+                       font=('Georgia', 10, 'bold'), justify="center", foreground='white')
 askAILabel.grid(row=1, column=2, columnspan=2, sticky='nsew')
 askAIText_homeScreen.grid(row=2, column=1, sticky='nsew', pady=10, columnspan=4)
 askAIEntry = ttk.Entry(master=askAI_homescreen, width=20, foreground='white')
