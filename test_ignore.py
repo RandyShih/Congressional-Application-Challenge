@@ -500,17 +500,79 @@ class createAssignments:
         self.rowspan = rowspan
         self.month = str(month) + ", Month: " + monthFinder(month)
         if self.rowspan == 8:
-            self.assignmentLabel = ttk.Label()
+            self.textP1 = None
+            self.textP2 = None
+            self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew',
+                                      padx=15,
+                                      pady=20)
             print('     Elongated Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(
                 master))
+            with open('user_data.json', 'r') as sp:
+                self.user_data = json.load(sp)
+                assignmentNamesList = [
+
+                ]
+                for assignmentsM, detailsM in self.user_data[user]['Assignments'].items():
+                    assignmentNamesList.append(assignmentsM)
+                self.details = self.user_data[user]['Assignments']
+                print(assignmentCounter)
+                self.textP1 = "Assignment: " + assignmentNamesList[assignmentCounter-2] + '\n' + "       Class: " + self.details[assignmentNamesList[assignmentCounter-1]]['Class'] + "\n" + "       Date Due: " + self.details[assignmentNamesList[assignmentCounter-2]]["DateDue"] + "\n" + "       Time Due: " + self.details[assignmentNamesList[assignmentCounter-2]]["TimeDue"] + "\n" + "       Description: " + self.details[assignmentNamesList[assignmentCounter-2]]['Description'] + '\n' + "       Completed: " + self.details[assignmentNamesList[assignmentCounter-2]]['Complete'] + '\n\n'
+                self.textP2 = "Assignment: " + assignmentNamesList[assignmentCounter-1] + '\n' + "       Class: " + self.details[assignmentNamesList[assignmentCounter-2]]['Class'] + "\n" + "       Date Due: " + self.details[assignmentNamesList[assignmentCounter-1]]["DateDue"] + "\n" + "       Time Due: " + self.details[assignmentNamesList[assignmentCounter-1]]["TimeDue"] + "\n" + "       Description: " + self.details[assignmentNamesList[assignmentCounter-1]]['Description'] + '\n' + "       Completed: " + self.details[assignmentNamesList[assignmentCounter-1]]['Complete'] + '\n\n'
+            self.assignmentInformationTextP1 = Text(master=self.frameAssignment, width=35, height=12, foreground='white', background='#2B2B2B', wrap=WORD)
+            self.assignmentInformationTextP2 = Text(master=self.frameAssignment, width=35, height=12, foreground='white', background='#2B2B2B', wrap=WORD)
+            self.assignmentsScrollbarP1 = ttk.Scrollbar(self.assignmentInformationTextP1, orient='vertical', command=self.assignmentInformationTextP1.yview)
+            self.assignmentsScrollbarP2 = ttk.Scrollbar(self.assignmentInformationTextP2, orient='vertical', command=self.assignmentInformationTextP2.yview)
+            self.assignmentInformationTextP1['state'] = 'normal'
+            self.assignmentInformationTextP2['state'] = 'normal'
+            self.assignmentInformationTextP1['yscrollcommand'] = self.assignmentsScrollbarP1.set
+            self.assignmentInformationTextP1.delete('1.0', END)
+            self.assignmentInformationTextP2.delete('1.0', END)
+            self.assignmentInformationTextP1.insert('1.0', self.textP1)
+            self.assignmentInformationTextP2.insert('1.0', self.textP2)
+            self.assignmentInformationTextP2['yscrollcommand'] = self.assignmentsScrollbarP2.set
+            self.assignmentsScrollbarP1.pack(fill='y', anchor='e', side='right', expand=True)
+            self.assignmentsScrollbarP2.pack(fill='y', anchor='e', side='right', expand=True)
+            self.assignmentInformationTextP1.place(relx=.1, rely=0)
+            self.assignmentInformationTextP2.place(relx=.1, rely=.5)
+            self.assignmentInformationTextP1['state'] = 'disabled'
+            self.assignmentInformationTextP2['state'] = 'disabled'
+            self.assignmentInformationTextP1.propagate(0)
+            self.assignmentInformationTextP2.propagate(0)
         elif self.rowspan == 4:
-            print('     Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(master))
+            with open('user_data.json', 'r') as sp:
+                self.user_data = json.load(sp)
+                assignmentNamesList = [
+
+                ]
+                self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew',
+                                          padx=15,
+                                          pady=20)
+                for assignmentsM, detailsM in self.user_data[user]['Assignments'].items():
+                    assignmentNamesList.append(assignmentsM)
+                self.details = self.user_data[user]['Assignments']
+                self.shortSpanText = "Assignment: " + assignmentNamesList[assignmentCounter - 1] + '\n' + self.details[assignmentNamesList[assignmentCounter-1]]['Class'] + "\n" + "       Date Due: " + \
+                              self.details[assignmentNamesList[assignmentCounter - 1]][
+                                  "DateDue"] + "\n" + "       Time Due: " + \
+                              self.details[assignmentNamesList[assignmentCounter - 1]][
+                                  "TimeDue"] + "\n" + "       Description: " + \
+                              self.details[assignmentNamesList[assignmentCounter - 1]][
+                                  'Description'] + '\n' + "       Completed: " + \
+                              self.details[assignmentNamesList[assignmentCounter - 1]]['Complete'] + '\n\n'
+                self.assignmentInformationShortSpanText = Text(master=self.frameAssignment, width=35, height=10,
+                                                        foreground='white', background='#2B2B2B', wrap=WORD)
+                self.assignmentsScrollbarShortSpanText = ttk.Scrollbar(self.assignmentInformationShortSpanText, orient='vertical',
+                                                            command=self.assignmentInformationShortSpanText.yview)
+                self.assignmentInformationShortSpanText['state'] = 'normal'
+                self.assignmentInformationShortSpanText['yscrollcommand'] = self.assignmentsScrollbarShortSpanText.set
+                self.assignmentInformationShortSpanText.delete('1.0', END)
+                self.assignmentInformationShortSpanText.insert('1.0', self.shortSpanText)
+                self.assignmentsScrollbarShortSpanText.pack(fill='y', anchor='e', side='right', expand=True)
+                self.assignmentInformationShortSpanText.place(relx=.1, rely=0)
+                self.assignmentInformationShortSpanText['state'] = 'disabled'
+                self.assignmentInformationShortSpanText.propagate(0)
+                print('     Frame Assignment Created for: ' + str(month) + '\n' + "          Master: " + str(master))
         else:
             print('Class createAssignment Error!')
-        self.frameAssignment = LabelFrame(master=self.master, text=self.month, font=('Georgia', 12, 'bold'), height=100,
-                                          background='#333333', foreground='white')
-        self.frameAssignment.grid(column=0, row=self.row, columnspan=8, rowspan=self.rowspan, sticky='nsew', padx=15,
-                                  pady=20)
 
 
 def addAssignment(assignmentname, timedue, datedue, description, className):
