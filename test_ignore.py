@@ -494,11 +494,14 @@ class createAssignmentScreen:
 
 class createAssignments:
     def __init__(self, row, master, month, rowspan):
-
+        global assignmentCounter
+        self.assignmentCounter = assignmentCounter
         self.row = row
         self.master = master
         self.rowspan = rowspan
         self.month = str(month) + ", Month: " + monthFinder(month)
+        self.frameAssignment = LabelFrame(master=self.master, text=self.month, font=('Georgia', 12, 'bold'), height=100,
+                                          background='#333333', foreground='white')
         if self.rowspan == 8:
             self.textP1 = None
             self.textP2 = None
