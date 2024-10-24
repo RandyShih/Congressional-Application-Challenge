@@ -24,7 +24,7 @@ except:
 
 # Google API Configuration
 try:
-    genai.configure(api_key="AIzaSyB_5KHGQ94m6cu_L-kEWeYzsXxuPmrvqp4")
+    genai.configure(api_key="AIzaSyDgHna4-kRQmvRTg2aEFsJ8ChVvPQOZ4KA")
     Model = genai.GenerativeModel(model_name="gemini-1.5-flash")
     AIConfigure = True
 except:
