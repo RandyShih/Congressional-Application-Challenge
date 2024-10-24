@@ -82,7 +82,7 @@
             },
             "Spanish Quiz 2": {
                 "TimeDue": "11:00 AM",
-                "DateDue": "August 27 2025",
+                "DateDue": "August 27 2024",
                 "Description": "Vocabulary quiz on food and dining",
                 "Class": "Spanish",
                 "Complete": "False"
@@ -96,7 +96,7 @@
             },
             "Math Quiz 2": {
                 "TimeDue": "09:00 AM",
-                "DateDue": "October 19 2026",
+                "DateDue": "October 23 2024",
                 "Description": "Quiz on solving linear equations",
                 "Class": "Math",
                 "Complete": "False"
@@ -130,7 +130,7 @@
                 "Complete": "True"
             },
             "wdawdwad": {
-                "TimeDue": "3:23 PM",
+                "TimeDue": "03:23 PM",
                 "DateDue": "December 01 1232",
                 "Description": "wadawd",
                 "Class": "Math",
@@ -140,6 +140,13 @@
                 "TimeDue": "12:23 PM",
                 "DateDue": "December 12 1232",
                 "Description": "321321",
+                "Class": "Math",
+                "Complete": "False"
+            },
+            "wadwadwad": {
+                "TimeDue": "01:23 AM",
+                "DateDue": "December 12 2323",
+                "Description": "awdwad",
                 "Class": "Math",
                 "Complete": "False"
             }
@@ -152,7 +159,8 @@
             5,
             12,
             15,
-            64
+            64,
+            4
         ],
         "Classes": [
             "Insert Class",
@@ -163,12 +171,108 @@
             "wdwad",
             "2323",
             "awdawd",
-            "23232"
+            "23232",
+            "awdaw"
         ]
     },
     {
         "Username": "dwadawd",
         "Password": "awdwadwad",
+        "Assignments": {},
+        "Period": [],
+        "Classes": [
+            "Insert Class"
+        ],
+        "DueDate": [],
+        "TimeDue": []
+    },
+    {
+        "Username": "test2",
+        "Password": "test2",
+        "Assignments": {},
+        "Period": [
+            100,
+            2,
+            4,
+            5
+        ],
+        "Classes": [
+            "Insert Class",
+            "wadwad",
+            "tset2",
+            "test"
+        ],
+        "DueDate": [],
+        "TimeDue": []
+    },
+    {
+        "Username": "dog2",
+        "Password": "wwww",
+        "Assignments": {
+            "dog": {
+                "TimeDue": "12:12 PM",
+                "DateDue": "December 12 1232",
+                "Description": "ddd",
+                "Class": "awdwad",
+                "Complete": "False"
+            }
+        },
+        "Period": [
+            2
+        ],
+        "Classes": [
+            "Insert Class",
+            "awdwad"
+        ],
+        "DueDate": [],
+        "TimeDue": []
+    },
+    {
+        "Username": "hey3",
+        "Password": "hey3",
+        "Assignments": {},
+        "Period": [
+            2,
+            5
+        ],
+        "Classes": [
+            "Insert Class",
+            "he33",
+            "hey33"
+        ],
+        "DueDate": [],
+        "TimeDue": []
+    },
+    {
+        "Username": "hey5",
+        "Password": "hey5",
+        "Assignments": {},
+        "Period": [],
+        "Classes": [
+            "Insert Class"
+        ],
+        "DueDate": [],
+        "TimeDue": []
+    },
+    {
+        "Username": "hey22",
+        "Password": "hey22",
+        "Assignments": {},
+        "Period": [
+            2,
+            5
+        ],
+        "Classes": [
+            "Insert Class",
+            "Math",
+            "Science"
+        ],
+        "DueDate": [],
+        "TimeDue": []
+    },
+    {
+        "Username": "hey223",
+        "Password": "hey223",
         "Assignments": {},
         "Period": [],
         "Classes": [

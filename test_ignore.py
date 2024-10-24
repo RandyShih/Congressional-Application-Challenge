@@ -1239,15 +1239,15 @@ def signupscreengrid():
 #
 
 # Home Screen
-homescreen_menu = ttk.Frame(main, padding=20, style='Card.TFrame', borderwidth=20, height=200)
-homeButton_homeScreen = ttk.Button(homescreen_menu, text='Home', style='Accent.TButton', width=40)
-assignmentsButton_homeScreen = ttk.Button(homescreen_menu, text='Assignments', style='Accent.TButton', width=40,
+homeScreen_menu = ttk.Frame(main, padding=20, style='Card.TFrame', borderwidth=20, height=200)
+homeButton_homeScreen = ttk.Button(homeScreen_menu, text='Home', style='Accent.TButton', width=40)
+assignmentsButton_homeScreen = ttk.Button(homeScreen_menu, text='Assignments', style='Accent.TButton', width=40,
                                           command=createAssignment)
-classesButton_homeScreen = ttk.Button(homescreen_menu, text='Classes', style='Accent.TButton', width=40,
+classesButton_homeScreen = ttk.Button(homeScreen_menu, text='Classes', style='Accent.TButton', width=40,
                                       command=updateClasses)
-calanderButton_homeScreen = ttk.Button(homescreen_menu, text='Calendar', style='Accent.TButton', width=40)
-profileButton_homeScreen = ttk.Button(homescreen_menu, text='Profile', style='Accent.TButton', width=40)
-settingsButton_homeScreen = ttk.Button(homescreen_menu, text='Settings', style='Accent.TButton', width=40)
+calanderButton_homeScreen = ttk.Button(homeScreen_menu, text='Calendar', style='Accent.TButton', width=40)
+profileButton_homeScreen = ttk.Button(homeScreen_menu, text='Profile', style='Accent.TButton', width=40)
+settingsButton_homeScreen = ttk.Button(homeScreen_menu, text='Settings', style='Accent.TButton', width=40)
 mainScreen_homeScreen = ttk.Frame(main, style='Card.TFrame', borderwidth=10, height=100)
 mainScreen_homeScreen.grid(row=0, column=2, sticky='nsew', columnspan=8, rowspan=10)
 ignore_text = Text(master=mainScreen_homeScreen, width=50, height=20, borderwidth=20, background='gray',
@@ -1255,7 +1255,7 @@ ignore_text = Text(master=mainScreen_homeScreen, width=50, height=20, borderwidt
 textInput_homeScreen = ttk.Entry(master=mainScreen_homeScreen, width=30)
 
 HomeScreenIcon = tk.PhotoImage(file="smallerAppIcon.png")
-appIcon_homescreen = ttk.Label(master=homescreen_menu, image=HomeScreenIcon, background='#333333')
+appIcon_homescreen = ttk.Label(master=homeScreen_menu, image=HomeScreenIcon, background='#333333')
 askAI_homescreen = ttk.Frame(master=main, height=10, width=20, style='Card.TFrame')
 askAI_homescreen.grid(row=6, column=0, sticky='NSEW', columnspan=2, rowspan=4)
 askAIText_homeScreen = Text(master=askAI_homescreen, width=15, height=10, background="#2B2B2B", foreground='white',
@@ -1282,8 +1282,8 @@ homeButton_homeScreen.grid(column=0, row=1, pady=15)
 # calanderButton_homeScreen.grid(column=0, row=4, pady=20)
 classesButton_homeScreen.grid(column=0, row=3, pady=15)
 assignmentsButton_homeScreen.grid(column=0, row=2, pady=15)
-homescreen_menu.grid(column=0, row=0, sticky='nsew', columnspan=2, rowspan=6)
-homescreen_menu.grid_propagate(False)
+homeScreen_menu.grid(column=0, row=0, sticky='nsew', columnspan=2, rowspan=6)
+homeScreen_menu.grid_propagate(False)
 
 
 def disableAICall():
