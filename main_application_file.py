@@ -1213,13 +1213,11 @@ def loading(step, continueLoading=True):
     global loadingscreen
     global progressionBar
     if continueLoading:
-        time.sleep(0.2)
         progressionBar.step(step)
         loadingscreen.grid(column=0, row=0, columnspan=10, rowspan=10, sticky='nsew')
         loadingscreen.lift()
         loadingscreen.update()
     else:
-        time.sleep(1)
         loadingscreen.lift()
         main.update_idletasks()
         loadingscreen.grid_forget()

@@ -1,15 +1,8 @@
 [
     {
-        "Username": "w",
-        "Password": "w",
+        "Username": "Randy",
+        "Password": "Pass",
         "Assignments": {
-            "Math Quiz 1": {
-                "TimeDue": "08:00 AM",
-                "DateDue": "April 29 2026",
-                "Description": "Quiz on algebraic expressions and factoring",
-                "Class": "Math",
-                "Complete": "True"
-            },
             "Communications Group Presentation": {
                 "TimeDue": "03:00 PM",
                 "DateDue": "April 20 2025",
@@ -24,25 +17,11 @@
                 "Class": "Spanish",
                 "Complete": "True"
             },
-            "Math Assignment 3": {
-                "TimeDue": "04:00 PM",
-                "DateDue": "April 22 2025",
-                "Description": "Assignment on calculating derivatives",
-                "Class": "Math",
-                "Complete": "True"
-            },
             "Spanish Quiz 3": {
                 "TimeDue": "10:00 AM",
-                "DateDue": "April 22 2025",
+                "DateDue": "April 22 2023",
                 "Description": "Quiz on conjugating irregular verbs",
                 "Class": "Spanish",
-                "Complete": "True"
-            },
-            "Math Homework 4": {
-                "TimeDue": "06:00 PM",
-                "DateDue": "April 30 2026",
-                "Description": "Practice problems on logarithmic functions",
-                "Class": "Math",
                 "Complete": "True"
             },
             "Spanish Oral Presentation": {
@@ -50,13 +29,6 @@
                 "DateDue": "May 27 2026",
                 "Description": "Oral presentation on a historical figure from a Spanish-speaking country",
                 "Class": "Spanish",
-                "Complete": "False"
-            },
-            "Math Final Exam": {
-                "TimeDue": "08:00 AM",
-                "DateDue": "April 10 2026",
-                "Description": "Final exam covering all calculus topics",
-                "Class": "Math",
                 "Complete": "False"
             },
             "Spanish Homework 3": {
@@ -71,34 +43,6 @@
                 "DateDue": "July 20 2026",
                 "Description": "Translate a dialogue using the subjunctive mood",
                 "Class": "Spanish",
-                "Complete": "False"
-            },
-            "Math Quiz 3": {
-                "TimeDue": "09:00 AM",
-                "DateDue": "April 18 2026",
-                "Description": "Quiz on solving complex integrals",
-                "Class": "Math",
-                "Complete": "True"
-            },
-            "Spanish Quiz 2": {
-                "TimeDue": "11:00 AM",
-                "DateDue": "August 27 2024",
-                "Description": "Vocabulary quiz on food and dining",
-                "Class": "Spanish",
-                "Complete": "False"
-            },
-            "Math Homework 5": {
-                "TimeDue": "04:00 PM",
-                "DateDue": "September 21 2026",
-                "Description": "Homework on advanced trigonometric identities",
-                "Class": "Math",
-                "Complete": "False"
-            },
-            "Math Quiz 2": {
-                "TimeDue": "09:00 AM",
-                "DateDue": "October 23 2024",
-                "Description": "Quiz on solving linear equations",
-                "Class": "Math",
                 "Complete": "False"
             },
             "Spanish Oral Exam 1": {
@@ -122,57 +66,31 @@
                 "Class": "Spanish",
                 "Complete": "False"
             },
-            "Math Final Project": {
-                "TimeDue": "04:00 PM",
-                "DateDue": "December 15 2026",
-                "Description": "Complete a project on applying calculus to real-world problems",
-                "Class": "Math",
-                "Complete": "True"
-            },
-            "wdawdwad": {
-                "TimeDue": "03:23 PM",
-                "DateDue": "December 01 1232",
-                "Description": "wadawd",
-                "Class": "Math",
+            "test": {
+                "TimeDue": "12:12 PM",
+                "DateDue": "December 12 2024",
+                "Description": "test",
+                "Class": "Math 3",
                 "Complete": "False"
             },
-            "2323": {
-                "TimeDue": "12:23 PM",
-                "DateDue": "December 12 1232",
-                "Description": "321321",
-                "Class": "Math",
-                "Complete": "False"
-            },
-            "wadwadwad": {
-                "TimeDue": "01:23 AM",
-                "DateDue": "December 12 2323",
-                "Description": "awdwad",
-                "Class": "Math",
+            "Name dwadwa": {
+                "TimeDue": "12:12 PM",
+                "DateDue": "October 23 2024",
+                "Description": "tset",
+                "Class": "Math 3",
                 "Complete": "False"
             }
         },
         "Period": [
             2,
-            1,
-            9,
-            6,
-            5,
-            12,
-            15,
-            64,
-            4
+            8,
+            5
         ],
         "Classes": [
             "Insert Class",
-            "Math",
-            "Spanish",
-            "Communications",
-            "hey",
-            "wdwad",
-            "2323",
-            "awdawd",
-            "23232",
-            "awdaw"
+            "Math 3",
+            "Math 7",
+            "Math  1"
         ]
     },
     {
