@@ -1618,5 +1618,5 @@ progressionBar = ttk.Progressbar(master=loadingscreen, orient="horizontal", leng
 progressionBar.place(rely=.6, relx=.5, anchor=CENTER)
 appIconLoading = ttk.Label(master=loadingscreen, image=image, background='#333333')
 appIconLoading.place(rely=.4, relx=.5, anchor=CENTER)
-
 main.mainloop()
+
